@@ -21,9 +21,9 @@ SLACK_TOKEN={enter a valid token here}
 ```bash
 npm start
 ```
-5. Browse to:
+5. Browse to the landing-page (note that you can change port by adding env-variable PORT):
 ```bash
-localhost:8080 (default, you can switch port with environment variable PORT) for the landing page.  
+localhost:8080   
 ```
 6. To access the data-api browse to: 
 ```bash
