@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 var importHistory = require('./utils/importHistory.js');
-const slackToken = process.env.SLACK_TEST_TOKEN;
+const slackToken = process.env.SLACK_TOKEN;
 
 app.use(express.static('build'))
 

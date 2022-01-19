@@ -4,7 +4,8 @@
   "description": "- The user stories are tested with suitable unittests and end-to-end-tests\r - The tests are successful (in the green) \r - The user stories match the requirement specifications\r - The code is reviewed\r - The code is of good quality (e.g. approved by lint)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
