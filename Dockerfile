@@ -8,6 +8,6 @@ RUN npm ci
 
 RUN adduser nodeuser --disabled-password
 
-RUN su nodeuser
+USER nodeuser
 
 CMD npm start
