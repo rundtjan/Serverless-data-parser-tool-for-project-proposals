@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16-alpine
   
 WORKDIR /usr/src/app
 
@@ -6,8 +6,8 @@ COPY . .
 
 RUN npm ci
 
-RUN useradd -m nodeuser
+RUN adduser nodeuser --disabled-password
 
-USER nodeuser
+RUN su nodeuser
 
 CMD npm start
