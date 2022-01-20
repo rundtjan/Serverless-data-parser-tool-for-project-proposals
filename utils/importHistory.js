@@ -15,7 +15,7 @@ async function importHistory(channelId, slackToken, res){
 
     const messages = GetHumanMessagesFromSlack(result.messages)
     const words = GetWordsFromMessages(messages)
-    res.json(words);
+    res.json({"messages": messages, "words": words});
   }
   catch (error) {
     res.send(error.data.error)
