@@ -1,4 +1,3 @@
-// Require the Node Slack SDK package (github.com/slackapi/node-slack-sdk)
 const { WebClient, LogLevel } = require("@slack/web-api");
 const res = require("express/lib/response");
 const {GetHumanMessagesFromSlack, GetWordsFromMessages} = require("./filterSlackResponse")
@@ -20,7 +19,6 @@ async function importHistory(channelId, slackToken, res){
   }
   catch (error) {
     res.send(error.data.error)
-    //res.send("error");
   }
   }
 
