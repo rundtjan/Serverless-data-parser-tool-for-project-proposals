@@ -9,18 +9,13 @@ const GetHumanMessagesFromSlack = (messages) => {
 const GetWordsFromMessages = (messages) => {
     const result = []
     messages.forEach(message => {
-        words = message.text.split(" ")
-        words = removeEmojis(words)
+        let words = message.text.split(" ")
+        words = words.filter(notAnEmoji)
         words.forEach(e => result.push(e))
     })
     return result
 }
 
-const removeEmojis = words => {    
-    const result = words.filter(word => {
-        return word.charAt(0) !== ":"
-    })
-    return result
-}
+const notAnEmoji = word => word.charAt(0) !== ":"
 
 module.exports = { GetHumanMessagesFromSlack, GetWordsFromMessages }
