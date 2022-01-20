@@ -31,7 +31,7 @@ localhost:8080/api/data/{enter a valid Slack-channel-id here}
 ```
 7. You can also build a Dockerfile with:
 ```bash
-docker build -t {enter a name for your Docker-image here} .  
+docker build -t {enter a name that suits your Docker-image here} .  
 ```
 8. And run it with:
 ```bash
