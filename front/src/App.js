@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-function App() {
+const App = () => {
   const [data, setData] = useState([])
   const [words, setWords] = useState([])
   const channel = 'C02UNV80V7B'
