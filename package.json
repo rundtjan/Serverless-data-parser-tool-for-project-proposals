@@ -1,0 +1,22 @@
+{
+  "name": "serverless-data-parser-tool-for-project-proposals",
+  "version": "1.0.0",
+  "description": "## Definition of Done - The user stories are tested with suitable unittests and end-to-end-tests - The tests are successful (in the green)  - The user stories match the requirement specifications - The code is reviewed - The code is of good quality (e.g. approved by lint)",
+  "main": "backend/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd front && npm run build && cd .. && cp -r front/build backend",
+    "start": "cd backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals/issues"
+  },
+  "homepage": "https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals#readme"
+}
