@@ -1,4 +1,4 @@
-const humanMessagesFromSlack = require('../utils/filterSlackResponse').GetHumanMessagesFromSlack
+const humanMessagesFromSlack = require('../../utils/filterSlackResponse').GetHumanMessagesFromSlack
 
 test('empty list of messages is empty', () => {
     messages = []
