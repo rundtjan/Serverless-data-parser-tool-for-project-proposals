@@ -3,7 +3,7 @@ const GetHumanMessagesFromSlack = (messages) => {
     const result = messages.filter(obj => {        
         return obj.hasOwnProperty('client_msg_id')
     })
-    return result
+    return result.reverse()
 }
 
 const GetWordsFromMessages = (messages) => {
