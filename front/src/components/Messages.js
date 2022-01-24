@@ -19,7 +19,7 @@ const Messages = () => {
             <h2> Messages from slack channel</h2>
             {messages.map(message => 
                 <p key={message.client_msg_id}>
-                    '<b>{message.text}</b>' was sent by user {message.user}
+                    '<b>{message.text}</b>' was sent by user {message.real_name} ({message.user})
                 </p>
             )}
         </div>

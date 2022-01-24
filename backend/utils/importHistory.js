@@ -1,8 +1,10 @@
 const { WebClient, LogLevel } = require("@slack/web-api");
 const res = require("express/lib/response");
-const {GetHumanMessagesFromSlack, GetWordsFromMessages} = require("./filterSlackResponse")
+const {GetHumanMessagesFromSlack, GetWordsFromMessages, GetRealNamesFromSlack} = require("./filterSlackResponse")
 
 async function importHistory(channelId, slackToken, res){
+  
+  var members = {};
   
   const client = new WebClient(slackToken, {
       logLevel: LogLevel.DEBUG
@@ -13,9 +15,13 @@ async function importHistory(channelId, slackToken, res){
       channel: channelId
     });
 
+    const users = await client.users.list({});
+    users.members.forEach(elem => members[elem.id] = elem.real_name);
+
     const messages = GetHumanMessagesFromSlack(result.messages)
+    const messagesWithNames = GetRealNamesFromSlack(messages, members)
     const words = GetWordsFromMessages(messages)
-    res.json({"messages": messages, "words": words});
+    res.json({"messages": messagesWithNames, "words": words});
   }
   catch (error) {
     res.send(error.data.error)

@@ -16,6 +16,11 @@ const GetWordsFromMessages = (messages) => {
     return result
 }
 
+const GetRealNamesFromSlack = (messages, members) => {
+    messages.forEach(elem => elem.real_name = members[elem.user]);
+    return messages;
+}
+
 const notAnEmoji = word => word.charAt(0) !== ":"
 
-module.exports = { GetHumanMessagesFromSlack, GetWordsFromMessages }
+module.exports = { GetHumanMessagesFromSlack, GetWordsFromMessages, GetRealNamesFromSlack }
