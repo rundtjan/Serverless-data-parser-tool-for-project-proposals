@@ -4,7 +4,7 @@
   "description": "- The user stories are tested with suitable unittests and end-to-end-tests\r - The tests are successful (in the green) \r - The user stories match the requirement specifications\r - The code is reviewed\r - The code is of good quality (e.g. approved by lint)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "start": "node index.js"
   },
   "repository": {
@@ -22,5 +22,8 @@
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",
     "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
   }
 }

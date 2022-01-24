@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "## Definition of Done - The user stories are tested with suitable unittests and end-to-end-tests - The tests are successful (in the green)  - The user stories match the requirement specifications - The code is reviewed - The code is of good quality (e.g. approved by lint)",
   "main": "backend/index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^27.4.7"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "install": "cd front && npm install && cd .. && cd backend && npm install",
     "build": "cd front && npm run build && cd .. && cp -r front/build backend",
-    "start": "cd backend && npm start"
+    "start": "cd backend && npm start",
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
