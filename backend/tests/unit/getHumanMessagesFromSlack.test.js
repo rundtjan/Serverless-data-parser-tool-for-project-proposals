@@ -1,4 +1,4 @@
-const humanMessagesFromSlack = require('../utils/filterSlackResponse').GetHumanMessagesFromSlack
+const humanMessagesFromSlack = require('../../utils/filterSlackResponse').GetHumanMessagesFromSlack
 
 test('empty list of messages is empty', () => {
     messages = []
@@ -28,4 +28,24 @@ test('list of messages is returned correctly', () => {
     expect(result.length).toBe(2)
     expect(messages).not.toBeNull()
     expect(messages).not.toBeUndefined()
+})
+
+test('returned list is empty if no client_msg_id field', () => {
+    messages = [
+        {   type: 'message',
+            text: 'kissa on suomen suosituin kotieläin',
+            user: 'U02UHPPRMJ6',
+            ts: '1642527720.000700',
+            team: 'T02UNV7V4GZ',
+            blocks: [ [Object] ],
+            reactions: [ [Object] ] },
+        {   type: 'message',
+            text: 'terveppä terve',
+            user: 'U02UHPPRMJ6',
+            ts: '1642527711.000400',
+            team: 'T02UNV7V4GZ',
+            blocks: [ [Object] ] },
+    ]
+    const result = humanMessagesFromSlack(messages)
+    expect(result.length).toBe(0)
 })
