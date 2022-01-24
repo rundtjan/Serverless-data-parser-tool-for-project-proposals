@@ -25,6 +25,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Install required dependecies
+      - name: Install Dependencies
+        run: npm install
+
       # Runs Jest tests
-      - name: Jest tests
+      - name: Run the Jest tests
         run: npm test
