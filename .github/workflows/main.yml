@@ -32,3 +32,7 @@ jobs:
       # Runs Jest tests
       - name: Run the Jest tests
         run: npm test
+        
+      # Linting
+      - name: lint server
+        run: cd backend && npm run eslint .
