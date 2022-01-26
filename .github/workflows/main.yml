@@ -43,7 +43,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: author,pullRequest,message,commit
-          custom_payload: "attachments: [{{text: 'Code review waiting'}}]"
+          fields: author,pullRequest,commit
+          text: 'Code review waiting'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
