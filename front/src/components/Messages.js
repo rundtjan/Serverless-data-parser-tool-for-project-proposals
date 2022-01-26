@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react'
 import { useSelector } from 'react-redux';
 
@@ -16,7 +17,9 @@ const Messages = () => {
     
     return(
         <div>
-            <h2> Messages from slack channel</h2>
+        <Typography variant='h3'>
+            Messages from slack channel
+        </Typography>
             {messages.map(message => 
                 <p key={message.client_msg_id}>
                     '<b>{message.text}</b>' was sent by user {message.real_name} ({message.user})
