@@ -36,3 +36,13 @@ jobs:
       # Linting
       - name: lint server
         run: cd backend && npm run lint
+
+      # Send slack message to ci/cd channel
+      - name: Notify on slack
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,pullRequest
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
