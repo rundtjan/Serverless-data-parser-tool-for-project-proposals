@@ -39,10 +39,11 @@ jobs:
 
       # Send slack message to ci/cd channel
       - name: Notify on slack
-        if: always()
+        if: ${{ github.event_name == 'pull_request' }}
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,pullRequest
+          fields: author,pullRequest,message,commit
+          custom_payload: "{text: 'Code review waiting'}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
