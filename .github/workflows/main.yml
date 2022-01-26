@@ -44,6 +44,6 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: author,pullRequest,message,commit
-          custom_payload: "{text: 'Code review waiting'}"
+          custom_payload: "attachments: [{{text: 'Code review waiting'}}]"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
