@@ -2,6 +2,9 @@
 
 ![CI workflow](https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals/actions/workflows/main.yml/badge.svg)
 
+# Tuntikirjanpito  
+[Linkki tuntikirjanpitoon](https://docs.google.com/spreadsheets/d/1cuh5_3st2fF5PlzxUwkLurNdqGqkFm90v7kIZbUjTgg/edit#gid=2125689465)
+
 ## Definition of Done
 - The user stories are tested with suitable unittests and end-to-end-tests
 - The tests are successful (in the green) 
