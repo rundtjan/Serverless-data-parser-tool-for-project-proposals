@@ -4,7 +4,6 @@ const {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
   GetRealNamesFromSlack,
-  GetThreads,
 } = require('./filterSlackResponse')
 
 async function importHistory(channelId, slackToken, res) {
@@ -24,7 +23,6 @@ async function importHistory(channelId, slackToken, res) {
 
     const messages = GetHumanMessagesFromSlack(result.messages)
     const messagesWithNames = GetRealNamesFromSlack(messages, members)
-    const threadedMessages = GetThreads(messages)
     const words = GetWordsFromMessages(messages)
     res.json({ messages: messagesWithNames, words: words })
   } catch (error) {

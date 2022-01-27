@@ -5,7 +5,7 @@ const GetHumanMessagesFromSlack = (messages) => {
   return result.reverse()
 }
 
-const messageIsThreaded = (message) => message.hasOwnProperty('thread_ts')
+const messageIsThreaded = (message) => Object.prototype.hasOwnProperty.call(message, 'thread_ts')
 
 const addThreadArrayToEachMessage = (message) => {
   message.thread_array = []
