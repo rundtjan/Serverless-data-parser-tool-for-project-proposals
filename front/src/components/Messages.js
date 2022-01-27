@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import React from 'react'
 import { useSelector } from 'react-redux';
+import '@fontsource/roboto/300.css'
 
 const Messages = () => {
 
@@ -8,26 +9,29 @@ const Messages = () => {
 
     if(!messages) {
         return(
-            <p>
-                Loading messages...
-            </p>
+            <Typography variant='body2'>
+              Loading messages...
+            </Typography>
         )
     }
 
     
     return(
-        <div>
-        <Typography variant='h3'>
+      <div>
+        <Typography variant='h4'>
             Messages from slack channel
         </Typography>
-            {messages.map(message => 
-                <p key={message.client_msg_id}>
-                    '<b>{message.text}</b>' was sent by user {message.real_name} ({message.user})
-                </p>
-            )}
-        </div>
+        
+        {messages.map(message => (
+          <ul key={message.client_msg_id}>
+            <Typography variant='body1'>
+              <b>`{message.text}'</b> was sent by user {message.real_name} {message.user} `
+            </Typography>   
+          </ul>  
+        ))}     
+       </div>
     )
     
 }
 
-export default Messages;
+export default Messages
