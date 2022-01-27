@@ -7,8 +7,10 @@ const Words = () => {
 
     if(!words) {
         return(
-            <p>Loading words...</p>
-        )
+          <Typography variant='body2'>
+            Loading words...
+          </Typography>
+       )
     }
 
     return (
