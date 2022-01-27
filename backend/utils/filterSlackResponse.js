@@ -5,6 +5,20 @@ const GetHumanMessagesFromSlack = (messages) => {
   return result.reverse()
 }
 
+const messageIsThreaded = (message) => message.hasOwnProperty('thread_ts')
+
+const addThreadArrayToEachMessage = (message) => {
+  message.thread_array = []
+}
+
+const GetThreads = (messages) => {
+  const result = messages.filter((message) => {
+    addThreadArrayToEachMessage(message)
+    return messageIsThreaded(message)
+  })
+  return result
+}
+
 const GetWordsFromMessages = (messages) => {
   const result = []
   messages.forEach((message) => {
@@ -26,4 +40,5 @@ module.exports = {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
   GetRealNamesFromSlack,
+  GetThreads,
 }
