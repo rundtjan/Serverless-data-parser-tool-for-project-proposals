@@ -36,7 +36,6 @@ async function importHistory(channelId, slackToken, res) {
         })
         threadsWithReplies.push(threadWithReplies.messages)
       }
-      console.log(threadsWithReplies)
     } catch (error) {
       //
     }
