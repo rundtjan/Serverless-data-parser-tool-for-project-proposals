@@ -23,6 +23,7 @@ async function importHistory(channelId, slackToken, res) {
 
     const messages = GetHumanMessagesFromSlack(result.messages)
     const messagesWithNames = GetRealNamesFromSlack(messages, members)
+    console.log('sasas')
     const words = GetWordsFromMessages(messages)
     res.json({ messages: messagesWithNames, words: words })
   } catch (error) {
