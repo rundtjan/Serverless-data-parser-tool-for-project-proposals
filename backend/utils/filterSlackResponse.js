@@ -29,7 +29,6 @@ const GetThreads = (messages) => {
 }
 
 const AddThreadToParent = (thread, messages) => {
-  //console.log(thread)
   messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
 }
 
