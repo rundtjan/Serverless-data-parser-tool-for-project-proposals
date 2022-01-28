@@ -29,17 +29,9 @@ const GetWordsFromMessages = (messages) => {
     words.forEach((word) => {
       word = RemoveSpecialCharacters(word)
       word = word.toLowerCase() 
-      if (word in temp_word_obj){
-        temp_word_obj[word]['count'] += 1
-        temp_word_obj[word]['message_ids'].push(message.client_msg_id)
-      } else {
-        temp_word_obj[word] = {
-          'word': word,
-          'message_ids': [message.client_msg_id],
-          'count': 1
-        }
-      }
-          
+      word in temp_word_obj ? 
+        (temp_word_obj[word]['count'] += 1, temp_word_obj[word]['message_ids'].push(message.client_msg_id)) :
+        temp_word_obj[word] = Create_Word_Obj(word, message)          
     })
   })
   
@@ -49,6 +41,14 @@ const GetWordsFromMessages = (messages) => {
   
   result.sort((a, b) => b.count - a.count)
   return result
+}
+
+const Create_Word_Obj = (word, message) => {
+  return {
+    'word': word,
+    'message_ids': [message.client_msg_id],
+    'count': 1
+  } 
 }
 
 const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, '')
