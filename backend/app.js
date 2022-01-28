@@ -38,9 +38,9 @@ app.post('/api/data', (req, res) => {
   var oldest = parseSlackTimestamp(Date.now() * 1000, req.body.hours)
   var user = req.body.user
 
-  //importHistoryParams(slackToken, res, channel, oldest, user) still to be implemented
+  importHistory(slackToken, res, channel, oldest, user)
 
-  res.json({'channel': channel, 'oldest': oldest, 'user': user})
+  //res.json({'channel': channel, 'oldest': oldest, 'user': user})
 })
 
 module.exports = app
