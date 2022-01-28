@@ -28,6 +28,10 @@ const GetThreads = (messages) => {
   return result
 }
 
+const AddThreadToParent = (thread, messages) => {
+  messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
+}
+
 const GetWordsFromMessages = (messages) => {
   const result = []
   messages.forEach((message) => {
@@ -51,4 +55,5 @@ module.exports = {
   GetRealNamesFromSlack,
   GetThreads,
   GetTimeStamps,
+  AddThreadToParent
 }
