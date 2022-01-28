@@ -7,6 +7,15 @@ const GetHumanMessagesFromSlack = (messages) => {
 
 const messageIsThreaded = (message) => Object.prototype.hasOwnProperty.call(message, 'thread_ts')
 
+const GetTimeStamps = (messages) => {
+  const result = messages.map(message => {
+    if (messageIsThreaded(message)) {
+      return message.ts
+    }
+  })
+  return result
+}
+
 const addThreadArrayToEachMessage = (message) => {
   message.thread_array = []
 }
@@ -17,6 +26,10 @@ const GetThreads = (messages) => {
     return messageIsThreaded(message)
   })
   return result
+}
+
+const AddThreadToParent = (thread, messages) => {
+  messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
 }
 
 const GetWordsFromMessages = (messages) => {
@@ -36,9 +49,21 @@ const GetRealNamesFromSlack = (messages, members) => {
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
 
+const filterOutOldMessages = (messages, oldest) => {
+  console.log("This should start filtering by date")
+}
+
+const filterMessagesByUser = (messages, user) => {
+  console.log("This should start filtering by user")
+}
+
 module.exports = {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
   GetRealNamesFromSlack,
   GetThreads,
+  GetTimeStamps,
+  AddThreadToParent,
+  filterOutOldMessages,
+  filterMessagesByUser
 }
