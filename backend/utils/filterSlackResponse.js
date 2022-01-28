@@ -35,7 +35,7 @@ const AddThreadToParent = (thread, messages) => {
 const GetWordsFromMessages = (messages) => {
   const result = []
   const temp_word_obj = {}
-  
+  messages = messages.concat(AddThreadMessages(messages))
   messages.forEach((message) => {
     let words = message.text.split(' ')
     words = words.filter(notAnEmoji)
@@ -56,6 +56,15 @@ const GetWordsFromMessages = (messages) => {
   return result
 }
 
+const AddThreadMessages = (messages) => {
+  let result = []
+  messages.forEach(message => {
+    if(message.thread_array && message.thread_array.length > 0){      
+      result = result.concat(message.thread_array)
+    }
+  })
+  return result
+}
 const Create_Word_Obj = (word, message) => {
   return {
     'word': word,
