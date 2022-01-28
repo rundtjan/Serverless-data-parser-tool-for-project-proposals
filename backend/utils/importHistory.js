@@ -6,6 +6,7 @@ const {
   GetRealNamesFromSlack,
   GetThreads,
   GetTimeStamps,
+  AddThreadToParent,
 } = require('./filterSlackResponse')
 
 async function importHistory(channelId, slackToken, res) {
@@ -28,13 +29,12 @@ async function importHistory(channelId, slackToken, res) {
     const threadTimestamps = GetTimeStamps(threads)
 
     try {
-      const threadsWithReplies = []
       for (let i=0; i < threadTimestamps.length; i++) {
         let threadWithReplies = await client.conversations.replies({
           channel: channelId,
           ts: threadTimestamps[i],
         })
-        threadsWithReplies.push(threadWithReplies.messages)
+        AddThreadToParent(threadWithReplies.messages, messagesWithNames)
       }
     } catch (error) {
       //
