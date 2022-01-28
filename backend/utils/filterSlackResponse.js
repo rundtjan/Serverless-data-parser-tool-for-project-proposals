@@ -7,11 +7,11 @@ const GetHumanMessagesFromSlack = (messages) => {
 
 const messageIsThreaded = (message) => Object.prototype.hasOwnProperty.call(message, 'thread_ts')
 
-const GetThreadTimeStamp = (message) => message.ts
-
-const GetThreadTimeStamps = (messages) => {
-  const result = messages.filter((message) => {
-    return GetThreadTimeStamp(message)
+const GetTimeStamps = (messages) => {
+  const result = messages.map(message => {
+    if (messageIsThreaded(message)) {
+      return message.ts
+    }
   })
   return result
 }
@@ -50,6 +50,5 @@ module.exports = {
   GetWordsFromMessages,
   GetRealNamesFromSlack,
   GetThreads,
-  GetThreadTimeStamp,
-  GetThreadTimeStamps,
+  GetTimeStamps,
 }
