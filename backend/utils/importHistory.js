@@ -8,7 +8,7 @@ const {
   GetTimeStamps,
 } = require('./filterSlackResponse')
 
-async function importHistory(channelId, slackToken, res, ts) {
+async function importHistory(channelId, slackToken, res) {
   var members = {}
 
   const client = new WebClient(slackToken, {
@@ -27,19 +27,19 @@ async function importHistory(channelId, slackToken, res, ts) {
     const threads = GetThreads(messages)
     const threadTimestamps = GetTimeStamps(threads)
 
-  try {
-    const threadsWithReplies = []
-    for (let i=0; i < threadTimestamps.length; i++) {
-      let threadWithReplies = await client.conversations.replies({
-        channel: channelId,
-        ts: threadTimestamps[i],
-      })
-      threadsWithReplies.push(threadWithReplies.messages)
+    try {
+      const threadsWithReplies = []
+      for (let i=0; i < threadTimestamps.length; i++) {
+        let threadWithReplies = await client.conversations.replies({
+          channel: channelId,
+          ts: threadTimestamps[i],
+        })
+        threadsWithReplies.push(threadWithReplies.messages)
+      }
+      console.log(threadsWithReplies)
+    } catch (error) {
+      //
     }
-    console.log(threadsWithReplies)
-  } catch (error) {
-    //
-  }
     res.json({ messages: messagesWithNames, words: words })
   } catch (error) {
     res.send(error.data.error)
