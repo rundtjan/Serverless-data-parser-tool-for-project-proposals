@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 var importHistory = require('./utils/importHistory.js')
 const parseSlackTimestamp = require('./utils/parseSlackTimestamp')
+const slackChannels = require('./utils/slackChannels.js')
 const slackToken = process.env.SLACK_TOKEN
 const cors = require('cors')
 
@@ -22,13 +23,17 @@ app.get('/api/data/:channelid', (req, res) => {
   importHistory(req.params.channelid, slackToken, res)
 })
 
+app.get('/api/channels', (req, res) => {
+  (slackChannels(slackToken, res))
+})
+
 app.post('/api/data', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_ID, "hours": HOW_MANY_HOURS_BACK, "user": USER_ID}
   var channel = req.body.channel || 'C02UNV80V7B'
   var oldest = parseSlackTimestamp(req.body.hours)
   var user = req.body.user
 
-  //importHistory(slackToken, res, channel, oldest, user) still to be implemented
+  //importHistoryParams(slackToken, res, channel, oldest, user) still to be implemented
 
   res.json({'channel': channel, 'oldest': oldest, 'user': user})
 })
