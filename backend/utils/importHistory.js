@@ -6,7 +6,7 @@ const {
   GetRealNamesFromSlack,
 } = require('./filterSlackResponse')
 
-async function importHistory(channelId, slackToken, res) {
+async function importHistory(channelId, slackToken, res, ts) {
   var members = {}
 
   const client = new WebClient(slackToken, {
@@ -27,6 +27,17 @@ async function importHistory(channelId, slackToken, res) {
     res.json({ messages: messagesWithNames, words: words })
   } catch (error) {
     res.send(error.data.error)
+  }
+
+  try {
+    const result = await client.conversations.replies({
+      channel: channelId,
+      ts: ts,
+    })
+    console.log(result.messages)
+
+  } catch (error) {
+    res.send(error)
   }
 }
 
