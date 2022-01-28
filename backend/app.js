@@ -5,7 +5,6 @@ var importHistory = require('./utils/importHistory.js')
 const parseSlackTimestamp = require('./utils/parseSlackTimestamp')
 const slackToken = process.env.SLACK_TOKEN
 const cors = require('cors')
-
 app.use(cors())
 app.use(express.static('build'))
 
