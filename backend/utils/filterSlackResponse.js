@@ -83,12 +83,12 @@ const GetRealNamesFromSlack = (messages, members) => {
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
 
-const filterOutOldMessages = (messages, oldest) => {
-  console.log("This should start filtering by date")
+const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
+  console.log('This should start filtering by date')
 }
 
-const filterMessagesByUser = (messages, user) => {
-  console.log("This should start filtering by user")
+const filterMessagesByUser = (messages, user) => {// eslint-disable-line
+  console.log('This should start filtering by user')
 }
 
 module.exports = {
