@@ -1,15 +1,15 @@
-import './App.css';
-import React, { useEffect } from 'react';
-import { useDispatch} from 'react-redux';
+import './App.css'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 //Components
-import DemoHome from './components/DemoHome';
+import DemoHome from './components/DemoHome'
 //Actions
-import { initializeMessages } from './reducers/dataReducer';
+import { initializeMessages } from './reducers/dataReducer'
 
 const App = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(initializeMessages())

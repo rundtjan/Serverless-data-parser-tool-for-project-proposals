@@ -7,14 +7,14 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import dataReducer from './reducers/dataReducer'
 
 const reducer = combineReducers({
-    data: dataReducer
-});
+  data: dataReducer
+})
 
 const store = createStore(
-    reducer,
-    composeWithDevTools(
-        applyMiddleware(thunk)
-    )
-);
+  reducer,
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
+)
 
-export default store;
+export default store
