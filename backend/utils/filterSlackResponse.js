@@ -34,13 +34,46 @@ const AddThreadToParent = (thread, messages) => {
 
 const GetWordsFromMessages = (messages) => {
   const result = []
+  const temp_word_obj = {}
+  messages = messages.concat(AddThreadMessages(messages))
   messages.forEach((message) => {
     let words = message.text.split(' ')
     words = words.filter(notAnEmoji)
-    words.forEach((e) => result.push(e))
+    words.forEach((word) => {
+      word = RemoveSpecialCharacters(word)
+      word = word.toLowerCase() 
+      word in temp_word_obj ? 
+        (temp_word_obj[word]['count'] += 1, temp_word_obj[word]['message_ids'].push(message.client_msg_id)) :
+        temp_word_obj[word] = Create_Word_Obj(word, message)          
+    })
+  })
+  
+  Object.keys(temp_word_obj).forEach( key => {
+    result.push(temp_word_obj[key])
+  })
+  
+  result.sort((a, b) => b.count - a.count)
+  return result
+}
+
+const AddThreadMessages = (messages) => {
+  let result = []
+  messages.forEach(message => {
+    if(message.thread_array && message.thread_array.length > 0){      
+      result = result.concat(message.thread_array)
+    }
   })
   return result
 }
+const Create_Word_Obj = (word, message) => {
+  return {
+    'word': word,
+    'message_ids': [message.client_msg_id],
+    'count': 1
+  } 
+}
+
+const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, '')
 
 const GetRealNamesFromSlack = (messages, members) => {
   messages.forEach((elem) => (elem.real_name = members[elem.user]))

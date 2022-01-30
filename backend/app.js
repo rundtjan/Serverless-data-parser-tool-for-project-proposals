@@ -39,8 +39,6 @@ app.post('/api/data', (req, res) => {
   var user = req.body.user
 
   importHistory(channel, slackToken, res, oldest, user)
-
-  //res.json({'channel': channel, 'oldest': oldest, 'user': user})
 })
 
 module.exports = app
