@@ -65,6 +65,7 @@ const AddThreadMessages = (messages) => {
   })
   return result
 }
+
 const Create_Word_Obj = (word, message) => {
   return {
     'word': word,

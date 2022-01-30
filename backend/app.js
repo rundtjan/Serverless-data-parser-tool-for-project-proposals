@@ -7,7 +7,6 @@ const slackChannels = require('./utils/slackChannels.js')
 const slackUsers = require('./utils/slackUsers.js')
 const slackToken = process.env.SLACK_TOKEN
 const cors = require('cors')
-
 app.use(cors())
 app.use(express.static('build'))
 
