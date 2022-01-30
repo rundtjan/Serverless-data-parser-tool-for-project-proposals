@@ -65,6 +65,7 @@ const AddThreadMessages = (messages) => {
   })
   return result
 }
+
 const Create_Word_Obj = (word, message) => {
   return {
     'word': word,
@@ -82,11 +83,21 @@ const GetRealNamesFromSlack = (messages, members) => {
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
 
+const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
+  console.log('This should start filtering by date')
+}
+
+const filterMessagesByUser = (messages, user) => {// eslint-disable-line
+  console.log('This should start filtering by user')
+}
+
 module.exports = {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
   GetRealNamesFromSlack,
   GetThreads,
   GetTimeStamps,
-  AddThreadToParent
+  AddThreadToParent,
+  filterOutOldMessages,
+  filterMessagesByUser
 }

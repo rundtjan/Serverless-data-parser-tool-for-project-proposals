@@ -1,5 +1,5 @@
 const { WebClient, LogLevel } = require('@slack/web-api')
-//const res = require('express/lib/response')
+
 const {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
@@ -7,9 +7,11 @@ const {
   GetThreads,
   GetTimeStamps,
   AddThreadToParent,
+  filterOutOldMessages,
+  filterMessagesByUser
 } = require('./filterSlackResponse')
 
-async function importHistory(channelId, slackToken, res) {
+async function importHistory(channelId, slackToken, res, oldest, user) {
   var members = {}
 
   const client = new WebClient(slackToken, {
@@ -38,6 +40,8 @@ async function importHistory(channelId, slackToken, res) {
     } catch (error) {
       //
     }
+    if (oldest) filterOutOldMessages(messagesWithNames, oldest)
+    if (user) filterMessagesByUser(messagesWithNames, user)
     const words = GetWordsFromMessages(messagesWithNames)
     res.json({ messages: messagesWithNames, words: words })
   } catch (error) {
