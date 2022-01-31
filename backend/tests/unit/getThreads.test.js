@@ -9,7 +9,7 @@ test('Threads are returned correctly from all messages', () => {
 test('Thread_array is not empty or null for threads', () => {  
   const threads = getThreads(threadTestMessages)
   expect(threads.length).toBe(3)
-  expect(threads[0].thread_array.length).not.toBeNull()
-  expect(threads[1].thread_array.length).not.toBeNull()
-  expect(threads[2].thread_array.length).not.toBeNull()
+  for (let i=0; i < threads.length; i++) {
+    expect(threads[i].thread_array).not.toBeNull()
+  }
 })
