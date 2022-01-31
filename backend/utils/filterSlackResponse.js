@@ -30,7 +30,7 @@ const GetThreads = (messages) => {
   return result
 }
 
-const AddThreadToParent = (thread, messages) => {
+const AddThreadToParent = (thread, messages) => {//this needs to be time-optimized
   messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
 }
 
@@ -80,43 +80,24 @@ const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, 
 
 const GetRealNamesFromSlack = (messages, members) => {
   messages.forEach((elem) => (elem.real_name = members[elem.user]))
-  //return messages
 }
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
 
-const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
-  const newMessages = []
+const filterOutOldMessages = (messages, oldest) => {
+  const resMessages = []
   for (var i = 0; i < messages.length; i++){
     var message = messages[i]
-    var thArrln = message.thread_array.length
-    if (thArrln > 0){
-      if (parseTimestampFromSlackTs(message.thread_array[thArrln-1].ts) < oldest){//the whole thread and parent can be ignored
-        continue
-      } else if (parseTimestampFromSlackTs(message.thread_array[0].ts) < oldest){//only parts of the thread should be included
-        var newThread = []
-        for (var j = message.thread_array.length-1; j >= 0; j--){
-          if (parseTimestampFromSlackTs(message.thread_array[j].ts) >= oldest){//message should be included in new thread
-            newThread.push(message.thread_array[j])
-          } else {//we have reached too old messages in the thread
-            break
-          }
-        }
-        newThread.reverse()
-        message.thread_array = newThread.slice()
+    if (parseTimestampFromSlackTs(message.ts) >= parseTimestampFromSlackTs(oldest)){
+      resMessages.push(message)
+    } else {
+      if (message.thread_array.length > 0){
+        message.text += ' :parent-message-outside-of-timelimit'
+        resMessages.push(message)
       }
     }
-    if (parseTimestampFromSlackTs(message.ts) < oldest && message.thread_array.length > 0){//parent is too old but there's relevant messages in the thread
-      message.text = ':The-start-of-this-thread-is-outside-of-timelimit'
-      message.real_name = 'Comment by bot'
-      message.user = 'xxxxx'
-      newMessages.push(message)
-    } else if (parseTimestampFromSlackTs(message.ts) >= oldest){//message is ok to push to array
-      newMessages.push(message)
-    }
   }
-  //console.log(newMessages)
-  return newMessages
+  return resMessages
 }
 
 const filterMessagesByUser = (messages, user) => {// eslint-disable-line
