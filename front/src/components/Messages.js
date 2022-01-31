@@ -22,7 +22,12 @@ const Messages = () => {
       {messages.map(message => (
         <ul key={message.client_msg_id}>
           <Typography variant='body1'>
-            <b>`{message.text} </b> was sent by user {message.real_name} {message.user} `
+            <b>{message.text} </b> was sent by user {message.real_name} {message.user}
+            <div>
+              {message.thread_array.map(thread => (
+                <li key={message.client_msg_id}>{thread.text}</li>
+              ))}
+            </div>
           </Typography>
         </ul>
       ))}
