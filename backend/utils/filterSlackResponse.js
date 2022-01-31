@@ -96,7 +96,7 @@ const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
       } else if (parseTimestampFromSlackTs(message.thread_array[0].ts) < oldest){//only parts of the thread should be included
         var newThread = []
         for (var j = message.thread_array.length-1; j >= 0; j--){
-          if (parseTimestampFromSlackTs(message.thread_array[j].ts) > oldest){//message should be included in new thread
+          if (parseTimestampFromSlackTs(message.thread_array[j].ts) >= oldest){//message should be included in new thread
             newThread.push(message.thread_array[j])
           } else {//we have reached too old messages in the thread
             break
@@ -111,11 +111,11 @@ const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
       message.real_name = 'Comment by bot'
       message.user = 'xxxxx'
       newMessages.push(message)
-    } else if (parseTimestampFromSlackTs(message.ts) > oldest){//message is ok to push to array
+    } else if (parseTimestampFromSlackTs(message.ts) >= oldest){//message is ok to push to array
       newMessages.push(message)
     }
   }
-  console.log(newMessages)
+  //console.log(newMessages)
   return newMessages
 }
 
