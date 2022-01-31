@@ -1,12 +1,33 @@
 const { filterOutOldMessages } = require('../../utils/filterSlackResponse.js')
 var messages = require('./dataForTimefilterTest.json')
 
-test('All tests for timefilter need to be renewed', () => {
-  const oldest = '1642847619.000000'
+test('With very old timelimit, all messages are included and unchanged', () => {
+  const oldest = '1042847619.000000'
   const result = filterOutOldMessages(messages, oldest)
-  expect(result.length).toBeDefined()
+  expect(result.length).toBe(4)
 })
 
+test('With very recent timelimit, only parentmessages and their threads are included', () => {
+  const oldest = '1643625219.000000'
+  const result = filterOutOldMessages(messages, oldest)
+  expect(result.length).toBe(2)
+  expect(result[0].thread_array.length).toBeGreaterThan(0)
+  expect(result[1].thread_array.length).toBeGreaterThan(0)
+})
+
+test('Parentmessages that are older than timelimit include message that this is the case', () =>{
+  const oldest = '1643625219.000000'
+  const result = filterOutOldMessages(messages, oldest)
+  expect(result[0].text.includes(':parent-message-outside-of-timelimit')).toBe(true)
+  expect(result[1].text.includes(':parent-message-outside-of-timelimit')).toBe(true)
+})
+
+test('Messages without parents and within timeline are listed without any change', () => {
+  const oldest = '1642934019.000000'
+  const result = filterOutOldMessages(messages, oldest)
+  expect(result.length).toBe(3)
+  expect(result[1].text.includes(':parent-message-outside-of-timelimit')).toBe(false)
+})
 
 //example dates:
 //1643625219000000 -- 31.1.2022
