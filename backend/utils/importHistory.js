@@ -51,7 +51,7 @@ async function importHistory(channel, slackToken, res, oldest, user) {
   } catch (error) {
     if (error){
       console.error(error)
-      res.send("Error in getting data.")
+      res.send('Error in getting data.')
     }
   }
 }

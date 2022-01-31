@@ -1,4 +1,4 @@
-const { slackTimeOlder, parseTimestampFromSlackTs } = require('./parseSlackTimestamp')
+const { parseTimestampFromSlackTs } = require('./parseSlackTimestamp')
 
 const GetHumanMessagesFromSlack = (messages) => {
   const result = messages.filter((obj) => {
@@ -92,7 +92,7 @@ const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
     var thArrln = message.thread_array.length
     if (thArrln > 0){
       if (parseTimestampFromSlackTs(message.thread_array[thArrln-1].ts) < oldest){//the whole thread and parent can be ignored
-        continue;
+        continue
       } else if (parseTimestampFromSlackTs(message.thread_array[0].ts) < oldest){//only parts of the thread should be included
         var newThread = []
         for (var j = message.thread_array.length-1; j >= 0; j--){
@@ -107,10 +107,11 @@ const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
       }
     }
     if (parseTimestampFromSlackTs(message.ts) < oldest && message.thread_array.length > 0){//parent is too old but there's relevant messages in the thread
-      message.text = ":Start-of-thread-is-outside-of-timelimit"
-      message.real_name = "Comment by bot"
+      message.text = ':The-start-of-this-thread-is-outside-of-timelimit'
+      message.real_name = 'Comment by bot'
+      message.user = 'xxxxx'
       newMessages.push(message)
-    } else if (parseTimestampFromSlackTs(message.ts) > oldest){
+    } else if (parseTimestampFromSlackTs(message.ts) > oldest){//message is ok to push to array
       newMessages.push(message)
     }
   }
