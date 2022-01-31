@@ -2,8 +2,16 @@ import './App.css'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
+//Styles
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
+import theme from './styles/theme'
+
 //Components
-import DemoHome from './components/DemoHome'
+import Layout from './components/Layout'
+
+//Pages
+import HomePage from './pages/HomePage'
+
 //Actions
 import { initializeMessages } from './reducers/dataReducer'
 
@@ -16,9 +24,11 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <div className="App">
-      <DemoHome />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Layout>
+        <HomePage />
+      </Layout>
+    </ThemeProvider>
   )
 }
 

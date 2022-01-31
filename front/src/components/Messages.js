@@ -1,37 +1,39 @@
-import { Typography } from '@mui/material'
 import React from 'react'
+
 import { useSelector } from 'react-redux'
 import '@fontsource/roboto/300.css'
+
+import { Grid, Typography } from '@mui/material'
+import Message from './Message'
+
 
 const Messages = () => {
   const messages = useSelector(state => state.data.messages)
 
+
   if(!messages) {
     return(
-      <Typography variant='body2'>
-        Loading messages...
-      </Typography>
+      <Grid container>
+        <Grid item>
+          <Typography
+            variant="body1"
+            component="div"
+            color="textSecondary"
+          >
+          Loading messages...
+          </Typography>
+        </Grid>
+      </Grid>
     )
   }
-  return(
-    <div>
-      <Typography variant='h4'>
-        Messages from slack channel
-      </Typography>
 
+  return(
+    <Grid container spacing={2}>
+      <Typography variant="h4">Slack messages</Typography>
       {messages.map(message => (
-        <ul key={message.client_msg_id}>
-          <Typography variant='body1'>
-            <b>{message.text} </b> was sent by user {message.real_name} {message.user}
-            <div>
-              {message.thread_array.map(thread => (
-                <li key={message.client_msg_id}>{thread.text}</li>
-              ))}
-            </div>
-          </Typography>
-        </ul>
+        <Message key={message.client_msg_id} message={message}/>
       ))}
-    </div>
+    </Grid>
   )
 
 }
