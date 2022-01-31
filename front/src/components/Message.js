@@ -47,7 +47,9 @@ const Message = ({ message }) => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography>
-                Threds here
+              {message.thread_array.map(thread => (
+                <li key={message.client_msg_id}>{thread.text}</li>
+              ))}
             </Typography>
           </CardContent>
         </Collapse>

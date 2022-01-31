@@ -20,10 +20,8 @@ const Words = () => {
       </Typography>
       <ul>
         <Typography variant='body1'>
-          {words.map(word =>
-            <li key={word}>
-              {word}
-            </li>
+          {words.map((obj) =>
+            <li key={obj['word']}>{obj['word']} {obj['count']}</li>
           )}
         </Typography>
       </ul>
