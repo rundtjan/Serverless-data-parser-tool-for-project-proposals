@@ -1,9 +1,12 @@
-function parseSlackTimestamp(now, hours) {
+function parseTimestamp(now, hours) {
   if (hours){
-    const timestamp = (now - hours * 60 * 60 * 1000000).toString()
-    return timestamp.substring(0, 10) + '.' + timestamp.substring(10, 16)
+    return now - hours * 60 * 60 * 1000000
   }
-  return null
+  return false
 }
 
-module.exports = parseSlackTimestamp
+function parseTimestampFromSlackTs(slackTimestamp){
+  return parseInt(slackTimestamp.replace('.', ''))
+}
+
+module.exports = { parseTimestamp, parseTimestampFromSlackTs }

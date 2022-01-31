@@ -1,3 +1,5 @@
+const { slackTimeOlder, parseTimestampFromSlackTs } = require('./parseSlackTimestamp')
+
 const GetHumanMessagesFromSlack = (messages) => {
   const result = messages.filter((obj) => {
     return Object.prototype.hasOwnProperty.call(obj, 'client_msg_id')
@@ -78,13 +80,42 @@ const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, 
 
 const GetRealNamesFromSlack = (messages, members) => {
   messages.forEach((elem) => (elem.real_name = members[elem.user]))
-  return messages
+  //return messages
 }
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
 
 const filterOutOldMessages = (messages, oldest) => {// eslint-disable-line
-  console.log('This should start filtering by date')
+  const newMessages = []
+  for (var i = 0; i < messages.length; i++){
+    var message = messages[i]
+    var thArrln = message.thread_array.length
+    if (thArrln > 0){
+      if (parseTimestampFromSlackTs(message.thread_array[thArrln-1].ts) < oldest){//the whole thread and parent can be ignored
+        continue;
+      } else if (parseTimestampFromSlackTs(message.thread_array[0].ts) < oldest){//only parts of the thread should be included
+        var newThread = []
+        for (var j = message.thread_array.length-1; j >= 0; j--){
+          if (parseTimestampFromSlackTs(message.thread_array[j].ts) > oldest){//message should be included in new thread
+            newThread.push(message.thread_array[j])
+          } else {//we have reached too old messages in the thread
+            break
+          }
+        }
+        newThread.reverse()
+        message.thread_array = newThread.slice()
+      }
+    }
+    if (parseTimestampFromSlackTs(message.ts) < oldest && message.thread_array.length > 0){//parent is too old but there's relevant messages in the thread
+      message.text = ":Start-of-thread-is-outside-of-timelimit"
+      message.real_name = "Comment by bot"
+      newMessages.push(message)
+    } else if (parseTimestampFromSlackTs(message.ts) > oldest){
+      newMessages.push(message)
+    }
+  }
+  console.log(newMessages)
+  return newMessages
 }
 
 const filterMessagesByUser = (messages, user) => {// eslint-disable-line
