@@ -30,8 +30,15 @@ const GetThreads = (messages) => {
   return result
 }
 
-const AddThreadToParent = (thread, messages) => {//this needs to be time-optimized
-  messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
+const AddThreadToParent = (thread, messages, parentIndex) => {
+  for (var i = parentIndex; i < messages.length; i++){
+    if (messages[i].client_msg_id == thread[0].client_msg_id){
+      messages[i].thread_array = thread.slice(1)
+      parentIndex = i
+      break
+    }
+  }
+  return parentIndex //this is used for time-optimization
 }
 
 const GetWordsFromMessages = (messages) => {
@@ -101,7 +108,27 @@ const filterOutOldMessages = (messages, oldest) => {
 }
 
 const filterMessagesByUser = (messages, user) => {// eslint-disable-line
-  console.log('This should start filtering by user')
+  const resMessages = []
+  for (var i = 0; i < messages.length; i++){
+    var message = messages[i]
+    if (message.thread_array.length > 0){
+      const newThread = []
+      for (var j = 0; j < message.thread_array.length; j++){
+        if (message.thread_array[j].real_name == user){
+          newThread.push(message.thread_array[j])
+        }
+      }
+      message.thread_array = newThread.slice()
+    }
+    if (message.real_name == user){
+      resMessages.push(message)
+    }
+    if (message.real_name != user && message.thread_array.length > 0){
+      message.text += ' :parent-of-a-thread-with-messages-by-' + user.replace(' ', '-')
+      resMessages.push(message)
+    }
+  }
+  return resMessages
 }
 
 module.exports = {

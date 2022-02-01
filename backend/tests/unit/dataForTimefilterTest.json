@@ -18,7 +18,7 @@
         ]
       }
     ],
-    "real_name": "Jan Rundt",
+    "real_name": "User 1",
     "thread_array": []
   },
   {
@@ -47,7 +47,7 @@
     "reply_users": ["U02V2KF4MS8", "U02UAB8HUFM"],
     "is_locked": false,
     "subscribed": false,
-    "real_name": "Eevi Bengs",
+    "real_name": "User 2",
     "thread_array": [
       {
         "client_msg_id": "c8cb8d2d-379f-4895-9b75-9ee54e168b72",
@@ -69,7 +69,8 @@
           }
         ],
         "thread_ts": "1643101417.000800",
-        "parent_user_id": "U02V2KF4MS8"
+        "parent_user_id": "U02V2KF4MS8",
+        "real_name": "User 1"
       },
       {
         "client_msg_id": "76dd8f92-8687-4144-b5bd-4286ae4130e0",
@@ -93,7 +94,8 @@
           }
         ],
         "thread_ts": "1643101417.000800",
-        "parent_user_id": "U02V2KF4MS8"
+        "parent_user_id": "U02V2KF4MS8",
+        "real_name":"User 1"
       },
       {
         "client_msg_id": "28f4b822-befd-47ed-97c2-23f92e5c0e8e",
@@ -117,7 +119,8 @@
           }
         ],
         "thread_ts": "1643101417.000800",
-        "parent_user_id": "U02V2KF4MS8"
+        "parent_user_id": "U02V2KF4MS8",
+        "real_name": "User 2"
       },
       {
         "client_msg_id": "df2bba59-9c23-4a7b-920f-27e062520cfb",
@@ -141,7 +144,8 @@
           }
         ],
         "thread_ts": "1643101417.000800",
-        "parent_user_id": "U02V2KF4MS8"
+        "parent_user_id": "U02V2KF4MS8",
+        "real_name":"User 3"
       }
     ]
   },
@@ -164,7 +168,7 @@
         ]
       }
     ],
-    "real_name": "Jan Rundt",
+    "real_name": "User 1",
     "thread_array": []
   },
   {
@@ -193,7 +197,7 @@
     "reply_users": ["U02V2KF4MS8", "U02UAB8HUFM"],
     "is_locked": false,
     "subscribed": false,
-    "real_name": "Eevi Bengs",
+    "real_name": "User 2",
     "thread_array": [
       {
         "client_msg_id": "c8cb8d2d-379f-4895-9b75-9ee54e168b72",
@@ -215,7 +219,8 @@
           }
         ],
         "thread_ts": "1643101417.000800",
-        "parent_user_id": "U02V2KF4MS8"
+        "parent_user_id": "U02V2KF4MS8",
+        "real_name": "User 1"
       },
       {
         "client_msg_id": "76dd8f92-8687-4144-b5bd-4286ae4130e0",
@@ -239,7 +244,8 @@
           }
         ],
         "thread_ts": "1643101417.000800",
-        "parent_user_id": "U02V2KF4MS8"
+        "parent_user_id": "U02V2KF4MS8",
+        "real_name":"User 3"
       }
     ]
   }

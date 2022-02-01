@@ -1,5 +1,10 @@
 const { filterOutOldMessages } = require('../../utils/filterSlackResponse.js')
-var messages = require('./dataForTimefilterTest.json')
+const fs = require('fs')
+var messages
+
+//For some reason JSON needs to be imported before every test, otherwise the object is mutated 
+
+beforeEach(() => messages = JSON.parse(fs.readFileSync(__dirname + '/dataForTimefilterTest.json')))
 
 test('With very old timelimit, all messages are included and unchanged', () => {
   const oldest = '1042847619.000000'
