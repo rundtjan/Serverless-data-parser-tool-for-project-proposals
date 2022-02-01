@@ -30,8 +30,15 @@ const GetThreads = (messages) => {
   return result
 }
 
-const AddThreadToParent = (thread, messages) => {//this needs to be time-optimized
-  messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
+const AddThreadToParent = (thread, messages, parentIndex) => {
+  for (var i = parentIndex; i < messages.length; i++){
+    if (messages[i].client_msg_id == thread[0].client_msg_id){
+      messages[i].thread_array = thread.slice(1)
+      parentIndex = i
+      break
+    }
+  }
+  return parentIndex //this is used for time-optimization
 }
 
 const GetWordsFromMessages = (messages) => {

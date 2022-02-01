@@ -34,12 +34,13 @@ async function importHistory(channel, slackToken, res, oldest, user) {
     const threadTimestamps = GetTimeStamps(threads)
 
     try {
+      var parentIndex = 0;
       for (let i=0; i < threadTimestamps.length; i++) {
         var args = {channel: channelId, ts: threadTimestamps[i]}
         if (oldest) args.oldest = oldest
         let threadWithReplies = await client.conversations.replies(args)
-        GetRealNamesFromSlack(threadWithReplies.messages, members) 
-        AddThreadToParent(threadWithReplies.messages, messages)
+        GetRealNamesFromSlack(threadWithReplies.messages, members)
+        parentIndex = AddThreadToParent(threadWithReplies.messages, messages, parentIndex)
       }
     } catch (error) {
       console.error(error)
