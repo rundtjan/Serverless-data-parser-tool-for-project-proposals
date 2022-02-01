@@ -69,6 +69,8 @@ const ParseWords = (words) => {
   let parsedWords = words.filter(notAnEmoji)
   parsedWords = parsedWords.map(word => {
     word = RemoveSpecialCharacters(word)
+    word = RemoveTrailingDots(word)
+    word = RemoveTrailingCommas(word)
     word = word.toLowerCase()
     return word
   })
@@ -94,7 +96,9 @@ const Create_Word_Obj = (word, message) => {
   } 
 }
 
-const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, '')
+const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€.,]/gi, '')
+const RemoveTrailingDots = (word) => word.replace( /\.+$/g, '' )
+const RemoveTrailingCommas = (word) => word.replace( /,+$/g, '' )
 
 const GetRealNamesFromSlack = (messages, members) => {
   messages.forEach((elem) => (elem.real_name = members[elem.user]))
