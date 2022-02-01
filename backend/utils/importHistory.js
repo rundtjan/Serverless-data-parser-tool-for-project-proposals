@@ -1,5 +1,5 @@
 const { WebClient, LogLevel } = require('@slack/web-api')
-//const res = require('express/lib/response')
+
 const {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
@@ -7,9 +7,11 @@ const {
   GetThreads,
   GetTimeStamps,
   AddThreadToParent,
+  filterOutOldMessages,
+  filterMessagesByUser
 } = require('./filterSlackResponse')
 
-async function importHistory(channelId, slackToken, res) {
+async function importHistory(channel, slackToken, res, oldest, user) {
   var members = {}
 
   const client = new WebClient(slackToken, {
@@ -17,31 +19,41 @@ async function importHistory(channelId, slackToken, res) {
   })
 
   try {
+    const channels = await client.conversations.list({})
+    var channelId = channels.channels.filter(obj => {
+      return obj.name == channel || obj.id == channel
+    })[0].id
     const result = await client.conversations.history({
       channel: channelId,
     })
     const users = await client.users.list({})
     users.members.forEach((elem) => (members[elem.id] = elem.real_name))
-    const messages = GetHumanMessagesFromSlack(result.messages)
-    const messagesWithNames = GetRealNamesFromSlack(messages, members)    
+    var messages = GetHumanMessagesFromSlack(result.messages)
+    GetRealNamesFromSlack(messages, members)    
     const threads = GetThreads(messages)
     const threadTimestamps = GetTimeStamps(threads)
 
     try {
+      var parentIndex = 0
       for (let i=0; i < threadTimestamps.length; i++) {
-        let threadWithReplies = await client.conversations.replies({
-          channel: channelId,
-          ts: threadTimestamps[i],
-        })
-        AddThreadToParent(threadWithReplies.messages, messagesWithNames)
+        var args = {channel: channelId, ts: threadTimestamps[i]}
+        if (oldest) args.oldest = oldest
+        let threadWithReplies = await client.conversations.replies(args)
+        GetRealNamesFromSlack(threadWithReplies.messages, members)
+        parentIndex = AddThreadToParent(threadWithReplies.messages, messages, parentIndex)
       }
     } catch (error) {
-      //
+      console.error(error)
     }
-    const words = GetWordsFromMessages(messagesWithNames)
-    res.json({ messages: messagesWithNames, words: words })
+    if (oldest) messages = filterOutOldMessages(messages, oldest)
+    if (user) messages = filterMessagesByUser(messages, user)
+    const words = GetWordsFromMessages(messages)
+    res.json({ messages: messages, words: words })
   } catch (error) {
-    res.send(error.data.error)
+    if (error){
+      console.error(error)
+      res.send('Error in getting data.')
+    }
   }
 }
 

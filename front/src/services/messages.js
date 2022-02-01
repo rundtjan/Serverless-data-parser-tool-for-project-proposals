@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const channel = 'C02UNV80V7B'
-const baseUrl = `http://${window.location.hostname}:80/api/data/${channel}`
+const port = process.env.REACT_APP_BACKEND_PORT || 80 // eslint-disable-line
+const channel = 'general'
+const baseUrl = `http://${window.location.hostname}:${port}/api/data/${channel}`
 
 const getAll = async() => {
   const res = await axios.get(baseUrl)

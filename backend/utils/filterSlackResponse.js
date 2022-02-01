@@ -1,3 +1,5 @@
+const { parseTimestampFromSlackTs } = require('./parseSlackTimestamp')
+
 const GetHumanMessagesFromSlack = (messages) => {
   const result = messages.filter((obj) => {
     return Object.prototype.hasOwnProperty.call(obj, 'client_msg_id')
@@ -28,8 +30,15 @@ const GetThreads = (messages) => {
   return result
 }
 
-const AddThreadToParent = (thread, messages) => {
-  messages.forEach(elem => elem.client_msg_id == thread[0].client_msg_id ? elem.thread_array = thread.slice(1) : elem )
+const AddThreadToParent = (thread, messages, parentIndex) => {
+  for (var i = parentIndex; i < messages.length; i++){
+    if (messages[i].client_msg_id == thread[0].client_msg_id){
+      messages[i].thread_array = thread.slice(1)
+      parentIndex = i
+      break
+    }
+  }
+  return parentIndex //this is used for time-optimization
 }
 
 const GetWordsFromMessages = (messages) => {
@@ -75,6 +84,7 @@ const AddThreadMessages = (messages) => {
   })
   return result
 }
+
 const Create_Word_Obj = (word, message) => {
   return {
     'word': word,
@@ -88,10 +98,49 @@ const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, 
 
 const GetRealNamesFromSlack = (messages, members) => {
   messages.forEach((elem) => (elem.real_name = members[elem.user]))
-  return messages
 }
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
+
+const filterOutOldMessages = (messages, oldest) => {
+  const resMessages = []
+  for (var i = 0; i < messages.length; i++){
+    var message = messages[i]
+    if (parseTimestampFromSlackTs(message.ts) >= parseTimestampFromSlackTs(oldest)){
+      resMessages.push(message)
+    } else {
+      if (message.thread_array.length > 0){
+        message.text += ' :parent-message-outside-of-timelimit'
+        resMessages.push(message)
+      }
+    }
+  }
+  return resMessages
+}
+
+const filterMessagesByUser = (messages, user) => {// eslint-disable-line
+  const resMessages = []
+  for (var i = 0; i < messages.length; i++){
+    var message = messages[i]
+    if (message.thread_array.length > 0){
+      const newThread = []
+      for (var j = 0; j < message.thread_array.length; j++){
+        if (message.thread_array[j].real_name == user){
+          newThread.push(message.thread_array[j])
+        }
+      }
+      message.thread_array = newThread.slice()
+    }
+    if (message.real_name == user){
+      resMessages.push(message)
+    }
+    if (message.real_name != user && message.thread_array.length > 0){
+      message.text += ' :parent-of-a-thread-with-messages-by-' + user.replace(' ', '-')
+      resMessages.push(message)
+    }
+  }
+  return resMessages
+}
 
 module.exports = {
   GetHumanMessagesFromSlack,
@@ -99,5 +148,7 @@ module.exports = {
   GetRealNamesFromSlack,
   GetThreads,
   GetTimeStamps,
-  AddThreadToParent
+  AddThreadToParent,
+  filterOutOldMessages,
+  filterMessagesByUser
 }
