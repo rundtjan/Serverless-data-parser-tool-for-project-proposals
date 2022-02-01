@@ -1,6 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Typography } from '@mui/material'
+import List from '@mui/material/List'
+
+import Word from './Word'
 
 const Words = () => {
   const words = useSelector(state => state.data.words)
@@ -14,18 +17,16 @@ const Words = () => {
   }
 
   return (
-    <div>
+    <Typography>
       <Typography variant='h5'>
         Words from messages
       </Typography>
-      <ul>
-        <Typography variant='body1'>
-          {words.map((obj) =>
-            <li key={obj['word']}>{obj['word']} {obj['count']}</li>
-          )}
-        </Typography>
-      </ul>
-    </div>
+      <List dense >
+        {words.map(obj => (
+          <Word key={obj.word} obj={obj}/>
+        ))}
+      </List>
+    </Typography>
   )
 }
 
