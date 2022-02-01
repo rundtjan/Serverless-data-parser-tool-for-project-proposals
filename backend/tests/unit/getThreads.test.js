@@ -1,5 +1,5 @@
 const getThreads = require('../../utils/filterSlackResponse').GetThreads
-const {threadTestMessages} = require('./threadConstants')
+const {threadTestMessages} = require('./constants')
 
 test('Threads are returned correctly from all messages', () => {
   const threads = getThreads(threadTestMessages)
