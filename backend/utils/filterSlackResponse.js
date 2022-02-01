@@ -42,7 +42,6 @@ const AddThreadToParent = (thread, messages, parentIndex) => {
 }
 
 const GetWordsFromMessages = (messages) => {
-  console.log(JSON.stringify(messages))
   const result = []
   const temp_word_obj = {}
 

@@ -7,7 +7,7 @@ const threadTestMessages = [
     ts: '1642509861.000600',
     team: 'T02UNV7V4GZ',
     blocks: [[Object]],
-    real_name: 'Jan Rundt',
+    real_name: 'User55',
     thread_array: [],
   },
   {
@@ -18,7 +18,7 @@ const threadTestMessages = [
     ts: '1642509866.000800',
     team: 'T02UNV7V4GZ',
     blocks: [[Object]],
-    real_name: 'Jan Rundt',
+    real_name: 'User55',
     thread_array: [],
   },
   {
@@ -29,7 +29,7 @@ const threadTestMessages = [
     ts: '1642527711.000400',
     team: 'T02UNV7V4GZ',
     blocks: [[Object]],
-    real_name: 'Aleksi Suuronen',
+    real_name: 'User11',
     thread_array: [],
   },
   {
@@ -48,7 +48,7 @@ const threadTestMessages = [
     is_locked: false,
     subscribed: false,
     reactions: [[Object]],
-    real_name: 'Aleksi Suuronen',
+    real_name: 'User11',
     thread_array: [[Object]],
   },
   {
@@ -59,7 +59,7 @@ const threadTestMessages = [
     ts: '1642531226.000400',
     team: 'T02UNV7V4GZ',
     blocks: [[Object]],
-    real_name: 'Juha T',
+    real_name: 'User41',
     thread_array: [],
   },
   {
@@ -70,7 +70,7 @@ const threadTestMessages = [
     ts: '1643100025.000500',
     team: 'T02UNV7V4GZ',
     blocks: [[Object]],
-    real_name: 'Eevi Bengs',
+    real_name: 'User77',
     thread_array: [],
   },
   {
@@ -88,7 +88,7 @@ const threadTestMessages = [
     reply_users: ['U02V2KF4MS8', 'U02UAB8HUFM'],
     is_locked: false,
     subscribed: false,
-    real_name: 'Eevi Bengs',
+    real_name: 'User77',
     thread_array: [[Object], [Object]],
   },
   {
@@ -106,7 +106,7 @@ const threadTestMessages = [
     reply_users: ['U02UAB8HUFM'],
     is_locked: false,
     subscribed: false,
-    real_name: 'Juha T',
+    real_name: 'User41',
     thread_array: [[Object]],
   },
   {
@@ -117,7 +117,7 @@ const threadTestMessages = [
     ts: '1643362475.606779',
     team: 'T02UNV7V4GZ',
     blocks: [[Object]],
-    real_name: 'Juha T',
+    real_name: 'User41',
     thread_array: [],
   },
 ]
