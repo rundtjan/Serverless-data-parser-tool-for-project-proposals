@@ -34,7 +34,7 @@ async function importHistory(channel, slackToken, res, oldest, user) {
     const threadTimestamps = GetTimeStamps(threads)
 
     try {
-      var parentIndex = 0;
+      var parentIndex = 0
       for (let i=0; i < threadTimestamps.length; i++) {
         var args = {channel: channelId, ts: threadTimestamps[i]}
         if (oldest) args.oldest = oldest
@@ -46,7 +46,7 @@ async function importHistory(channel, slackToken, res, oldest, user) {
       console.error(error)
     }
     if (oldest) messages = filterOutOldMessages(messages, oldest)
-    if (user) filterMessagesByUser(messages, user)
+    if (user) messages = filterMessagesByUser(messages, user)
     const words = GetWordsFromMessages(messages)
     res.json({ messages: messages, words: words })
   } catch (error) {

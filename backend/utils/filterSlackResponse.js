@@ -108,7 +108,27 @@ const filterOutOldMessages = (messages, oldest) => {
 }
 
 const filterMessagesByUser = (messages, user) => {// eslint-disable-line
-  console.log('This should start filtering by user')
+  const resMessages = []
+  for (var i = 0; i < messages.length; i++){
+    var message = messages[i]
+    if (message.thread_array.length > 0){
+      const newThread = []
+      for (var j = 0; j < message.thread_array.length; j++){
+        if (message.thread_array[j].real_name == user){
+          newThread.push(message.thread_array[j])
+        }
+      }
+      message.thread_array = newThread.slice()
+    }
+    if (message.real_name == user){
+      resMessages.push(message)
+    }
+    if (message.real_name != user && message.thread_array.length > 0){
+      message.text += ' :parent-of-a-thread-with-messages-by-' + user.replace(' ', '-')
+      resMessages.push(message)
+    }
+  }
+  return resMessages
 }
 
 module.exports = {
