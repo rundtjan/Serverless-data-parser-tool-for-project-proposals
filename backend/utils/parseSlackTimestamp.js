@@ -1,6 +1,7 @@
 function parseTimestamp(now, hours) {
   if (hours){
-    return now - hours * 60 * 60 * 1000000
+    var timestamp = (now - hours * 60 * 60 * 1000000).toString()
+    return timestamp.substring(0,10) + '.' + timestamp.substring(10)
   }
   return false
 }
