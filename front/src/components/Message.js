@@ -48,7 +48,7 @@ const Message = ({ message }) => {
           <CardContent>
             <List>
               {message.thread_array.map(thread => (
-                <ListItem key={thread.client_msg_id}>{thread.text} sent by {thread.user}</ListItem>
+                <ListItem key={thread.client_msg_id}>{thread.text} sent by {thread.real_name}</ListItem>
               ))}
             </List>
           </CardContent>
