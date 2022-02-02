@@ -11,7 +11,7 @@ async function slackChannels(slackToken, res){
   try {
     const result = await client.conversations.list({})
     console.log(result)
-    result.channels.filter(elem => elem.is_channel).forEach(elem => channels.push({'id': elem.id, 'name': elem.name}))
+    result.channels.filter(elem => elem.is_channel).forEach(elem => channels.push(elem.name))
 
     res.send(channels)
   } catch (error){

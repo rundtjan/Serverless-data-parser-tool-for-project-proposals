@@ -1,6 +1,7 @@
 import messageService from '../services/messages'
 
 const reducer = (state = [], action) => {
+  console.log(action.data)
   switch(action.type) {
   case 'INIT_MESSAGES':
     return action.data
@@ -18,7 +19,6 @@ export const initializeMessages = (channel='general') => {
     })
   }
 }
-
 
 
 export default reducer
