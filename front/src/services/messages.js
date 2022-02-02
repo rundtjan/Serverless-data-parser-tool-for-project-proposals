@@ -5,7 +5,7 @@ const channel = 'general'
 const baseUrl = `http://${window.location.hostname}:${port}/api/data/${channel}`
 
 const getAll = async(channel) => {
-  const res = await axios.get(`${baseUrl}${channel}`)
+  const res = await axios.get(`${baseUrl}`)
   console.log(`${baseUrl}${channel}`)
   return res.data
 }
