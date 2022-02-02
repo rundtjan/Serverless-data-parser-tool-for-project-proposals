@@ -1,7 +1,7 @@
 import channelService from '../services/channels'
 
 const reducer = (state='general', action) => {
-  console.log('from reducer', action.data)
+  console.log(action.data)
   switch(action.type) {
   case 'SET_CHANNEL':
     return action.channel

@@ -10,6 +10,7 @@ const sendParameters = async(channel, user, hours) => {
 }
 
 const getChannels = async() => {
+  console.log('gettting')
   const res = await axios.get(channelUrl)
   return res.data
 }

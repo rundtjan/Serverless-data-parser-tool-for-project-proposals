@@ -1,12 +1,23 @@
 import messageService from '../services/messages'
 
 const reducer = (state = [], action) => {
-  console.log(action.data)
   switch(action.type) {
   case 'INIT_MESSAGES':
     return action.data
+  case 'UPDATE_MESSAGES':
+    return action.data
   default:
     return state
+  }
+}
+
+export const getMessagesParameters = (channel='', user='', hours='') => {
+  return async dispatch => {
+    const data = await messageService.getWithParameters(channel, user, hours)
+    dispatch({
+      type: 'UPDATE_MESSAGES',
+      data
+    })
   }
 }
 

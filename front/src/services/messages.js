@@ -8,4 +8,9 @@ const getAll = async(channel) => {
   return res.data
 }
 
-export default { getAll }
+const getWithParameters = async(channel, user, hours) => {
+  const res = await axios.post(baseUrl, { channel, user, hours })
+  return res.data
+}
+
+export default { getAll, getWithParameters }
