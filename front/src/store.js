@@ -5,9 +5,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 //Reducers
 import dataReducer from './reducers/dataReducer'
+import channelReducer from './reducers/channelReducer'
 
 const reducer = combineReducers({
-  data: dataReducer
+  data: dataReducer,
+  channel: channelReducer
 })
 
 const store = createStore(

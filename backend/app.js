@@ -33,6 +33,7 @@ app.get('/api/users', (req, res) => {
 
 app.post('/api/data', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "hours": HOW_MANY_HOURS_BACK, "user": USER_NAME}
+  console.log(req.body)
   var channel = req.body.channel || 'general'
   var oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
   var user = req.body.user

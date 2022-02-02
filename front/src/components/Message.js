@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
-import { Typography } from '@mui/material'
+import { ListItem, Typography, List } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
 
 const ExpandMore = styled((props) => {
@@ -34,27 +34,26 @@ const Message = ({ message }) => {
         <CardContent>
           <Typography component='div'>
             {message.text} sent by {message.real_name}
-            <ExpandMore
+            {message.thread_array.length !== 0 && <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label="show more"
             >
               <ExpandMoreIcon />
-            </ExpandMore>
+            </ExpandMore>}
           </Typography>
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography>
+            <List>
               {message.thread_array.map(thread => (
-                <li key={message.client_msg_id}>{thread.text}</li>
+                <ListItem key={thread.client_msg_id}>{thread.text} sent by {thread.real_name}</ListItem>
               ))}
-            </Typography>
+            </List>
           </CardContent>
         </Collapse>
       </Card>
-
     </Grid>
   )
 }

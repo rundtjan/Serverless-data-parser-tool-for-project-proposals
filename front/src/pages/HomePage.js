@@ -6,6 +6,7 @@ import { Grid } from '@mui/material'
 
 import Messages from '../components/Messages'
 import Words from '../components/Words'
+import UserForm from '../components/UserForm'
 
 const HomePage = () => {
 
@@ -17,6 +18,9 @@ const HomePage = () => {
       </Grid>
       <Grid item>
         <Words />
+      </Grid>
+      <Grid item xs={6}>
+        <UserForm />
       </Grid>
     </Grid>
   )

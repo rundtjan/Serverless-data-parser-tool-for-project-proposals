@@ -1,8 +1,8 @@
 const { WebClient, LogLevel } = require('@slack/web-api')
 
-const channels = []
-
 async function slackChannels(slackToken, res){
+
+  const channels = []
 
   const client = new WebClient(slackToken, {
     logLevel: LogLevel.DEBUG,
@@ -10,8 +10,8 @@ async function slackChannels(slackToken, res){
 
   try {
     const result = await client.conversations.list({})
-
-    result.channels.filter(elem => elem.is_channel).forEach(elem => channels.push({'id': elem.id, 'name': elem.name}))
+    console.log(result)
+    result.channels.filter(elem => elem.is_channel).forEach(elem => channels.push(elem.name))
 
     res.send(channels)
   } catch (error){
