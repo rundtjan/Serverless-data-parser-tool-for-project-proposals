@@ -22,19 +22,6 @@ export const setChannel = (channel) => {
     })
   }
 }
-export const setParameters = (channel='', user='', hours='') => {
-  return async dispatch => {
-    await channelService.sendParameters(channel, user, hours)
-    dispatch({
-      type: 'SET_PARAMETERS',
-      data: {
-        channel: channel,
-        user: user,
-        hours: hours
-      }
-    })
-  }
-}
 
 export const initializeChannels = () => {
   return async dispatch => {

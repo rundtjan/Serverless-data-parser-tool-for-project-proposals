@@ -1,7 +1,6 @@
 import { Typography, Grid, FormControl, InputLabel, MenuItem, Select, OutlinedInput, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch/*, useSelector */ } from 'react-redux'
-import { setParameters } from '../reducers/channelReducer'
 import { getMessagesParameters } from '../reducers/dataReducer'
 
 
@@ -14,7 +13,6 @@ const UserForm = () => {
 
   const putParameters = async (event) => {
     event.preventDefault()
-    dispatch(setParameters(channel, user, hours))
     dispatch(getMessagesParameters(channel, user, hours))
     console.log(channel)
     setChannel('')
