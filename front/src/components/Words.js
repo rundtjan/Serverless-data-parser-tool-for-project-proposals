@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Typography } from '@mui/material'
+import { Typography, Container } from '@mui/material'
 import List from '@mui/material/List'
+
 
 import Word from './Word'
 
@@ -17,7 +18,7 @@ const Words = () => {
   }
 
   return (
-    <Typography>
+    <Container>
       <Typography variant='h5'>
         Words from messages
       </Typography>
@@ -26,7 +27,7 @@ const Words = () => {
           <Word key={obj.word} obj={obj}/>
         ))}
       </List>
-    </Typography>
+    </Container>
   )
 }
 
