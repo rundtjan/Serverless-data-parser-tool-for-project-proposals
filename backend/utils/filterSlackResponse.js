@@ -38,7 +38,7 @@ const AddThreadToParent = (thread, messages, parentIndex) => {
       break
     }
   }
-  return parentIndex //this is used for time-optimization
+  return parentIndex
 }
 
 const GetWordsFromMessages = (messages) => {
@@ -122,18 +122,12 @@ const filterOutOldMessages = (messages, oldest) => {
   return resMessages
 }
 
-const filterMessagesByUser = (messages, user) => {// eslint-disable-line
+const filterMessagesByUser = (messages, user) => {
   const resMessages = []
   for (var i = 0; i < messages.length; i++){
     var message = messages[i]
     if (message.thread_array.length > 0){
-      const newThread = []
-      for (var j = 0; j < message.thread_array.length; j++){
-        if (message.thread_array[j].real_name == user){
-          newThread.push(message.thread_array[j])
-        }
-      }
-      message.thread_array = newThread.slice()
+      message.thread_array = message.thread_array.filter(elem => elem.real_name == user)
     }
     if (message.real_name == user){
       resMessages.push(message)
