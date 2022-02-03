@@ -1,7 +1,8 @@
-import { Typography, Grid, FormControl, InputLabel, MenuItem, Select, OutlinedInput, TextField } from '@mui/material'
+import { Typography, Grid, FormControl, InputLabel,
+  MenuItem, Select, OutlinedInput, TextField, Button } from '@mui/material'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { setParameters } from '../reducers/channelReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMessagesParameters } from '../reducers/dataReducer'
 
 
 const UserForm = () => {
@@ -9,13 +10,11 @@ const UserForm = () => {
   const [user, setUser] = useState('')
   const [hours, setHours] = useState('')
   const dispatch = useDispatch()
-  const possibleChannels = ['general', 'channel-two'] //useSelector(state => state.channels)
-  console.log(possibleChannels)
+  const channels = useSelector(state => state.channel)
 
   const putParameters = async (event) => {
     event.preventDefault()
-    dispatch(setParameters(channel, user, hours))
-    console.log(channel)
+    dispatch(getMessagesParameters(channel, user, hours))
     setChannel('')
     setUser('')
     setHours('')
@@ -23,37 +22,33 @@ const UserForm = () => {
 
   return (
     <Grid item>
-      <div>
-        <Typography
-          variant='h5'>
+      <Typography
+        variant='h5'>
             Make choices
-        </Typography>
-        <form onSubmit={putParameters}>
-          <FormControl sx={{ m: 1, width: 200 }}>
-            <InputLabel id='channel'>Channel</InputLabel>
-            <Select
-              id='channel'
-              label='Channel'
-              onChange={({ target }) => setChannel(target.value)}
-              input={<OutlinedInput label='Channel' /> }
+      </Typography>
+      <FormControl sx={{ m: 1, width: 200 }}>
+        <InputLabel id='channel'>Channel</InputLabel>
+        <Select
+          id='channel'
+          label='Channel'
+          onChange={({ target }) => setChannel(target.value)}
+          input={<OutlinedInput label='Channel' /> }
+        >
+          {channels.map((channel) => (
+            <MenuItem
+              key={channel}
+              value={channel}
             >
-              {possibleChannels.map((channel) => (
-                <MenuItem
-                  key={channel}
-                  value={channel}
-                >
-                  {channel}
-                </MenuItem>
-              ))}
-            </Select>
-            <TextField id='user' label='User' variant='outlined'
-              onChange={({ target }) => setUser(target.value)}/>
-            <TextField id='hours' label='Hours' variant='outlined'
-              onChange={({ target }) => setHours(target.value)} />
-          </FormControl>
-          <button id='submit'>choose</button>
-        </form>
-      </div>
+              {channel}
+            </MenuItem>
+          ))}
+        </Select>
+        <TextField id='user' label='User' variant='outlined'
+          onChange={({ target }) => setUser(target.value)}/>
+        <TextField id='hours' label='Hours' variant='outlined'
+          onChange={({ target }) => setHours(target.value)} />
+      </FormControl>
+      <Button onClick={putParameters} id='submit'>Go</Button>
     </Grid>
 
   )

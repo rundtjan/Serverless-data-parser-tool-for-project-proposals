@@ -4,8 +4,20 @@ const reducer = (state = [], action) => {
   switch(action.type) {
   case 'INIT_MESSAGES':
     return action.data
+  case 'UPDATE_MESSAGES':
+    return action.data
   default:
     return state
+  }
+}
+
+export const getMessagesParameters = (channel='', user='', hours='') => {
+  return async dispatch => {
+    const data = await messageService.getWithParameters(channel, user, hours)
+    dispatch({
+      type: 'UPDATE_MESSAGES',
+      data
+    })
   }
 }
 
@@ -18,7 +30,6 @@ export const initializeMessages = (channel='general') => {
     })
   }
 }
-
 
 
 export default reducer
