@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
@@ -23,6 +24,31 @@ const ExpandMore = styled((props) => {
 
 const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
+  const highlightWord = useSelector(state => state.highlightWord)
+
+
+  /**
+   * Parses the message to highlight the word which is hovered over with mouse
+   * @returns Message with highlight
+   */
+  const parseMessageText = () => {
+
+    if(highlightWord === '') {
+      return(
+        <Typography component='span'>
+          {message.text} sent by {message.real_name}
+        </Typography>
+      )
+    }
+
+    const words = message.text.split(new RegExp(`(${highlightWord})`, 'gi'))
+
+    return(
+      <Typography component='span'>
+        {words.map(word => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography component='span' color="#f44336">{word}</Typography> : word)} sent by {message.real_name}
+      </Typography>
+    )
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -33,7 +59,7 @@ const Message = ({ message }) => {
       <Card elevation={3}>
         <CardContent>
           <Typography component='div' id={'text-'+message.client_msg_id}>
-            {message.text} sent by {message.real_name}
+            {parseMessageText()}
             {message.thread_array.length !== 0 && <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
