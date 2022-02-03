@@ -7,6 +7,7 @@ const slackChannels = require('./utils/slackChannels.js')
 const slackUsers = require('./utils/slackUsers.js')
 const slackToken = process.env.SLACK_TOKEN
 const cors = require('cors')
+
 app.use(cors())
 app.use(express.static('build'))
 
@@ -18,9 +19,8 @@ app.use(
 
 app.use(express.json())
 
-//you will need valid channel ids for testing
 app.get('/api/data/:channelid', (req, res) => {
-  importHistory(req.params.channelid, slackToken, res)
+  importHistory(res, req.params.channelid)
 })
 
 app.get('/api/channels', (req, res) => {
@@ -38,7 +38,7 @@ app.post('/api/data', (req, res) => {
   var oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
   var user = req.body.user
 
-  importHistory(channel, slackToken, res, oldest, user)
+  importHistory(res, channel, oldest, user)
 })
 
 module.exports = app

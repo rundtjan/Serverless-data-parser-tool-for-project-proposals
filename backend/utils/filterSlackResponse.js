@@ -4,7 +4,7 @@ const GetHumanMessagesFromSlack = (messages) => {
   const result = messages.filter((obj) => {
     return Object.prototype.hasOwnProperty.call(obj, 'client_msg_id')
   })
-  return result.reverse()
+  return result
 }
 
 const messageIsThreaded = (message) => Object.prototype.hasOwnProperty.call(message, 'thread_ts')
