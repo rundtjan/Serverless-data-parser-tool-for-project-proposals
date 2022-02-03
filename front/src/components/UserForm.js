@@ -12,16 +12,6 @@ const UserForm = () => {
   const [hours, setHours] = useState('')
   const dispatch = useDispatch()
   const channels = useSelector(state => state.channel)
-  //const inputRef=useRef()
-
-  if(!channels) {
-    return (
-      <Typography
-        variant='h5'>
-          Make choices
-      </Typography>
-    )
-  }
 
   const putParameters = async (event) => {
     event.preventDefault()
