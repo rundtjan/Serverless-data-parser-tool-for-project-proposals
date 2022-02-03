@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { Typography, Container } from '@mui/material'
 import List from '@mui/material/List'
 
-
 import Word from './Word'
 
 const Words = () => {
@@ -11,7 +10,9 @@ const Words = () => {
 
   if(!words) {
     return(
-      <Typography variant='body2'>
+      <Typography
+        variant="body1"
+        color="textSecondary">
         Loading words...
       </Typography>
     )

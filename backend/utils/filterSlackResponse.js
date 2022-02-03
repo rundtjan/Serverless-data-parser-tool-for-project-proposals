@@ -44,13 +44,13 @@ const AddThreadToParent = (thread, messages, parentIndex) => {
 const GetWordsFromMessages = (messages) => {
   const result = []
   const temp_word_obj = {}
+
   messages = messages.concat(AddThreadMessages(messages))
   messages.forEach((message) => {
-    let words = message.text.split(' ')
-    words = words.filter(notAnEmoji)
-    words.forEach((word) => {
-      word = RemoveSpecialCharacters(word)
-      word = word.toLowerCase() 
+    const words = message.text.split(' ')
+    const parsedWords = ParseWords(words)
+    
+    parsedWords.forEach((word) => {     
       word in temp_word_obj ? 
         (temp_word_obj[word]['count'] += 1, temp_word_obj[word]['message_ids'].push(message.client_msg_id)) :
         temp_word_obj[word] = Create_Word_Obj(word, message)          
@@ -63,6 +63,18 @@ const GetWordsFromMessages = (messages) => {
   
   result.sort((a, b) => b.count - a.count)
   return result
+}
+
+const ParseWords = (words) => {
+  let parsedWords = words.filter(notAnEmoji)
+  parsedWords = parsedWords.map(word => {
+    word = RemoveSpecialCharacters(word)
+    word = RemoveTrailingDots(word)
+    word = RemoveTrailingCommas(word)
+    word = word.toLowerCase()
+    return word
+  })
+  return parsedWords
 }
 
 const AddThreadMessages = (messages) => {
@@ -79,11 +91,14 @@ const Create_Word_Obj = (word, message) => {
   return {
     'word': word,
     'message_ids': [message.client_msg_id],
-    'count': 1
+    'count': 1,
+    'important': false
   } 
 }
 
-const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€]/gi, '')
+const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€.,]/gi, '')
+const RemoveTrailingDots = (word) => word.replace( /\.+$/g, '' )
+const RemoveTrailingCommas = (word) => word.replace( /,+$/g, '' )
 
 const GetRealNamesFromSlack = (messages, members) => {
   messages.forEach((elem) => (elem.real_name = members[elem.user]))
