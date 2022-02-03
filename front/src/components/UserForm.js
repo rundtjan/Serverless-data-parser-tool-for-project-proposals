@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getMessagesParameters } from '../reducers/dataReducer'
 
 
+
 const UserForm = () => {
   const [channel, setChannel] = useState('')
   const [user, setUser] = useState('')
@@ -31,6 +32,7 @@ const UserForm = () => {
         <Select
           id='channel'
           label='Channel'
+          defaultValue={''}
           onChange={({ target }) => setChannel(target.value)}
           input={<OutlinedInput label='Channel' /> }
         >
@@ -48,7 +50,7 @@ const UserForm = () => {
         <TextField id='hours' label='Hours' variant='outlined'
           onChange={({ target }) => setHours(target.value)} />
       </FormControl>
-      <Button onClick={putParameters} id='submit'>Go</Button>
+      <Button onClick={putParameters} type='submit' id='submit'>Go</Button>
     </Grid>
 
   )
