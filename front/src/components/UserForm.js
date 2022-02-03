@@ -12,13 +12,11 @@ const UserForm = () => {
   const [hours, setHours] = useState('')
   const dispatch = useDispatch()
   const channels = useSelector(state => state.channel)
+  channels.concat('empty')
 
   const putParameters = async (event) => {
     event.preventDefault()
     dispatch(getMessagesParameters(channel, user, hours))
-    setChannel('')
-    setUser('')
-    setHours('')
   }
 
   return (
@@ -50,7 +48,7 @@ const UserForm = () => {
         <TextField id='hours' label='Hours' variant='outlined'
           onChange={({ target }) => setHours(target.value)} />
       </FormControl>
-      <Button onClick={putParameters} type='submit' id='submit'>Go</Button>
+      <Button onClick={putParameters} variant='outlined' id='submit'>Go</Button>
     </Grid>
 
   )

@@ -45,7 +45,7 @@ const Message = ({ message }) => {
 
     return(
       <Typography component='span'>
-        {words.map(word => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography component='span' color="#f44336">{word}</Typography> : word)} sent by {message.real_name}
+        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span' color="#f44336">{word}</Typography> : word)} sent by {message.real_name}
       </Typography>
     )
   }

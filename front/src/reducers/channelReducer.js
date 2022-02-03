@@ -7,7 +7,7 @@ const reducer = (state=[], action) => {
   case 'SET_PARAMETERS':
     return state
   case 'INIT_CHANNELS':
-    return action.data
+    return [...action.data]
   default:
     return state
   }
