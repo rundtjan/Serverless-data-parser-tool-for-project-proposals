@@ -4,10 +4,12 @@
   "description": "## Definition of Done - The user stories are tested with suitable unittests and end-to-end-tests - The tests are successful (in the green)  - The user stories match the requirement specifications - The code is reviewed - The code is of good quality (e.g. approved by lint)",
   "main": "backend/index.js",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
+    "babel-jest": "^27.4.6",
     "cypress": "^9.4.1",
-    "jest": "^27.4.7"
+    "jest": "^27.4.7",
+    "supertest": "^6.2.2"
   },
   "scripts": {
     "install": "cd front && npm install && cd .. && cd backend && npm install",
