@@ -25,12 +25,7 @@ const UserForm = () => {
 
   const putParameters = async (event) => {
     event.preventDefault()
-    console.log(user)
     dispatch(getMessagesParameters(channel, user, hours))
-    uninstallParameters
-  }
-
-  const uninstallParameters = () => {
     setChannel('')
     setUser('')
     setHours('')
@@ -42,32 +37,30 @@ const UserForm = () => {
         variant='h5'>
             Make choices
       </Typography>
-      <form onSubmit={putParameters}>
-        <FormControl sx={{ m: 1, width: 200 }}>
-          <InputLabel id='channel'>Channel</InputLabel>
-          <Select
-            id='channel'
-            label='Channel'
-            defaultValue={''}
-            onChange={({ target }) => setChannel(target.value)}
-            input={<OutlinedInput label='Channel' /> }
-          >
-            {channels.map((channel) => (
-              <MenuItem
-                key={channel}
-                value={channel}
-              >
-                {channel}
-              </MenuItem>
-            ))}
-          </Select>
-          <TextField id='user' label='User' variant='outlined'
-            onChange={({ target }) => setUser(target.value)}/>
-          <TextField id='hours' label='Hours' variant='outlined'
-            onChange={({ target }) => setHours(target.value)} />
-        </FormControl>
-        <Button type='submit' id='submit'>Go</Button>
-      </form>
+      <FormControl sx={{ m: 1, width: 200 }}>
+        <InputLabel id='channel'>Channel</InputLabel>
+        <Select
+          id='channel'
+          label='Channel'
+          defaultValue={''}
+          onChange={({ target }) => setChannel(target.value)}
+          input={<OutlinedInput label='Channel' /> }
+        >
+          {channels.map((channel) => (
+            <MenuItem
+              key={channel}
+              value={channel}
+            >
+              {channel}
+            </MenuItem>
+          ))}
+        </Select>
+        <TextField id='user' label='User' variant='outlined'
+          onChange={({ target }) => setUser(target.value)}/>
+        <TextField id='hours' label='Hours' variant='outlined'
+          onChange={({ target }) => setHours(target.value)} />
+      </FormControl>
+      <Button onClick={putParameters} type='submit' id='submit'>Go</Button>
     </Grid>
 
   )
