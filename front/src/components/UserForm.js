@@ -12,7 +12,6 @@ const UserForm = () => {
   const [hours, setHours] = useState('')
   const dispatch = useDispatch()
   const channels = useSelector(state => state.channel)
-  channels.concat('empty')
 
   const putParameters = async (event) => {
     event.preventDefault()
