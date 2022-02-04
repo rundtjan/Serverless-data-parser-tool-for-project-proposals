@@ -7,6 +7,7 @@ const slackChannels = require('./utils/slackChannels.js')
 const slackUsers = require('./utils/slackUsers.js')
 const slackToken = process.env.SLACK_TOKEN
 const cors = require('cors')
+const userController = require('./controllers/userController')
 
 app.use(cors())
 app.use(express.static('build'))
@@ -29,6 +30,11 @@ app.get('/api/channels', (req, res) => {
 
 app.get('/api/users', (req, res) => {
   slackUsers(slackToken, res)
+})
+
+app.get('/api/users/:id', (req, res) => {
+  if (req.params.id) userController.getAllByUser(res, req.params.id)
+  else return res.badRequest()
 })
 
 app.post('/api/data', (req, res) => {
