@@ -28,7 +28,7 @@ const Messages = () => {
   }
 
   return(
-    <Grid container spacing={2}>
+    <Grid item>
       <Typography variant="h4">Slack messages</Typography>
       <List>
         {messages.map(message => (
