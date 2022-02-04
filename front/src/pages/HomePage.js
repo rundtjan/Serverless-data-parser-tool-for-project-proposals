@@ -13,14 +13,14 @@ const HomePage = () => {
 
   return(
     <Grid container direction='row'>
-      <Grid item xs={6}>
+      <Grid item>
+        <UserForm />
+      </Grid>
+      <Grid item>
         <Messages />
       </Grid>
       <Grid item>
         <Words />
-      </Grid>
-      <Grid item xs={6}>
-        <UserForm />
       </Grid>
     </Grid>
   )
