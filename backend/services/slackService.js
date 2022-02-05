@@ -1,5 +1,3 @@
-const { GetHumanMessagesFromSlack } = require('../utils/filterSlackResponse')
-
 const slackService = ({ slackClient }) => {
   // Only dependency is api client given as parameter for Dependency Injection.
   const getUsers = async () => {
@@ -16,6 +14,15 @@ const slackService = ({ slackClient }) => {
   }
 
   const getChannels = async () => {
+    try {
+      const result = await slackClient.conversations.list({})
+      return result
+    } catch (error) {
+      throw new Error(`Error in getChannels: ${error}`)
+    }
+  }
+
+  const getChannelNames = async () => {
     const channels = []
     try {
       const result = await slackClient.conversations.list({})
@@ -38,30 +45,28 @@ const slackService = ({ slackClient }) => {
   }
 
   const getChannelMessages = async (channelId) => {
-    let messages = []
     try {
       const apiResult = await slackClient.conversations.history({
         channel: channelId,
-      })
-      if (apiResult.messages)
-        messages = GetHumanMessagesFromSlack(apiResult.messages)
-    } catch (error) {
-      throw new Error(`Error in getThreadMessages: ${error}`)
-    }
-    return messages
-  }
-
-  const getThreadMessages = async (channelId, ts) => {
-    try {
-      const apiResult = await slackClient.conversations.replies({
-        channel: channelId,
-        ts: ts,
       })
       return apiResult.messages
     } catch (error) {
       throw new Error(`Error in getThreadMessages: ${error}`)
     }
   }
+
+  // TODO: not tested
+  // const getThreadMessages = async (channelId, ts) => {
+  //   try {
+  //     const apiResult = await slackClient.conversations.replies({
+  //       channel: channelId,
+  //       ts: ts,
+  //     })
+  //     return apiResult.messages
+  //   } catch (error) {
+  //     throw new Error(`Error in getThreadMessages: ${error}`)
+  //   }
+  // }
 
   const getAllThreadsMessages = async (channelId, ts_array) => {
     let messages = []
@@ -100,7 +105,9 @@ const slackService = ({ slackClient }) => {
         })
         const threadMessages = await getAllThreadsMessages(channel['id'], ts)
         threadMessages.forEach((msg) => {
-          if (msg.user === id) messages.push(msg)
+          if (msg.user === id) {
+            messages.push(msg)
+          }
         })
       }
     } catch (error) {
@@ -113,10 +120,10 @@ const slackService = ({ slackClient }) => {
   return Object.freeze({
     getUsers,
     getChannels,
+    getChannelNames,
     getChannelIds,
     getChannelMessages,
     getChannelWithParameters,
-    getThreadMessages,
     findAllByUser,
   })
 }

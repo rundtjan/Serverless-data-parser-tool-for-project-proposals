@@ -4,10 +4,12 @@ const app = express()
 var importHistory = require('./utils/importHistory.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
 const slackChannels = require('./utils/slackChannels.js')
-const slackUsers = require('./utils/slackUsers.js')
+const { slackUsers, slackGetAllByUser } = require('./utils/slackUsers.js')
 const slackToken = process.env.SLACK_TOKEN
+const { slackService } = require('./services/slackService')
+const { slackClient } = require('./services/slackClient')
+const slack = slackService({ slackClient })
 const cors = require('cors')
-const userController = require('./controllers/userController')
 
 app.use(cors())
 app.use(express.static('build'))
@@ -33,7 +35,7 @@ app.get('/api/users', (req, res) => {
 })
 
 app.get('/api/users/:id', (req, res) => {
-  if (req.params.id) userController.getAllByUser(res, req.params.id)
+  if (req.params.id) slackGetAllByUser(res, slack, req.params.id)
   else return res.badRequest()
 })
 
