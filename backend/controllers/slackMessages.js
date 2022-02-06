@@ -1,6 +1,6 @@
-require('dotenv').config()
-const { WebClient, LogLevel } = require('@slack/web-api')
-const slackToken = process.env.SLACK_TOKEN
+const { slackService } = require('../services/slackService')
+const { slackClient } = require('../services/slackClient')
+const slack = slackService({ slackClient })
 
 const {
   GetHumanMessagesFromSlack,
@@ -13,24 +13,17 @@ const {
   filterMessagesByUser
 } = require('../application/filterSlackResponse')
 
-const client = new WebClient(slackToken, {
-  logLevel: LogLevel.DEBUG,
-})
-
 async function importHistory(res, channel, oldest, user) {
 
   try {
-    const channels = await client.conversations.list({})
+    const channels = await slack.getChannels()
     var channelId = channels.channels.filter(obj => {
       return obj.name == channel || obj.id == channel
     })[0].id
-    const result = await client.conversations.history({
-      channel: channelId,
-    })
-
-    var messages = result.messages.reverse()
+    const result = await slack.getChannelMessages(channelId)
+    let messages = result.reverse()
     
-    messages = GetHumanMessagesFromSlack(result.messages)
+    messages = GetHumanMessagesFromSlack(result)
 
     addThreadsToMessages(res, channelId, messages, oldest, user)
 
@@ -50,8 +43,8 @@ async function addThreadsToMessages(res, channelId, messages, oldest, user){
     for (let i=0; i < threadTimestamps.length; i++) {
       var args = {channel: channelId, ts: threadTimestamps[i]}
       if (oldest) args.oldest = oldest
-      let threadWithReplies = await client.conversations.replies(args)
-      parentIndex = AddThreadToParent(threadWithReplies.messages, messages, parentIndex)
+      let threadWithReplies = await slack.getThreadMessages(args)
+      parentIndex = AddThreadToParent(threadWithReplies, messages, parentIndex)
     }
     addNamesToMessages(res, messages, oldest, user)
   } catch (error) {
@@ -61,8 +54,8 @@ async function addThreadsToMessages(res, channelId, messages, oldest, user){
 
 async function addNamesToMessages(res, messages, oldest, user){
   var members = {}
-  const users = await client.users.list({})
-  users.members.forEach((elem) => (members[elem.id] = elem.real_name))
+  const users = await slack.getUsers()
+  users.forEach((elem) => (members[elem.id] = elem.real_name))
   GetRealNamesFromSlack(messages, members)
   messages.filter(elem => elem.thread_array.length > 0).forEach(elem => GetRealNamesFromSlack(elem.thread_array, members))
 

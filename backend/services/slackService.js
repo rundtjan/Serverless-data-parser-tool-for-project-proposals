@@ -46,27 +46,25 @@ const slackService = ({ slackClient }) => {
 
   const getChannelMessages = async (channelId) => {
     try {
+      console.log('CHA ID: ',channelId)
       const apiResult = await slackClient.conversations.history({
         channel: channelId,
       })
       return apiResult.messages
     } catch (error) {
-      throw new Error(`Error in getThreadMessages: ${error}`)
+      throw new Error(`Error in getChannelMessages: ${error}`)
     }
   }
 
   // TODO: not tested
-  // const getThreadMessages = async (channelId, ts) => {
-  //   try {
-  //     const apiResult = await slackClient.conversations.replies({
-  //       channel: channelId,
-  //       ts: ts,
-  //     })
-  //     return apiResult.messages
-  //   } catch (error) {
-  //     throw new Error(`Error in getThreadMessages: ${error}`)
-  //   }
-  // }
+  const getThreadMessages = async (args) => {
+    try {
+      const apiResult = await slackClient.conversations.replies(args)
+      return apiResult.messages
+    } catch (error) {
+      throw new Error(`Error in getThreadMessages: ${error}`)
+    }
+  }
 
   const getAllThreadsMessages = async (channelId, ts_array) => {
     let messages = []
@@ -124,6 +122,7 @@ const slackService = ({ slackClient }) => {
     getChannelIds,
     getChannelMessages,
     getChannelWithParameters,
+    getThreadMessages,
     findAllByUser,
   })
 }
