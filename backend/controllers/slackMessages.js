@@ -1,6 +1,6 @@
-const { slackService } = require('../services/slackService')
-const { slackClient } = require('../services/slackClient')
-const slack = slackService({ slackClient })
+// const { slackService } = require('../services/slackService')
+// const { slackClient } = require('../services/slackClient')
+// const slack = slackService({ slackClient })
 
 const {
   GetHumanMessagesFromSlack,
@@ -13,8 +13,8 @@ const {
   filterMessagesByUser
 } = require('../application/filterSlackResponse')
 
-async function importHistory(res, channel, oldest, user) {
-
+async function importHistory(res, slack, args) {
+  const {channel, oldest, user} = args
   try {
     const channels = await slack.getChannels()
     var channelId = channels.channels.filter(obj => {
@@ -25,7 +25,7 @@ async function importHistory(res, channel, oldest, user) {
     
     messages = GetHumanMessagesFromSlack(result)
 
-    addThreadsToMessages(res, channelId, messages, oldest, user)
+    addThreadsToMessages(res, slack, channelId, messages, oldest, user)
 
   } catch (error) {
     if (error){
@@ -35,7 +35,7 @@ async function importHistory(res, channel, oldest, user) {
   }
 }
 
-async function addThreadsToMessages(res, channelId, messages, oldest, user){
+async function addThreadsToMessages(res, slack, channelId, messages, oldest, user){
   const threads = GetThreads(messages)
   const threadTimestamps = GetTimeStamps(threads)
   try {
@@ -46,16 +46,15 @@ async function addThreadsToMessages(res, channelId, messages, oldest, user){
       let threadWithReplies = await slack.getThreadMessages(args)
       parentIndex = AddThreadToParent(threadWithReplies, messages, parentIndex)
     }
-    addNamesToMessages(res, messages, oldest, user)
+    addNamesToMessages(res, slack, messages, oldest, user)
   } catch (error) {
     console.error(error)
   }
 }
 
-async function addNamesToMessages(res, messages, oldest, user){
+async function addNamesToMessages(res, slack, messages, oldest, user){
   var members = {}
   const users = await slack.getUsers()
-  console.log('users: ',users)
   users.forEach((elem) => (members[elem.id] = elem.name))
   GetRealNamesFromSlack(messages, members)
   messages.filter(elem => elem.thread_array.length > 0).forEach(elem => GetRealNamesFromSlack(elem.thread_array, members))

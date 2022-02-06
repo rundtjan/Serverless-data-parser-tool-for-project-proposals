@@ -23,7 +23,11 @@ app.use(
 app.use(express.json())
 
 app.get('/api/data/:channelId', (req, res) => {
-  importHistory(res, req.params.channelId)
+  const channel = req.params.channelId
+  const oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
+  const user = req.body.user
+  const args = {channel, user, oldest}
+  importHistory(res, slack, args)
 })
 
 app.get('/api/channels', (req, res) => {
@@ -42,11 +46,11 @@ app.get('/api/users/:id', (req, res) => {
 app.post('/api/data', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "hours": HOW_MANY_HOURS_BACK, "user": USER_NAME}
   console.log(req.body)
-  var channel = req.body.channel || 'general'
-  var oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
-  var user = req.body.user
-
-  importHistory(res, channel, oldest, user)
+  const channel = req.body.channel || 'general'
+  const oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
+  const user = req.body.user
+  const args = {channel, user, oldest}
+  importHistory(res, slack, args)
 })
 
 module.exports = app
