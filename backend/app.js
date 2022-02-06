@@ -1,10 +1,10 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-var importHistory = require('./utils/importHistory.js')
+var importHistory = require('./controllers/importHistory.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
-const slackChannels = require('./utils/slackChannels.js')
-const { slackUsers, slackGetAllByUser } = require('./utils/slackUsers.js')
+const slackChannels = require('./controllers/slackChannels.js')
+const { slackUsers, slackGetAllByUser } = require('./controllers/slackUsers.js')
 const slackToken = process.env.SLACK_TOKEN
 const { slackService } = require('./services/slackService')
 const { slackClient } = require('./services/slackClient')

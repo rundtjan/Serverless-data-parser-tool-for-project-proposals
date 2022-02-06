@@ -1,4 +1,4 @@
-const { parseTimestampFromSlackTs } = require('./parseSlackTimestamp')
+const { parseTimestampFromSlackTs } = require('../utils/parseSlackTimestamp')
 
 const GetHumanMessagesFromSlack = (messages) => {
   const result = messages.filter((obj) => {

@@ -11,7 +11,7 @@ const {
   AddThreadToParent,
   filterOutOldMessages,
   filterMessagesByUser
-} = require('./filterSlackResponse')
+} = require('../application/filterSlackResponse')
 
 const client = new WebClient(slackToken, {
   logLevel: LogLevel.DEBUG,
