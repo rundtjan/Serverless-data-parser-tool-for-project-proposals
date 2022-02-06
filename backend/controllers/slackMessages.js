@@ -55,7 +55,8 @@ async function addThreadsToMessages(res, channelId, messages, oldest, user){
 async function addNamesToMessages(res, messages, oldest, user){
   var members = {}
   const users = await slack.getUsers()
-  users.forEach((elem) => (members[elem.id] = elem.real_name))
+  console.log('users: ',users)
+  users.forEach((elem) => (members[elem.id] = elem.name))
   GetRealNamesFromSlack(messages, members)
   messages.filter(elem => elem.thread_array.length > 0).forEach(elem => GetRealNamesFromSlack(elem.thread_array, members))
 
