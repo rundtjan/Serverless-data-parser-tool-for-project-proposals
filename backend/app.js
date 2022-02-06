@@ -1,15 +1,15 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-var importHistory = require('./controllers/importHistory.js')
-const { parseTimestamp } = require('./utils/parseSlackTimestamp')
+const cors = require('cors')
+const importHistory = require('./controllers/slackMessages.js')
 const slackChannels = require('./controllers/slackChannels.js')
 const { slackUsers, slackGetAllByUser } = require('./controllers/slackUsers.js')
-const slackToken = process.env.SLACK_TOKEN
+const { parseTimestamp } = require('./utils/parseSlackTimestamp')
 const { slackService } = require('./services/slackService')
 const { slackClient } = require('./services/slackClient')
 const slack = slackService({ slackClient })
-const cors = require('cors')
+
 
 app.use(cors())
 app.use(express.static('build'))
@@ -22,16 +22,16 @@ app.use(
 
 app.use(express.json())
 
-app.get('/api/data/:channelid', (req, res) => {
-  importHistory(res, req.params.channelid)
+app.get('/api/data/:channelId', (req, res) => {
+  importHistory(res, req.params.channelId)
 })
 
 app.get('/api/channels', (req, res) => {
-  slackChannels(slackToken, res)
+  slackChannels(res, slack)
 })
 
 app.get('/api/users', (req, res) => {
-  slackUsers(slackToken, res)
+  slackUsers(res, slack)
 })
 
 app.get('/api/users/:id', (req, res) => {
