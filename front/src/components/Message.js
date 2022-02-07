@@ -32,21 +32,21 @@ const Message = ({ message }) => {
    * Parses the message to highlight the word which is hovered over with mouse
    * @returns Message with highlight
    */
-  const parseMessageText = () => {
+  const parseMessageText = (obj) => {
 
     if(highlightWord === '') {
       return(
         <Typography component='span'>
-          {message.text} sent by {message.real_name}
+          {obj.text} sent by {obj.real_name}
         </Typography>
       )
     }
 
-    const words = message.text.split(new RegExp(`(${highlightWord})`, 'gi'))
+    const words = obj.text.split(new RegExp(`(${highlightWord})`, 'gi'))
 
     return(
       <Typography component='span'>
-        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {message.real_name}
+        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
       </Typography>
     )
   }
@@ -61,7 +61,7 @@ const Message = ({ message }) => {
       <Card elevation={3}>
         <CardContent>
           <Typography component='div'>
-            {parseMessageText()}
+            {parseMessageText(message)}
             {message.thread_array.length !== 0 && <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
@@ -76,7 +76,7 @@ const Message = ({ message }) => {
           <CardContent>
             <List>
               {message.thread_array.map(thread => (
-                <ListItem key={thread.client_msg_id}>{thread.text} sent by {thread.real_name}</ListItem>
+                <ListItem key={thread.client_msg_id}>{parseMessageText(thread)}</ListItem>
               ))}
             </List>
           </CardContent>
