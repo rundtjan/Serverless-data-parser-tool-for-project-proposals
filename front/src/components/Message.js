@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import { ListItem, Typography, List } from '@mui/material'
 import Collapse from '@mui/material/Collapse'
+import Box from '@mui/material/Box'
 
 const ExpandMore = styled((props) => {
   // eslint-disable-next-line no-unused-vars
@@ -45,10 +46,11 @@ const Message = ({ message }) => {
 
     return(
       <Typography component='span'>
-        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span' color="#f44336">{word}</Typography> : word)} sent by {message.real_name}
+        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {message.real_name}
       </Typography>
     )
   }
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
