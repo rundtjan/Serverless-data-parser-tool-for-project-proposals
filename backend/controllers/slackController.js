@@ -1,3 +1,7 @@
+const { slackService } = require('../services/slackService')
+const { slackClient } = require('../services/slackClient')
+const slack = slackService({ slackClient })
+
 const {
   GetHumanMessagesFromSlack,
   GetWordsFromMessages,
@@ -9,7 +13,7 @@ const {
   filterMessagesByUser
 } = require('../application/filterSlackResponse')
 
-async function importHistory(res, slack, args) {
+async function importHistory(res, args) {
   const {channel, oldest, user} = args
   try {
     const channels = await slack.getChannels()
@@ -21,7 +25,7 @@ async function importHistory(res, slack, args) {
     
     messages = GetHumanMessagesFromSlack(result)
 
-    addThreadsToMessages(res, slack, channelId, messages, oldest, user)
+    addThreadsToMessages(res, channelId, messages, oldest, user)
 
   } catch (error) {
     if (error){
@@ -31,7 +35,7 @@ async function importHistory(res, slack, args) {
   }
 }
 
-async function addThreadsToMessages(res, slack, channelId, messages, oldest, user){
+async function addThreadsToMessages(res, channelId, messages, oldest, user){
   const threads = GetThreads(messages)
   const threadTimestamps = GetTimeStamps(threads)
   try {
@@ -42,13 +46,13 @@ async function addThreadsToMessages(res, slack, channelId, messages, oldest, use
       let threadWithReplies = await slack.getThreadMessages(args)
       parentIndex = AddThreadToParent(threadWithReplies, messages, parentIndex)
     }
-    addNamesToMessages(res, slack, messages, oldest, user)
+    addNamesToMessages(res, messages, oldest, user)
   } catch (error) {
     console.error(error)
   }
 }
 
-async function addNamesToMessages(res, slack, messages, oldest, user){
+async function addNamesToMessages(res, messages, oldest, user){
   var members = {}
   const users = await slack.getUsers()
   users.forEach((elem) => (members[elem.id] = elem.name))
@@ -65,4 +69,31 @@ function applyFilters(res, messages, oldest, user){
   res.json({ messages: messages, words: words })
 }
 
-module.exports = importHistory
+async function slackChannels(res){
+  try {
+    const result = await slack.getChannelNames()
+    res.send(result)
+  } catch (error){
+    res.send(error.data.error)
+  }
+
+}
+
+async function slackUsers(res) {
+  try {
+    const result = await slack.getUsers()    
+    res.send(result)
+  } catch (error) {
+    res.send(error.data.error)
+  }
+}
+
+async function slackGetAllByUser(res, id) {
+  try {
+    const messages = await slack.findAllByUser(id)
+    res.send(messages)
+  } catch (error) {
+    res.send(error)
+  }
+}
+module.exports = {importHistory, slackChannels, slackUsers, slackGetAllByUser}
