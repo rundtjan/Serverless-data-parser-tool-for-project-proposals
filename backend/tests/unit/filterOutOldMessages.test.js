@@ -1,4 +1,4 @@
-const { filterOutOldMessages } = require('../../utils/filterSlackResponse.js')
+const { filterOutOldMessages } = require('../../application/filterSlackResponse')
 const fs = require('fs')
 var messages
 
