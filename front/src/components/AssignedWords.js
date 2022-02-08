@@ -8,16 +8,6 @@ import List from '@mui/material/List'
 const AssignedWords = () => {
   const assignedWords = useSelector(state => state.assignedWords)
 
-  /*if(!words) {
-    return(
-      <Typography
-        variant="body1"
-        color="textSecondary">
-        Loading words...
-      </Typography>
-    )
-  }*/
-
   return (
     <Container>
       <Typography variant='h5'>
@@ -25,7 +15,7 @@ const AssignedWords = () => {
       </Typography>
       <List dense >
         {assignedWords.map(word => (
-          <p key={word.word}>{word.word}</p>
+          <p key={word.word}>{word.word} {word.category}</p>
         ))}
       </List>
     </Container>
