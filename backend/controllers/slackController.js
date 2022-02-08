@@ -1,54 +1,46 @@
 const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
-const {addThreadsToMessages} = require('../application/processSlackMessages')
-
-const {
-  GetHumanMessagesFromSlack,
-  // GetWordsFromMessages,
-  // GetRealNamesFromSlack,
-  // GetThreads,
-  // GetTimeStamps,
-  // AddThreadToParent,
-  // filterOutOldMessages,
-  // filterMessagesByUser
-} = require('../application/filterSlackResponse')
+const { addThreadsToMessages } = require('../application/processSlackMessages')
+const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
 
 async function importHistory(res, args) {
-  const {channel, oldest, user} = args
+  // channel, oldest, user are contained in args
+  const { channel } = args
   try {
     const channels = await slack.getChannels()
-    var channelId = channels.channels.filter(obj => {
+    var channelId = channels.channels.filter((obj) => {
       return obj.name == channel || obj.id == channel
     })[0].id
     const result = await slack.getChannelMessages(channelId)
     let messages = result.reverse()
-    
-    messages = GetHumanMessagesFromSlack(result)
 
-    const resultObj = await addThreadsToMessages(res, slack, channelId, messages, oldest, user)
+    messages = GetHumanMessagesFromSlack(result)
+    args.messages = messages
+    args.channelId = channelId
+
+    const resultObj = await addThreadsToMessages(res, slack, args)
     res.send(resultObj)
   } catch (error) {
-    if (error){
+    if (error) {
       console.error(error)
-      res.send('Error in getting data.')
+      res.send('Error in getting data.', error)
     }
   }
 }
 
-async function slackChannels(res){
+async function slackChannels(res) {
   try {
     const result = await slack.getChannelNames()
     res.send(result)
-  } catch (error){
+  } catch (error) {
     res.send(error.data.error)
   }
-
 }
 
 async function slackUsers(res) {
   try {
-    const result = await slack.getUsers()    
+    const result = await slack.getUsers()
     res.send(result)
   } catch (error) {
     res.send(error.data.error)
@@ -63,4 +55,4 @@ async function slackGetAllByUser(res, id) {
     res.send(error)
   }
 }
-module.exports = {importHistory, slackChannels, slackUsers, slackGetAllByUser}
+module.exports = { importHistory, slackChannels, slackUsers, slackGetAllByUser }

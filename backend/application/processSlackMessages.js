@@ -8,22 +8,19 @@ const {
   filterMessagesByUser,
 } = require('./filterSlackResponse')
 
-async function addThreadsToMessages(
-  res,
-  slack,
-  channelId,
-  messages,
-  oldest,
-  user
-) {
+// TODO : Create parent function that does api calls all at once and remove args drilling or do this in controller
+// TODO : remove Unnecessary api calls, info is already somewhere.
+// TODO : Throw errors to controller that sends error response?
+async function addThreadsToMessages(res, slack, args) {
+  const {channelId, oldest, user, messages} = args
   const threads = GetThreads(messages)
   const threadTimestamps = GetTimeStamps(threads)
   try {
     var parentIndex = 0
     for (let i = 0; i < threadTimestamps.length; i++) {
-      var args = { channel: channelId, ts: threadTimestamps[i] }
-      if (oldest) args.oldest = oldest
-      let threadWithReplies = await slack.getThreadMessages(args)
+      const query_args = { channel: channelId, ts: threadTimestamps[i] }
+      if (oldest) query_args.oldest = oldest
+      let threadWithReplies = await slack.getThreadMessages(query_args)
       parentIndex = AddThreadToParent(threadWithReplies, messages, parentIndex)
     }
     const resultObj = await addNamesToMessages(res, slack, messages, oldest, user)
