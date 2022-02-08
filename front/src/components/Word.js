@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { setHighlightedWord, clearHighlightedWord } from '../reducers/highlightReducer'
+import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
 
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -13,6 +14,8 @@ const Word = ({ obj }) => {
 
   const handleToggle = () => {
     setChecked(!checked)
+    if (!checked) dispatch(setAssignedWord(obj.word))
+    else dispatch(unAssignWord(obj.word))
   }
 
   const handleAddHighlight = () => {

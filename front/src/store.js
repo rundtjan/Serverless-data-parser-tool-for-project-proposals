@@ -7,11 +7,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import dataReducer from './reducers/dataReducer'
 import channelReducer from './reducers/channelReducer'
 import highlightReducer from './reducers/highlightReducer'
+import assignReducer from './reducers/assignReducer'
 
 const reducer = combineReducers({
   data: dataReducer,
   channel: channelReducer,
-  highlightWord: highlightReducer
+  highlightWord: highlightReducer,
+  assignedWords: assignReducer
 })
 
 const store = createStore(
