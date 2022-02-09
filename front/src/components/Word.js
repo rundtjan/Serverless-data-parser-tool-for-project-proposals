@@ -19,10 +19,13 @@ const Word = ({ obj }) => {
   const dispatch = useDispatch()
 
   const handleToggle = (event) => {
+    if (checked) {
+      dispatch(unAssignWord(obj.word))
+    } else {
+      setShowMenu(true)
+      setAnchorEl(event.currentTarget)
+    }
     setChecked(!checked)
-    if (checked) dispatch(unAssignWord(obj.word))
-    setShowMenu(!showMenu)
-    setAnchorEl(event.currentTarget)
   }
 
   const handleAddHighlight = () => {
@@ -34,9 +37,10 @@ const Word = ({ obj }) => {
   }
 
   const handleClose = (event) => {
-    console.log(event.currentTarget.id)
-    dispatch(setAssignedWord(obj.word, event.currentTarget.id))
+    if (!event.currentTarget.id) setChecked(false)
+    else dispatch(setAssignedWord(obj.word, event.currentTarget.id))
     setAnchorEl(null)
+    setShowMenu(false)
   }
 
   if (!showMenu){
