@@ -2,7 +2,7 @@ const wordsFromMessages =
   require('../../application/filterSlackResponse').GetWordsFromMessages
 
 const testJson = require('./dataForWordTest.json')
-const { singleMessage, messages, emojis } = require('./constants')
+const { singleMessage, messages, emojis } = require('./testMessages')
 
 test('Words are returned correctly from test data', () => {
   const result = wordsFromMessages(messages)
@@ -52,17 +52,19 @@ test('Word object is on correct format', () => {
 })
 
 test('amounts are correct', () => {
-  const msg = [{
-    client_msg_id: 'e72bf69f-2ee5-4feb-834f-1d08bdd44364',
-    type: 'message',
-    text: '5000€, 5.000€, 5.000,00€, 5.000€ tai €5.000',
-    user: 'U02UF7S2DN1',
-    ts: '1643362475.606779',
-    team: 'T02UNV7V4GZ',
-    blocks: [],
-    real_name: 'User5',
-    thread_array: [],
-  }]
+  const msg = [
+    {
+      client_msg_id: 'e72bf69f-2ee5-4feb-834f-1d08bdd44364',
+      type: 'message',
+      text: '5000€, 5.000€, 5.000,00€, 5.000€ tai €5.000',
+      user: 'U02UF7S2DN1',
+      ts: '1643362475.606779',
+      team: 'T02UNV7V4GZ',
+      blocks: [],
+      real_name: 'User5',
+      thread_array: [],
+    },
+  ]
   const response = wordsFromMessages(msg)
   expect(response[0].word).toBe('5.000€')
   expect(response[0].count).toBe(2)
@@ -70,4 +72,39 @@ test('amounts are correct', () => {
   expect(response[2].word).toBe('5.000,00€')
   expect(response[3].word).toBe('tai')
   expect(response[4].word).toBe('€5.000')
+})
+test('Company suffix is added to previous word', () => {
+  const response = wordsFromMessages([{
+    client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d8',
+    type: 'message',
+    text: 'Oy Jrt Ab 2.700€. Osakeyhtiö Oy tai yhtiö co.',
+    user: 'U02UF7S2DN1',
+    ts: '1642531226.000400',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+  }])
+  expect(response[0]).toStrictEqual({
+    word: 'oy jrt ab',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d8'],
+    count: 1,
+    important: false,
+  })
+  expect(response[1]).toStrictEqual({
+    word: '2.700€',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d8'],
+    count: 1,
+    important: false,
+  })
+  expect(response[2]).toStrictEqual({
+    word: 'osakeyhtiö oy',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d8'],
+    count: 1,
+    important: false,
+  })
+  expect(response[4]).toStrictEqual({
+    word: 'yhtiö co',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d8'],
+    count: 1,
+    important: false,
+  })
 })
