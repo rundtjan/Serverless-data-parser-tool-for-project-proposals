@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-//import { Grid } from '@mui/material'
 import { Typography, Container } from '@mui/material'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import List from '@mui/material/List'
 
 //import Word from './Word'
@@ -16,7 +17,11 @@ const CategoryWords = ({ category }) => {
       </Typography>
       <List dense >
         {assignedWords.map(word => (
-          <p key={word.word}>{word.word} </p>
+          <ListItem key={word.word +'-assignItem'}>
+            <ListItemText key={word.word + '-assignText'}>
+              {word.word}
+            </ListItemText>
+          </ListItem>
         ))}
       </List>
     </Container>
