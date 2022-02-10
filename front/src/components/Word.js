@@ -14,7 +14,7 @@ const Word = ({ obj }) => {
   const [checked, setChecked] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
-  const categories = useSelector(state => state.categories)
+  const categories = useSelector(state => state.data.categories)
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
 

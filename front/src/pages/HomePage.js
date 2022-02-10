@@ -12,7 +12,7 @@ import UserForm from '../components/UserForm'
 import CategoryWords from '../components/CategoryWords'
 
 const HomePage = () => {
-  const categories = useSelector(state => state.categories)
+  const categories = useSelector(state => state.data.categories)
 
   const addCategories = () => {
     const categoryElement = categories.map(cat => <Grid key={cat + 'griditem'} item><CategoryWords key={cat + 'cat'} category={cat} /></Grid>)
@@ -30,7 +30,7 @@ const HomePage = () => {
       <Grid item>
         <Words />
       </Grid>
-      { categories.length ? addCategories() : null }
+      { categories ? addCategories() : null }
     </Grid>
   )
 }
