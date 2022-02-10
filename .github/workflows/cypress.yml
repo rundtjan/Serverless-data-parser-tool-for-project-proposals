@@ -25,6 +25,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: npm run build REACT_APP_BACKEND_PORT=8080
-          start: npm run start PORT=8080
+          build: REACT_APP_BACKEND_PORT=8080 npm run build 
+          start: PORT=8080 npm run start
       
