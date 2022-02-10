@@ -17,6 +17,8 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
+    env:
+      PORT: 8080
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,8 +28,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           env:
-            REACT_APP_BACKEND_PORT: 8080
-            PORT: 8080
           build: npm run build 
           start: npm run start
 
