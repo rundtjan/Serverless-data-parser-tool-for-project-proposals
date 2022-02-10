@@ -5,9 +5,6 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import List from '@mui/material/List'
 import Box from '@mui/material/Box'
-//import Paper from '@mui/material/Paper'
-
-//import Word from './Word'
 
 const CategoryWords = ({ category }) => {
   const assignedWords = useSelector(state => state.assignedWords.filter(word => word.category === category))
