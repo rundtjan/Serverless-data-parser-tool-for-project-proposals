@@ -5,6 +5,9 @@
 ## Tuntikirjanpito  
 [Linkki tuntikirjanpitoon](https://docs.google.com/spreadsheets/d/1cuh5_3st2fF5PlzxUwkLurNdqGqkFm90v7kIZbUjTgg/edit#gid=2125689465)
 
+## Product Backlog
+[View the product backlog here](https://github.com/orgs/Ohtu-org/projects/1/views/1?layout=board)
+
 ## Definition of Done
 - The user stories are tested with suitable unittests and end-to-end-tests
 - The tests are successful (in the green) 
@@ -23,9 +26,11 @@ Run using Docker with:
 docker build -t [name] .  
 docker run -it -p [your port]:8080 [name] (use 8080 as your port unless you want to change the backend port within the frontend code)
 ```
-Or run with npm (the server will start on port 8080):
+Or run with npm (as default the server will start on port 80):
 ```bash
 npm install  
 npm run build  
 npm start  
-```
+```  
+When starting frontend and backend separately from their respective folder (e.g. while developing), you can use environment variables REACT_APP_BACKEND_PORT and PORT to 
+choose on which port the backend serves data (both variables should be used at the same time).

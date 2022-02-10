@@ -1,24 +1,36 @@
-import './App.css';
-import React, { useEffect } from 'react';
-import { useDispatch} from 'react-redux';
+import './App.css'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+
+//Styles
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
+import theme from './styles/theme'
 
 //Components
-import DemoHome from './components/DemoHome';
+import Layout from './components/Layout'
+
+//Pages
+import HomePage from './pages/HomePage'
+
 //Actions
-import { initializeMessages } from './reducers/dataReducer';
+import { initializeMessages } from './reducers/dataReducer'
+import { initializeChannels } from './reducers/channelReducer'
 
 const App = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(initializeMessages())
+    dispatch(initializeChannels())
   }, [dispatch])
 
   return (
-    <div className="App">
-      <DemoHome />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Layout>
+        <HomePage />
+      </Layout>
+    </ThemeProvider>
   )
 }
 

@@ -36,6 +36,10 @@ jobs:
       # Linting
       - name: lint server
         run: cd backend && npm run lint
+      
+      - name: lint front
+        run: cd front && npm run lint
+      
 
       # Send slack message to ci/cd channel
       - name: Notify on slack

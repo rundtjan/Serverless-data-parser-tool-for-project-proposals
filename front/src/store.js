@@ -5,16 +5,22 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 //Reducers
 import dataReducer from './reducers/dataReducer'
+import channelReducer from './reducers/channelReducer'
+import highlightReducer from './reducers/highlightReducer'
+import assignReducer from './reducers/assignReducer'
 
 const reducer = combineReducers({
-    data: dataReducer
-});
+  data: dataReducer,
+  channel: channelReducer,
+  highlightWord: highlightReducer,
+  assignedWords: assignReducer
+})
 
 const store = createStore(
-    reducer,
-    composeWithDevTools(
-        applyMiddleware(thunk)
-    )
-);
+  reducer,
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
+)
 
-export default store;
+export default store

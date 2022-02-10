@@ -1,27 +1,35 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Typography, Container } from '@mui/material'
+import List from '@mui/material/List'
+
+import Word from './Word'
 
 const Words = () => {
-    const words = useSelector(state => state.data.words);
+  const words = useSelector(state => state.data.words)
 
-    if(!words) {
-        return(
-            <p>Loading words...</p>
-        )
-    }
-
-    return (
-        <div>
-            <h3>Words from messages</h3>
-            <ul>
-                {words.map(word =>
-                    <li key={word}>
-                        {word}
-                    </li>
-                )}
-            </ul>
-        </div>
+  if(!words) {
+    return(
+      <Typography
+        variant="body1"
+        color="textSecondary">
+        Loading words...
+      </Typography>
     )
+  }
+
+  return (
+    <Container>
+      <Typography variant='h5'>
+        Words from messages
+      </Typography>
+      <List dense >
+        {words.map(obj => (
+          <Word key={obj.word} obj={obj}/>
+        ))}
+      </List>
+    </Container>
+  )
 }
 
-export default Words;
+export default Words
