@@ -74,15 +74,17 @@ test('amounts are correct', () => {
   expect(response[4].word).toBe('€5.000')
 })
 test('Company suffix is added to previous word', () => {
-  const response = wordsFromMessages([{
-    client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d8',
-    type: 'message',
-    text: 'Oy Jrt Ab 2.700€. Osakeyhtiö Oy tai yhtiö co.',
-    user: 'U02UF7S2DN1',
-    ts: '1642531226.000400',
-    team: 'T02UNV7V4GZ',
-    blocks: [[Object]],
-  }])
+  const response = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d8',
+      type: 'message',
+      text: 'Oy Jrt Ab 2.700€. Osakeyhtiö Oy tai yhtiö co.',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
   expect(response[0]).toStrictEqual({
     word: 'oy jrt ab',
     message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d8'],
@@ -107,4 +109,46 @@ test('Company suffix is added to previous word', () => {
     count: 1,
     important: false,
   })
+})
+test('Ends of word array give correct result', () => {
+  const response = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d9',
+      type: 'message',
+      text: 'Oy Ab',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
+  expect(response[0]).toStrictEqual({
+    word: 'oy',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d9'],
+    count: 1,
+    important: false,
+  })
+  expect(response[1]).toStrictEqual({
+    word: 'ab',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d9'],
+    count: 1,
+    important: false,
+  })
+  const res = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d11',
+      type: 'message',
+      text: '',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
+  expect(res).toStrictEqual([{
+    word: '',
+    message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d11'],
+    count: 1,
+    important: false,
+  }])
 })

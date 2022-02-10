@@ -161,7 +161,7 @@ const mergeCompanyEntityType = (words) => {
         words[i + 2] = ''
         continue
       }
-      if (i > 0) {
+      if (i > 0 && !co_Set.has(words[i-1])) {
         words[i - 1] = words[i - 1].concat(` ${words[i]}`)
         words[i] = ''
       }
