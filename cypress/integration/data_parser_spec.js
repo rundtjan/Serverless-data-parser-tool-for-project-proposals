@@ -18,6 +18,11 @@ describe('Data parser tool ', function() {
         cy.contains('Tämä on uusi threadvastaus vanhaan parentviestiin!! sent by Jan Rundt')
     })
 
+    it('Message with an expander has a thread', function(){
+        cy.get('#messageList').find('button').first().click()
+        cy.get('#messageList').find('button').first().parent().parent().parent().children().should('have.length.of.at.least', 2)
+    })
+
     it('Message which is not a thread does not have an expander', function() {
         cy.contains('Slack messages')
         cy.contains('Diba daba sent by Jan Rundt')
@@ -29,19 +34,27 @@ describe('Data parser tool ', function() {
         cy.contains('Customer')
         cy.contains('Price')
         cy.contains('Deadline')
-        cy.contains('Fte')
+        cy.contains('FTEs')
         cy.contains('Contact')
         cy.contains('Technology')
     })
 
     it('Clicking a checkbox opens a drop down menu', function() {
-        cy.contains('Words from messages').parent().find('input').first().click()
+        cy.get('#wordList').parent().find('input').first().click()
         cy.get('#basic-menu').should('exist')
     })
 
     it('Choosing a category shows the word in category column', function() {
-        cy.contains('Words from messages').parent().find('input').first().click()
+        cy.get('#wordList').parent().find('input').first().click()
         cy.get('#basic-menu').find('li').first().click()
-        cy.contains('Customer').parent().find('li').should('exist')
+        cy.get('#categoryGrid').find('li').should('exist')
+    })
+
+    it('Unchecking the checkbox removes the word from the column', function() {
+        cy.get('#wordList').parent().find('input').first().click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#categoryGrid').find('li').should('exist')
+        cy.contains('Words from messages').parent().find('input').first().click()
+        cy.contains('Customer').parent().find('li').should('not.exist')
     })
 })

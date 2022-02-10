@@ -32,7 +32,7 @@ const HomePage = () => {
           <Words />
         </Grid>
       </Grid>
-      <Grid container item justifyContent='center'>
+      <Grid container item justifyContent='center' id='categoryGrid'>
         { categories ? addCategories() : null }
       </Grid>
     </Grid>

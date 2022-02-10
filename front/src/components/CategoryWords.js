@@ -10,14 +10,14 @@ const CategoryWords = ({ category }) => {
   const assignedWords = useSelector(state => state.assignedWords.filter(word => word.category === category))
 
   return (
-    <Container>
+    <Container >
       <Box
         sx={{
           boxShadow: 2,
           borderRadius: 1,
           minHeight: 200,
           minWidth: 150,
-          m: -1,
+          mx: -1,
         }}>
         <Typography variant='h5' textAlign='center'>
           { category }
