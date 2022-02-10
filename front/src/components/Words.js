@@ -19,7 +19,7 @@ const Words = () => {
   }
 
   return (
-    <Container>
+    <Container id='wordList'>
       <Typography variant='h5'>
         Words from messages
       </Typography>
