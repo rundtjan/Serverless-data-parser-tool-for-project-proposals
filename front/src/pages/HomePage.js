@@ -21,16 +21,20 @@ const HomePage = () => {
 
   return(
     <Grid container direction='row'>
-      <Grid item>
-        <UserForm />
+      <Grid container item justifyContent='center'>
+        <Grid item>
+          <UserForm />
+        </Grid>
+        <Grid item>
+          <Messages />
+        </Grid>
+        <Grid item>
+          <Words />
+        </Grid>
       </Grid>
-      <Grid item>
-        <Messages />
+      <Grid container item justifyContent='center'>
+        { categories ? addCategories() : null }
       </Grid>
-      <Grid item>
-        <Words />
-      </Grid>
-      { categories ? addCategories() : null }
     </Grid>
   )
 }
