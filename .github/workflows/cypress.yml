@@ -1,0 +1,29 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ cicd_workflow ]
+  pull_request:
+    branches: [ cicd_workflow ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run E2E Tests
+        uses: BerniWittmann/background-server-action@latest
+        with:
+          command: npm run cypress:run
+          build: npm run install, npm run build
+          start: export SLACK_TOKEN=${{ secrets.SLACK_TOKEN }}, npm run start
+      
