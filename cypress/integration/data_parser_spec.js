@@ -1,6 +1,7 @@
 describe('Data parser tool ', function() {
+    
     beforeEach(function() {
-        cy.visit('http://localhost:8080/')
+        cy.visit(Cypress.env('CYPRESS_URL'))
     })
 
     it('Front page can be opened', function() {
