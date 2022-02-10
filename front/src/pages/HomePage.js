@@ -12,7 +12,7 @@ import UserForm from '../components/UserForm'
 import CategoryWords from '../components/CategoryWords'
 
 const HomePage = () => {
-  const categories = useSelector(state => state.categories)
+  const categories = useSelector(state => state.data.categories)
 
   const addCategories = () => {
     const categoryElement = categories.map(cat => <Grid key={cat + 'griditem'} item><CategoryWords key={cat + 'cat'} category={cat} /></Grid>)
@@ -21,16 +21,20 @@ const HomePage = () => {
 
   return(
     <Grid container direction='row'>
-      <Grid item>
-        <UserForm />
+      <Grid container item justifyContent='center'>
+        <Grid item>
+          <UserForm />
+        </Grid>
+        <Grid item>
+          <Messages />
+        </Grid>
+        <Grid item>
+          <Words />
+        </Grid>
       </Grid>
-      <Grid item>
-        <Messages />
+      <Grid container item justifyContent='center'>
+        { categories ? addCategories() : null }
       </Grid>
-      <Grid item>
-        <Words />
-      </Grid>
-      { categories.length ? addCategories() : null }
     </Grid>
   )
 }
