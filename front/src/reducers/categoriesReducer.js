@@ -8,7 +8,7 @@ const reducer = (state = [], action) => {
 }
 
 export const initializeCategories = () => {
-  const data = ['customername', 'projectprice', 'deadline', 'fte', 'customercontact', 'technology']
+  const data = ['Customer', 'Price', 'Deadline', 'Fte', 'Contact', 'Technology']
   return {
     type: 'INIT_CATEGORIES',
     data
