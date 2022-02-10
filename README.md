@@ -5,6 +5,9 @@
 ## Tuntikirjanpito  
 [Linkki tuntikirjanpitoon](https://docs.google.com/spreadsheets/d/1cuh5_3st2fF5PlzxUwkLurNdqGqkFm90v7kIZbUjTgg/edit#gid=2125689465)
 
+## Product Backlog
+[View the product backlog here](https://github.com/orgs/Ohtu-org/projects/1/views/1?layout=board)
+
 ## Definition of Done
 - The user stories are tested with suitable unittests and end-to-end-tests
 - The tests are successful (in the green) 
