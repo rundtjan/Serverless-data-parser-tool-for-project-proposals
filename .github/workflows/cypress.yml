@@ -20,6 +20,7 @@ jobs:
     env:
       PORT: 8080
       REACT_APP_BACKEND_PORT: 8080
+      SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
