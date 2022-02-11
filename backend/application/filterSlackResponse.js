@@ -1,5 +1,7 @@
 const { parseTimestampFromSlackTs } = require('../utils/parseSlackTimestamp')
 const { co_Set } = require('../utils/utilityConstants')
+const { assignCategoryToWord } =  require('../utils/assignCategoryToWord')
+
 
 const GetHumanMessagesFromSlack = (messages) => {
   const result = messages.filter((obj) => {
@@ -92,12 +94,14 @@ const AddThreadMessages = (messages) => {
 }
 
 const Create_Word_Obj = (word, message) => {
+  const category = assignCategoryToWord(word)
   return {
-    word: word,
-    message_ids: [message.client_msg_id],
-    count: 1,
-    important: false,
-  }
+    'word': word,
+    'message_ids': [message.client_msg_id],
+    'count': 1,
+    'important': false,
+    'category': category
+  } 
 }
 
 const RemoveSpecialCharacters = (word) => word.replace(/[^\w\såäö£$€.,]/gi, '')

@@ -14,15 +14,18 @@ const Word = ({ obj }) => {
   const [checked, setChecked] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
-  const categories = useSelector(state => state.categories)
+  const categories = useSelector(state => state.data.categories)
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
 
   const handleToggle = (event) => {
+    if (checked) {
+      dispatch(unAssignWord(obj.word))
+    } else {
+      setShowMenu(true)
+      setAnchorEl(event.currentTarget)
+    }
     setChecked(!checked)
-    if (checked) dispatch(unAssignWord(obj.word))
-    setShowMenu(!showMenu)
-    setAnchorEl(event.currentTarget)
   }
 
   const handleAddHighlight = () => {
@@ -34,9 +37,10 @@ const Word = ({ obj }) => {
   }
 
   const handleClose = (event) => {
-    console.log(event.currentTarget.id)
-    dispatch(setAssignedWord(obj.word, event.currentTarget.id))
+    if (!event.currentTarget.id) setChecked(false)
+    else dispatch(setAssignedWord(obj.word, event.currentTarget.id))
     setAnchorEl(null)
+    setShowMenu(false)
   }
 
   if (!showMenu){

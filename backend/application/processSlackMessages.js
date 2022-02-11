@@ -8,6 +8,8 @@ const {
   filterMessagesByUser,
 } = require('./filterSlackResponse')
 
+const categories = require('./categories.json')
+
 // TODO : Create parent function that does api calls all at once and remove args drilling or do this in controller
 // TODO : remove Unnecessary api calls, info is already somewhere.
 // TODO : Throw errors to controller that sends error response?
@@ -47,7 +49,7 @@ function applyFilters(res, messages, oldest, user) {
   if (oldest) messages = filterOutOldMessages(messages, oldest)
   if (user) messages = filterMessagesByUser(messages, user)
   const words = GetWordsFromMessages(messages)
-  return { messages: messages, words: words }
+  return { messages: messages, words: words, categories: categories }
 }
 
 module.exports = { addThreadsToMessages }

@@ -15,7 +15,6 @@ import HomePage from './pages/HomePage'
 //Actions
 import { initializeMessages } from './reducers/dataReducer'
 import { initializeChannels } from './reducers/channelReducer'
-import { initializeCategories } from './reducers/categoriesReducer'
 
 const App = () => {
 
@@ -24,7 +23,6 @@ const App = () => {
   useEffect(() => {
     dispatch(initializeMessages())
     dispatch(initializeChannels())
-    dispatch(initializeCategories())
   }, [dispatch])
 
   return (

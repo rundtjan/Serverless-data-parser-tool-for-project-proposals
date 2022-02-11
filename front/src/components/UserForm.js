@@ -3,8 +3,7 @@ import { Typography, Grid, FormControl, InputLabel,
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMessagesParameters } from '../reducers/dataReducer'
-
-
+import { clearAssignedWords } from '../reducers/assignReducer'
 
 const UserForm = () => {
   const [channel, setChannel] = useState('')
@@ -16,6 +15,7 @@ const UserForm = () => {
   const putParameters = async (event) => {
     event.preventDefault()
     dispatch(getMessagesParameters(channel, user, hours))
+    dispatch(clearAssignedWords())
   }
 
   return (
