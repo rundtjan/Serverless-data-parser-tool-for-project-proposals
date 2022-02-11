@@ -12,6 +12,7 @@ function assignCategoryToWord(word) {
       let letter = letters[i]
       if (!isNaN(letter)) {
         number = true 
+        return
       }
     }
   }
