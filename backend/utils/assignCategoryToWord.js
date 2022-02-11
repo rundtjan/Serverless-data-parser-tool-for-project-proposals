@@ -2,16 +2,18 @@ const technologies = require('./technologies.json')
 
 function assignCategoryToWord(word) {
     let date = false
-    let numbers = false 
-   
-    if (technologies.map(tec => tec.toLowerCase().includes(word))) {
+    let numbers = false
+
+    const technology = technologies.find(t => t.toLowerCase() === word)
+
+    if (technology) {
         return 'Technology'
-    } else  if (date) {
+    } else if (date) {
         return 'date'
     } else if (numbers) {
         return 'numbers'
     } else {
-        return 'no category'
+        return ''
     }
 }
 
