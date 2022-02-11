@@ -48,6 +48,7 @@ test('Word object is on correct format', () => {
     message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d7'],
     count: 1,
     important: false,
+    category: ''
   })
 })
 
