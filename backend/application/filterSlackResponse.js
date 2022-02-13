@@ -54,7 +54,7 @@ const GetWordsFromMessages = (messages) => {
     const words = message.text.split(' ')
     let parsedWords = ParseWords(words)
     parsedWords = mergeCompanyEntityType(parsedWords)
-
+    parsedWords = parsedWords.filter(Boolean)
     parsedWords.forEach((word) => {
       word in temp_word_obj
         ? ((temp_word_obj[word]['count'] += 1),

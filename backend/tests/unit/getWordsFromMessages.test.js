@@ -106,17 +106,17 @@ test('short messages are returned correctly', () => {
   expect(response[0]['word']).toEqual('oy')
   expect(response[1]['word']).toEqual('ab')
 })
-// test('empty message returns []', () => {
-//   const res = wordsFromMessages([
-//     {
-//       client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d11',
-//       type: 'message',
-//       text: '',
-//       user: 'U02UF7S2DN1',
-//       ts: '1642531226.000400',
-//       team: 'T02UNV7V4GZ',
-//       blocks: [[Object]],
-//     },
-//   ])
-//   expect(res).toStrictEqual([])
-// })
+test('empty message returns []', () => {
+  const res = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d11',
+      type: 'message',
+      text: '',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
+  expect(res).toStrictEqual([])
+})
