@@ -72,3 +72,4 @@ test('amounts are correct', () => {
   expect(response[3].word).toBe('tai')
   expect(response[4].word).toBe('€5.000')
 })
+
