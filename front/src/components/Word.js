@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setHighlightedWord, clearHighlightedWord } from '../reducers/highlightReducer'
+import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
 
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -11,16 +11,29 @@ const Word = ({ obj }) => {
   const [checked, setChecked] = useState(false)
   const dispatch = useDispatch()
 
+  /**
+   * Handles checkbox action. Adds word to highlight list when toggled on and removes word from list when toggled off.
+   */
   const handleToggle = () => {
-    setChecked(!checked)
+    if(checked) {
+      setChecked(false)
+      dispatch(clearHighlightedWords(obj.word))
+    } else {
+      setChecked(true)
+      dispatch(addHighlightedWord(obj.word))
+    }
   }
 
   const handleAddHighlight = () => {
-    dispatch(setHighlightedWord(obj.word))
+    if(!checked) {
+      dispatch(addHighlightedWord(obj.word))
+    }
   }
 
   const handleClearHighlight = () => {
-    dispatch(clearHighlightedWord())
+    if(!checked) {
+      dispatch(clearHighlightedWords(obj.word))
+    }
   }
 
   return(

@@ -25,7 +25,7 @@ const ExpandMore = styled((props) => {
 
 const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
-  const highlightWord = useSelector(state => state.highlightWord)
+  const highlightWords = useSelector(state => state.highlightWord)
 
 
   /**
@@ -34,7 +34,7 @@ const Message = ({ message }) => {
    */
   const parseMessageText = (obj) => {
 
-    if(highlightWord === '') {
+    if(highlightWords.length === 0) {
       return(
         <Typography component='span'>
           {obj.text} sent by {obj.real_name}
@@ -42,13 +42,24 @@ const Message = ({ message }) => {
       )
     }
 
-    const words = obj.text.split(new RegExp(`(${highlightWord})`, 'gi'))
+    //const words = obj.text.split(new RegExp(`(${highlightWord})`, 'gi'))
 
+    const words = obj.text.split(new RegExp(`(${highlightWords.join('|')})`, 'gi'))
+    console.log(words)
+
+    /*
     return(
       <Typography component='span'>
         {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
       </Typography>
     )
+    */
+    return(
+      <Typography component='span'>
+        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
+      </Typography>
+    )
+
   }
 
 
