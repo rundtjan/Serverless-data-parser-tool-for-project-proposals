@@ -29,7 +29,7 @@ const Message = ({ message }) => {
 
 
   /**
-   * Parses the message to highlight the word which is hovered over with mouse
+   * Parses the message to highlight the word which is hovered over with mouse, or tagged withh checkbox
    * @returns Message with highlight
    */
   const parseMessageText = (obj) => {
@@ -42,18 +42,10 @@ const Message = ({ message }) => {
       )
     }
 
-    //const words = obj.text.split(new RegExp(`(${highlightWord})`, 'gi'))
+    const pattern = highlightWords.map(highlightword => `\\b${highlightword}\\b`).join('|')
 
-    const words = obj.text.split(new RegExp(`(${highlightWords.join('|')})`, 'gi'))
-    console.log(words)
+    const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
 
-    /*
-    return(
-      <Typography component='span'>
-        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
-      </Typography>
-    )
-    */
     return(
       <Typography component='span'>
         {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
