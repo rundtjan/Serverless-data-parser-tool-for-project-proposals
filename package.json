@@ -14,7 +14,8 @@
     "build": "cd front && npm run build && cd .. && cp -r front/build backend",
     "start": "cd backend && npm start",
     "test": "jest --verbose",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "repository": {
     "type": "git",

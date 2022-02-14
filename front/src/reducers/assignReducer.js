@@ -4,6 +4,8 @@ const reducer = (state = [], action) => {
     return state.concat(action.data)
   case 'DEL_ASSIGNED':
     return state.filter(word => word.word !== action.data.word)
+  case 'CLEAR_ASSIGNED':
+    return []
   default:
     return state
   }
@@ -22,6 +24,12 @@ export const unAssignWord = (word='', category='test') => {
   return {
     type: 'DEL_ASSIGNED',
     data
+  }
+}
+
+export const clearAssignedWords = () => {
+  return {
+    type: 'CLEAR_ASSIGNED'
   }
 }
 
