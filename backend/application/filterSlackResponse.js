@@ -1,5 +1,5 @@
 const { parseTimestampFromSlackTs } = require('../utils/parseSlackTimestamp')
-const { co_Set, fillerWords } = require('../utils/utilityConstants')
+const { co_Set, fillerWords } = require('../utils/languageConstants')
 const { assignCategoryToWord } =  require('../utils/assignCategoryToWord')
 
 
