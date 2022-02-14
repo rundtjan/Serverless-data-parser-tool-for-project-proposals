@@ -2,8 +2,16 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const { importHistory, slackChannels, slackUsers, slackGetAllByUser} = require('./controllers/slackController.js')
+const {
+  importHistory,
+  slackChannels,
+  slackUsers,
+  slackGetAllByUser,
+  returnQuery,
+  saveQuery,
+} = require('./controllers/slackController.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
+
 app.use(cors())
 app.use(express.static('build'))
 app.use(
@@ -17,7 +25,7 @@ app.get('/api/data/:channelId', (req, res) => {
   const channel = req.params.channelId
   const oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
   const user = req.body.user
-  const args = {channel, user, oldest}
+  const args = { channel, user, oldest }
   importHistory(res, args)
 })
 
@@ -38,8 +46,20 @@ app.post('/api/data', (req, res) => {
   const channel = req.body.channel || 'general'
   const oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
   const user = req.body.user
-  const args = {channel, user, oldest}
+  const args = { channel, user, oldest }
   importHistory(res, args)
+})
+
+app.post('/api/requests', (req, res) => {
+  //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "hours": HOW_MANY_HOURS_BACK, "user": USER_NAME}
+  const channel = req.body.channel || 'general'
+  const oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
+  const user = req.body.user
+  const args = { channel, user, oldest }
+  saveQuery(res, args)
+})
+app.get('/api/requests/:id', (req, res) => {
+  returnQuery(res, req.params.id)
 })
 
 module.exports = app

@@ -115,6 +115,16 @@ const slackService = ({ slackClient }) => {
     return messages
   }
 
+  const sendMessage = async (channelId, text) => {
+    const result = await slackClient.chat.postMessage({
+      channel: channelId,
+      text: text
+    })
+  
+    console.log('sendMessage : ', channelId, text)
+    console.log('Result : ', result)
+  }
+
   return Object.freeze({
     getUsers,
     getChannels,
@@ -124,6 +134,7 @@ const slackService = ({ slackClient }) => {
     getChannelWithParameters,
     getThreadMessages,
     findAllByUser,
+    sendMessage
   })
 }
 
