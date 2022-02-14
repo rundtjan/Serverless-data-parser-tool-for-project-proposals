@@ -1,5 +1,5 @@
 const wordsFromMessages =
-  require('../../utils/filterSlackResponse').GetWordsFromMessages
+  require('../../application/filterSlackResponse').GetWordsFromMessages
 
 const testJson = require('./dataForWordTest.json')
 const { singleMessage, messages, emojis } = require('./constants')
