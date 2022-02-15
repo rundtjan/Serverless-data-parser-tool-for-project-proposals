@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setHighlightedWord, clearHighlightedWord } from '../reducers/highlightReducer'
+import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
 import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
 
 import ListItem from '@mui/material/ListItem'
@@ -18,22 +18,30 @@ const Word = ({ obj }) => {
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
 
+
   const handleToggle = (event) => {
-    if (checked) {
+    if(checked) {
+      dispatch(clearHighlightedWords(obj.word))
       dispatch(unAssignWord(obj.word))
     } else {
+      dispatch(addHighlightedWord(obj.word))
       setShowMenu(true)
       setAnchorEl(event.currentTarget)
     }
     setChecked(!checked)
   }
 
+
   const handleAddHighlight = () => {
-    dispatch(setHighlightedWord(obj.word))
+    if(!checked) {
+      dispatch(addHighlightedWord(obj.word))
+    }
   }
 
   const handleClearHighlight = () => {
-    dispatch(clearHighlightedWord())
+    if(!checked) {
+      dispatch(clearHighlightedWords(obj.word))
+    }
   }
 
   const handleClose = (event) => {
