@@ -1,28 +1,29 @@
 
-const reducer = (state='', action) => {
+const reducer = (state=[], action) => {
   switch(action.type) {
-  case 'SET_HIGHLIGHTED_WORD':
-    return action.word
-  case 'CLEAR_HIGHLIGHTED_WORD':
-    return ''
+  case 'SET_HIGHLIGHTED_WORDS':
+    return [...state, action.word]
+  case 'CLEAR_HIGHLIGHTED_WORDS':
+    return state.filter(w => w !== action.word)
   default:
     return state
   }
 }
 
-export const setHighlightedWord = (word) => {
+export const addHighlightedWord = (word) => {
   return async dispatch => {
     dispatch({
-      type: 'SET_HIGHLIGHTED_WORD',
+      type: 'SET_HIGHLIGHTED_WORDS',
       word
     })
   }
 }
 
-export const clearHighlightedWord = () => {
+export const clearHighlightedWords = (word) => {
   return async dispatch => {
     dispatch({
-      type: 'CLEAR_HIGHLIGHTED_WORD'
+      type: 'CLEAR_HIGHLIGHTED_WORDS',
+      word
     })
   }
 }
