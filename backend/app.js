@@ -53,11 +53,11 @@ app.post('/api/data', (req, res) => {
 app.post('/api/parse', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "hours": HOW_MANY_HOURS_BACK, "user": USER_NAME}
   const params = req.body.text.split(' ')
-  if (params.length === 3) {
+  if (params.length === 2) {
     const channel = params[0] || 'general'
     const hours = params[1]
     const oldest = parseTimestamp(Date.now() * 1000, hours)
-    const user =  params[2]
+    const user =  ''
     const args = { channel, user, oldest }
     saveQuery(res, args)
   }

@@ -28,14 +28,14 @@ async function saveQuery(res, args) {
     const resultObj = await addThreadsToMessages(res, slack, args)
     savedQueries[id] = resultObj
     //slack.sendMessage(channelId, `Your query is ready at : http://135.181.37.120/${id}`)
-    console.log('saved result: ', savedQueries[id])
+    //console.log('saved result: ', savedQueries[id])
     res.json({
       blocks: [
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `Your query is ready at : http://135.181.37.120/${id}`,
+            text: `Your query is ready at : http://135.181.37.120:9999/api/parse/${id}`,
           },
         }
       ],
