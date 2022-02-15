@@ -63,13 +63,14 @@ const Message = ({ message }) => {
     <Grid item xs={12}>
       <Card elevation={3}>
         <CardContent>
-          <Typography component='div'>
+          <Typography component='div' id={'text-'+message.client_msg_id}>
             {parseMessageText(message)}
             {message.thread_array.length !== 0 && <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label="show more"
+              id={'button-'+message.client_msg_id}
             >
               <ExpandMoreIcon />
             </ExpandMore>}

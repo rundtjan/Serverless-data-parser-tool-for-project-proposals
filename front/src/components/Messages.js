@@ -28,7 +28,7 @@ const Messages = () => {
   }
 
   return(
-    <Grid item>
+    <Grid item id='messageList'>
       <Typography variant="h4">Slack messages</Typography>
       <List>
         {messages.map(message => (
