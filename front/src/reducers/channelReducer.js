@@ -4,8 +4,6 @@ const reducer = (state=[], action) => {
   switch(action.type) {
   case 'SET_CHANNEL':
     return action.channel
-  case 'SET_PARAMETERS':
-    return state
   case 'INIT_CHANNELS':
     return action.data
   default:
