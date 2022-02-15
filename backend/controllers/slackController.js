@@ -2,14 +2,18 @@ const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { addThreadsToMessages } = require('../application/processSlackMessages')
-const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
+const {
+  GetHumanMessagesFromSlack,
+} = require('../application/filterSlackResponse')
 const savedQueries = {}
 
 async function saveQuery(res, args) {
   // channel, oldest, user are contained in args
   const { channel } = args
   try {
-    const id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+    const id = Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1)
     const channels = await slack.getChannels()
     var channelId = channels.channels.filter((obj) => {
       return obj.name == channel || obj.id == channel
@@ -23,8 +27,19 @@ async function saveQuery(res, args) {
 
     const resultObj = await addThreadsToMessages(res, slack, args)
     savedQueries[id] = resultObj
-    slack.sendMessage(channelId, `Your query is ready at : http://135.181.37.120/${id}`)
-    res.sendStatus(200)
+    //slack.sendMessage(channelId, `Your query is ready at : http://135.181.37.120/${id}`)
+    console.log('saved result: ', savedQueries[id])
+    res.json({
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `Your query is ready at : http://135.181.37.120/${id}`,
+          },
+        }
+      ],
+    })
   } catch (error) {
     if (error) {
       console.error(error)
@@ -35,11 +50,11 @@ async function saveQuery(res, args) {
 
 async function returnQuery(res, id) {
   try {
-    if (id in savedQueries){
+    if (id in savedQueries) {
       res.send(savedQueries[id])
-    }else{
+    } else {
       res.sendStatus(401)
-    }    
+    }
   } catch (error) {
     if (error) {
       console.error(error)
@@ -99,4 +114,11 @@ async function slackGetAllByUser(res, id) {
     res.send(error)
   }
 }
-module.exports = { importHistory, slackChannels, slackUsers, slackGetAllByUser, saveQuery, returnQuery }
+module.exports = {
+  importHistory,
+  slackChannels,
+  slackUsers,
+  slackGetAllByUser,
+  saveQuery,
+  returnQuery,
+}

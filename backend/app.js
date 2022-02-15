@@ -50,15 +50,19 @@ app.post('/api/data', (req, res) => {
   importHistory(res, args)
 })
 
-app.post('/api/requests', (req, res) => {
+app.post('/api/parse', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "hours": HOW_MANY_HOURS_BACK, "user": USER_NAME}
-  const channel = req.body.channel || 'general'
-  const oldest = parseTimestamp(Date.now() * 1000, req.body.hours)
-  const user = req.body.user
-  const args = { channel, user, oldest }
-  saveQuery(res, args)
+  const params = req.body.text.split(' ')
+  if (params.length === 3) {
+    const channel = params[0] || 'general'
+    const hours = params[1]
+    const oldest = parseTimestamp(Date.now() * 1000, hours)
+    const user =  params[2]
+    const args = { channel, user, oldest }
+    saveQuery(res, args)
+  }
 })
-app.get('/api/requests/:id', (req, res) => {
+app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
 })
 
