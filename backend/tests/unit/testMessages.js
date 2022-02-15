@@ -220,4 +220,65 @@ const emojis = [
     reactions: [[Object]],
   },
 ]
-module.exports = {threadTestMessages, singleMessage, messages, emojis}
+
+const testMessageWithThreadResponse = [
+  {
+    client_msg_id: '6b5f5a7d-6c01-4baa-b764-a33d0d934c4d',
+    type: 'message',
+    text: 'Kissa On SuoSItuin, totta!',
+    user: 'U02UF7S2DN1',
+    ts: '1643359472.109509',
+    team: 'T02UNV7V4GZ',
+    blocks: [
+      {
+        type: 'rich_text',
+        block_id: 'Ca1iw',
+        elements: [
+          {
+            type: 'rich_text_section',
+            elements: [{ type: 'text', text: 'Kissa On SuoSItuin, totta!' }],
+          },
+        ],
+      },
+    ],
+    thread_ts: '1643359472.109509',
+    reply_count: 1,
+    reply_users_count: 1,
+    latest_reply: '1643359571.915789',
+    reply_users: ['U02UAB8HUFM'],
+    is_locked: false,
+    subscribed: false,
+    real_name: 'User5',
+    thread_array: [
+      {
+        client_msg_id: 'e317f184-aa35-406c-824c-3c23f1a9e8ee',
+        type: 'message',
+        text: 'Kissa On SuoSItuin, kissa',
+        user: 'U02UAB8HUFM',
+        ts: '1643359571.915789',
+        team: 'T02UNV7V4GZ',
+        blocks: [
+          {
+            type: 'rich_text',
+            block_id: 'KeV',
+            elements: [
+              {
+                type: 'rich_text_section',
+                elements: [
+                  {
+                    type: 'text',
+                    text: 'Kissa On SuoSItuin, kissa',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        thread_ts: '1643359472.109509',
+        parent_user_id: 'U02UF7S2DN1',
+        real_name: 'User7',
+      },
+    ],
+  },
+]
+module.exports = { threadTestMessages, singleMessage, messages, emojis,testMessageWithThreadResponse }
