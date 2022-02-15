@@ -1,5 +1,5 @@
 const { parseTimestampFromSlackTs } = require('../utils/parseSlackTimestamp')
-const { co_Set } = require('../utils/utilityConstants')
+const { co_Set, fillerWords } = require('../utils/languageConstants')
 const { assignCategoryToWord } =  require('../utils/assignCategoryToWord')
 
 
@@ -54,6 +54,7 @@ const GetWordsFromMessages = (messages) => {
     const words = message.text.split(' ')
     let parsedWords = ParseWords(words)
     parsedWords = mergeCompanyEntityType(parsedWords)
+    parsedWords = parsedWords.filter(word => !fillerWords.has(word))
     parsedWords = parsedWords.filter(Boolean)
     parsedWords.forEach((word) => {
       word in temp_word_obj
