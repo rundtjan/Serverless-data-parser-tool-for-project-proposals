@@ -4,7 +4,6 @@ const slack = slackService({ slackClient })
 const { addThreadsToMessages } = require('../application/processSlackMessages')
 const {
   GetHumanMessagesFromSlack,
-  filterMessagesByUser,
 } = require('../application/filterSlackResponse')
 const savedQueries = {}
 

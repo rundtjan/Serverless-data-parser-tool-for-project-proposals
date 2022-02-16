@@ -57,16 +57,16 @@ app.post('/api/parse', (req, res) => {
     const channel = 'general'
     const args = { channel }
     saveQuery(res, args)
-}
+  }
   else if (params.length === 1) {
     const channel = params[0] || 'general'
     const args = { channel }
     saveQuery(res, args)
-}
+  }
   else if (params.length === 2) {
     const channel = params[0] || 'general'
     const user =  params[1]
-    //@TODO: params[1] or the username will be in the format @user.name for example @aleksi.suuronen and needs to be implemented
+    //@TODO: params[1]or the username will be in the format @user.name for example @aleksi.suuronen and needs to be implemented
     const args = { channel, user }
     saveQuery(res, args)
   }
@@ -78,7 +78,7 @@ app.post('/api/parse', (req, res) => {
     const oldest = parseTimestamp(Date.now() * 1000, hours)
     const args = {channel, user, oldest }
     saveQuery(res, args)
-}
+  }
 })
 app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
