@@ -10,9 +10,19 @@ const GetHumanMessagesFromSlack = (messages) => {
   return result
 }
 
+/**
+ * Checks if the message is a thread. Slack API says that threads have a 'thread_ts'-field.
+ * @param {A slack message object} message 
+ * @returns True if message is a thread and False otherwise
+ */
 const messageIsThreaded = (message) =>
   Object.prototype.hasOwnProperty.call(message, 'thread_ts')
 
+/**
+ * Gets a list of timestamps of every threaded message.
+ * @param {An object of Slack messages} messages 
+ * @returns List of timestamps from every threaded message
+ */
 const GetTimeStamps = (messages) => {
   const result = messages.map((message) => {
     if (messageIsThreaded(message)) {
@@ -22,10 +32,19 @@ const GetTimeStamps = (messages) => {
   return result
 }
 
+/**
+ * Adds an array for threads to message.
+ * @param {A slack message object to which the array field is added} message 
+ */
 const addThreadArrayToEachMessage = (message) => {
   message.thread_array = []
 }
 
+/**
+ * Gets messages which are threads.
+ * @param {An array of slack message objects} messages 
+ * @returns List of Slack message objects which are threads.
+ */
 const GetThreads = (messages) => {
   const result = messages.filter((message) => {
     addThreadArrayToEachMessage(message)

@@ -10,8 +10,6 @@ const savedQueries = {}
 async function saveQuery(res, args) {
   // channel, oldest, user are contained in args
   const { channel } = args
-  const { user } = args
-  const { oldest } = args
   try {
     const id = Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
