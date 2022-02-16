@@ -29,7 +29,7 @@ const UserForm = () => {
         <Select
           id='channel'
           label='Channel'
-          defaultValue={''}
+          defaultValue={'general'}
           onChange={({ target }) => setChannel(target.value)}
           input={<OutlinedInput label='Channel' /> }
         >
