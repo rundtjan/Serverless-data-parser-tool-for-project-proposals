@@ -56,10 +56,11 @@ const GetWordsFromMessages = (messages) => {
     parsedWords = mergeCompanyEntityType(parsedWords)
     parsedWords = parsedWords.filter(Boolean)
     parsedWords.forEach((word) => {
+      const category = assignCategoryToWord(word)
       word in temp_word_obj
         ? ((temp_word_obj[word]['count'] += 1),
         temp_word_obj[word]['message_ids'].push(message.client_msg_id))
-        : (temp_word_obj[word] = Create_Word_Obj(word, message))
+        : (temp_word_obj[word] = Create_Word_Obj(word, message, category))
     })
   })
 
@@ -74,11 +75,14 @@ const GetWordsFromMessages = (messages) => {
 const ParseWords = (words) => {
   let parsedWords = words.filter(notAnEmoji)
   parsedWords = parsedWords.map((word) => {
-    word = RemoveSpecialCharacters(word)
-    word = RemoveTrailingDots(word)
-    word = RemoveTrailingCommas(word)
-    word = word.toLowerCase()
-    return word
+    const category = assignCategoryToWord(word)
+    if(category === '') {
+      word = RemoveSpecialCharacters(word)
+      word = RemoveTrailingDots(word)
+      word = RemoveTrailingCommas(word)
+      word = word.toLowerCase()
+      return word
+    } else return word
   })
   return parsedWords
 }
@@ -93,8 +97,7 @@ const AddThreadMessages = (messages) => {
   return result
 }
 
-const Create_Word_Obj = (word, message) => {
-  const category = assignCategoryToWord(word)
+const Create_Word_Obj = (word, message, category) => {
   return {
     'word': word,
     'message_ids': [message.client_msg_id],
