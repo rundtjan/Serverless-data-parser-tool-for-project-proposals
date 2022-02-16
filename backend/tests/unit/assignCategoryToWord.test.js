@@ -39,4 +39,16 @@ test('Programming languages are assigned category Technology', () => {
   const response = assignCategoryToWord('java')
   expect(response).toBe('Technology')
 })
+test('Number category is not added to word with space', () => {
+  const response = assignCategoryToWord('Yhtiö oy')
+  expect(response).toBe('')
+})
+test('Date category is added to date format DD-MM-YYYY', () => {
+  const response = assignCategoryToWord('12-02-2022')
+  expect(response).toBe('Date')
+})
+test('Date category is added to date format DD/MM/YYYY', () => {
+  const response = assignCategoryToWord('03/03/2022')
+  expect(response).toBe('Date')
+})
 
