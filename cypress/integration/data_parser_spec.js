@@ -1,6 +1,7 @@
 describe('Data parser tool ', function() {
+    
     beforeEach(function() {
-        cy.visit('http://135.181.37.120/')
+        cy.visit('/')
     })
 
     it('Front page can be opened', function() {
