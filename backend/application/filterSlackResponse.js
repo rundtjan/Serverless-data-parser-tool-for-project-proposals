@@ -82,7 +82,11 @@ const ParseWords = (words) => {
       word = RemoveTrailingCommas(word)
       word = word.toLowerCase()
       return word
-    } else return word
+    } else  {
+      word = RemoveTrailingDots(word)
+      word = RemoveTrailingCommas(word)
+      return word
+    }     
   })
   return parsedWords
 }
