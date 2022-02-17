@@ -26,29 +26,21 @@ const parseParameters = (parameters) => {
     return args
   }
   if (parameters.length === 1) {
-    let param = ''
     if (parameterIsHours(parameters[0])) {
-      param = parameters[0]
-      const hours = param
+      const hours = parameters[0]
       const args = { hours }
       return args
     }
     if (parameterIsUsername(parameters[0])) {
-      param = parameters[0]
-      const user = param
+      const user = parameters[0]
       const args = { user }
       return args
     }
     if (parameterIsValidChannel(parameters[0])) {
-      param = parameters[0]
-      const channel = param
+      const channel = parameters[0]
       const args = { channel }
       return args
     }
-    param = 'general'
-    const channel = param
-    const args = { channel }
-    return args
   }
   /**
    * @TODO: FIX and think with 2 parameters
