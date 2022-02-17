@@ -136,7 +136,10 @@ const RemoveTrailingDots = (word) => word.replace(/\.+$/g, '')
 const RemoveTrailingCommas = (word) => word.replace(/,+$/g, '')
 
 const GetRealNamesFromSlack = (messages, members) => {
-  messages.forEach((elem) => (elem.real_name = members[elem.user]))
+  messages.forEach((elem) => {
+    elem.real_name = members[elem.user].real_name
+    elem.username = members[elem.user].username
+  })
 }
 
 const notAnEmoji = (word) => word.charAt(0) !== ':'
@@ -160,18 +163,19 @@ const filterOutOldMessages = (messages, oldest) => {
 }
 
 const filterMessagesByUser = (messages, user) => {
+  if (user.includes('@')) user = user.substring(1)
   const resMessages = []
   for (var i = 0; i < messages.length; i++) {
     var message = messages[i]
     if (message.thread_array.length > 0) {
       message.thread_array = message.thread_array.filter(
-        (elem) => elem.real_name == user
+        (elem) => elem.real_name == user || elem.username == user
       )
     }
-    if (message.real_name == user) {
+    if (message.real_name == user || message.username == user) {
       resMessages.push(message)
     }
-    if (message.real_name != user && message.thread_array.length > 0) {
+    if (!(message.real_name == user || message.username == user) && message.thread_array.length > 0) {
       message.text +=
         ' :parent-of-a-thread-with-messages-by-' + user.replace(' ', '-')
       resMessages.push(message)

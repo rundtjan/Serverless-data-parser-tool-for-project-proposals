@@ -6,7 +6,7 @@ const slackService = ({ slackClient }) => {
       const apiResult = await slackClient.users.list({})
       apiResult.members
         .filter((elem) => !elem.is_bot)
-        .forEach((elem) => users.push({ id: elem.id, name: elem.real_name, username: elem.name }))
+        .forEach((elem) => users.push({ id: elem.id, real_name: elem.real_name, username: elem.name }))
     } catch (error) {
       throw new Error(`Error in getUsers: ${error}`)
     }
