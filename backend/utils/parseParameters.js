@@ -27,13 +27,15 @@ const parseParameters = (parameters) => {
   }
   if (parameters.length === 1) {
     if (parameterIsHours(parameters[0])) {
+      const channel = 'general'
       const hours = parameters[0]
-      const args = { hours }
+      const args = { channel, hours }
       return args
     }
     if (parameterIsUsername(parameters[0])) {
+      const channel = 'general'
       const user = parameters[0]
-      const args = { user }
+      const args = { channel, user }
       return args
     }
     if (parameterIsValidChannel(parameters[0])) {
