@@ -1,6 +1,9 @@
 import React from 'react'
 
+import Layout from '../components/Layout'
+
 //import Container from '@mui/material/Container'
+/*
 import { Grid } from '@mui/material'
 
 import { useSelector } from 'react-redux'
@@ -36,6 +39,18 @@ const HomePage = () => {
         { categories ? addCategories() : null }
       </Grid>
     </Grid>
+  )
+}
+*/
+import Messages from '../components/Messages'
+
+const HomePage = () => {
+
+
+  return(
+    <Layout>
+      <Messages />
+    </Layout>
   )
 }
 
