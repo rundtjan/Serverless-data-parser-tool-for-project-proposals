@@ -11,6 +11,7 @@ const {
   saveQuery,
 } = require('./controllers/slackController.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
+const { parseParameters } = require('./utils/parseParameters.js')
 
 app.use(cors())
 app.use(express.static('build'))
@@ -53,6 +54,9 @@ app.post('/api/data', (req, res) => {
 app.post('/api/parse', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "user": USER_NAME, "hours": HOW_MANY_HOURS_BACK}
   const params = req.body.text.split(' ')
+  const parsedParams = parseParameters(params)
+  saveQuery(res, parsedParams)
+  /**
   if (params.length === 0) {
     const channel = 'general'
     const args = { channel }
@@ -79,7 +83,9 @@ app.post('/api/parse', (req, res) => {
     const args = {channel, user, oldest }
     saveQuery(res, args)
   }
+   */
 })
+
 app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
 })
