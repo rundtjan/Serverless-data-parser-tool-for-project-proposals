@@ -52,10 +52,31 @@ describe('Data parser tool ', function() {
     })
 
     it('Unchecking the checkbox removes the word from the column', function() {
-        cy.get('#wordList').parent().find('input').first().click()
+        cy.get('#wordList').find('input').first().click()
         cy.get('#basic-menu').find('li').first().click()
         cy.get('#categoryGrid').find('li').should('exist')
         cy.contains('Words from messages').parent().find('input').first().click()
         cy.contains('Customer').parent().find('li').should('not.exist')
+    })
+
+    it('Clicking Filter words open a drop down meny', function() {
+        cy.contains('Filter words')
+        cy.get('#wordList').find('#filter-button').click()
+        cy.get('#filter-menu').should('exist')
+    })
+
+    it('Labels for filter exist', function() {
+        cy.get('#wordList').find('#filter-button').click()
+        cy.contains('Technology')
+        cy.contains('Number')
+        cy.contains('Date')
+        cy.contains('Show all')
+    })
+
+    it('Category Technology shows right words', function() {
+        cy.get('#wordList').find('#filter-button').click()
+        cy.get('#filter-menu').find('li').first().click()
+        cy.contains('python')
+        !cy.contains('kissa')
     })
 })
