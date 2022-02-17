@@ -57,4 +57,18 @@ describe('Data parser tool ', function() {
         cy.contains('Words from messages').parent().find('input').first().click()
         cy.contains('Customer').parent().find('li').should('not.exist')
     })
+
+    it('Clicking Filter words open a drop down meny', function() {
+        cy.contains('Filter words')
+        cy.get('#wordList').parent().find('#filter-button').click()
+        cy.get('#filter-menu').should('exist')
+    })
+
+    it('Labels for filters exist', function() {
+        cy.get('#wordList').parent().find('#filter-button').click()
+        cy.contains('Technology')
+        cy.contains('Number')
+        cy.contains('Date')
+        cy.contains('Show all')
+    })
 })
