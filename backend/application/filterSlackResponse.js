@@ -75,18 +75,15 @@ const GetWordsFromMessages = (messages) => {
 const ParseWords = (words) => {
   let parsedWords = words.filter(notAnEmoji)
   parsedWords = parsedWords.map((word) => {
+    word = word.toLowerCase()
+    word = RemoveTrailingDots(word)
+    word = RemoveTrailingCommas(word)
+    // If no category is assigned, specialCharacters is removed.
     const category = assignCategoryToWord(word)
     if(category === '') {
       word = RemoveSpecialCharacters(word)
-      word = RemoveTrailingDots(word)
-      word = RemoveTrailingCommas(word)
-      word = word.toLowerCase()
-      return word
-    } else  {
-      word = RemoveTrailingDots(word)
-      word = RemoveTrailingCommas(word)
-      return word
-    }     
+    }  
+    return word   
   })
   return parsedWords
 }
