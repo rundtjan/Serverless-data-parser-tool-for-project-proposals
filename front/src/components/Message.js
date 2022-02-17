@@ -25,30 +25,33 @@ const ExpandMore = styled((props) => {
 
 const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
-  const highlightWord = useSelector(state => state.highlightWord)
+  const highlightWords = useSelector(state => state.highlightWord)
 
 
   /**
-   * Parses the message to highlight the word which is hovered over with mouse
+   * Parses the message to highlight the word which is hovered over with mouse, or tagged withh checkbox
    * @returns Message with highlight
    */
-  const parseMessageText = () => {
+  const parseMessageText = (obj) => {
 
-    if(highlightWord === '') {
+    if(highlightWords.length === 0) {
       return(
         <Typography component='span'>
-          {message.text} sent by {message.real_name}
+          {obj.text} sent by {obj.real_name}
         </Typography>
       )
     }
 
-    const words = message.text.split(new RegExp(`(${highlightWord})`, 'gi'))
+    const pattern = highlightWords.map(highlightword => `\\b${highlightword}\\b`).join('|')
+
+    const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
 
     return(
       <Typography component='span'>
-        {words.map((word, index) => word.toLowerCase() === highlightWord.toLowerCase() ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {message.real_name}
+        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
       </Typography>
     )
+
   }
 
 
@@ -61,7 +64,7 @@ const Message = ({ message }) => {
       <Card elevation={3}>
         <CardContent>
           <Typography component='div' id={'text-'+message.client_msg_id}>
-            {parseMessageText()}
+            {parseMessageText(message)}
             {message.thread_array.length !== 0 && <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
@@ -77,7 +80,7 @@ const Message = ({ message }) => {
           <CardContent>
             <List>
               {message.thread_array.map(thread => (
-                <ListItem key={thread.client_msg_id}>{thread.text} sent by {thread.real_name}</ListItem>
+                <ListItem key={thread.client_msg_id}>{parseMessageText(thread)}</ListItem>
               ))}
             </List>
           </CardContent>
