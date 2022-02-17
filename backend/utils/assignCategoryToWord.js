@@ -4,7 +4,7 @@ function assignCategoryToWord(word) {
   let date = false
   let number = false
   let specialCharacter = false
-
+  
   const technology = technologies.find(t => t.toLowerCase() === word)
   let letters = word.split('')
 
