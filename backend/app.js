@@ -54,20 +54,20 @@ app.post('/api/data', (req, res) => {
 app.post('/api/parse', (req, res) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "user": USER_NAME, "hours": HOW_MANY_HOURS_BACK}
   const params = req.body.text.split(' ')
+  /** 
+   * @TODO: FIX, works with user but not with hours.
   if (params.length !== 3) {
     const parsedParams = parseParameters(params)
     saveQuery(res, parsedParams)
   }
-
-  else {
-    const channel = params[0] || 'general'
-    // username wil be in format @user.name for example @aleksi.suuronen and needs to be implemented
-    const user = params[1]
-    const hours = params[2]
-    const oldest = parseTimestamp(Date.now() * 1000, hours)
-    const args = {channel, user, oldest }
-    saveQuery(res, args)
-  }
+  */
+  const channel = params[0] || 'general'
+  // username wil be in format @user.name for example @aleksi.suuronen and needs to be implemented
+  const user = params[1]
+  const hours = params[2]
+  const oldest = parseTimestamp(Date.now() * 1000, hours)
+  const args = {channel, user, oldest }
+  saveQuery(res, args)
 })
 
 app.get('/api/parse/:id', (req, res) => {
