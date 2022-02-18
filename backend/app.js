@@ -59,25 +59,6 @@ app.post('/api/parse', (req, res) => {
     saveQuery(res, parsedParams)
   }
 
-  /**
-  if (params.length === 0) {
-    const channel = 'general'
-    const args = { channel }
-    saveQuery(res, args)
-  }
-  else if (params.length === 1) {
-    const channel = params[0] || 'general'
-    const args = { channel }
-    saveQuery(res, args)
-  }
-  else if (params.length === 2) {
-    const channel = params[0] || 'general'
-    const user =  params[1]
-    //@TODO: params[1]or the username will be in the format @user.name for example @aleksi.suuronen and needs to be implemented
-    const args = { channel, user }
-    saveQuery(res, args)
-  }*/
-
   else {
     const channel = params[0] || 'general'
     // username wil be in format @user.name for example @aleksi.suuronen and needs to be implemented
