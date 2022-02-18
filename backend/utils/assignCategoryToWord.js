@@ -1,21 +1,21 @@
-const technologies = require('./technologies.json')
+const { technologies } = require('./technologies')
 
 function assignCategoryToWord(word) {
   let date = false
   let number = false
-  let dot = false
+  let specialCharacter = false
 
-  const technology = technologies.find(t => t.toLowerCase() === word)
+  const technology = technologies.has(word)
   let letters = word.split('')
 
   const checkWord = () => {
-    if(letters.find(l => !isNaN(l))) {
+    if(letters.find(l => !isNaN(l) && l !== ' ')) {
       number = true
     }
-    if(letters.find(l => l === '.')) {
-      dot = true
+    if(letters.find(l => l === '.' || l === '-' || l === '/')) {
+      specialCharacter = true
     }
-    if(dot && number) {
+    if(specialCharacter && number) {
       date = true
     } 
   }
