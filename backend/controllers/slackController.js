@@ -15,7 +15,7 @@ async function saveQuery(res, args) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `Your query is ready at : http://135.181.37.120:9999/api/parse/${id}`,
+          text: `Your query is ready at : http://135.181.37.120:80/api/parse/${id}`,
         },
       }
     ],
