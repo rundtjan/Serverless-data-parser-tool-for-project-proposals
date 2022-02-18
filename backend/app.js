@@ -11,7 +11,6 @@ const {
   saveQuery,
 } = require('./controllers/slackController.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
-const { parseParameters } = require('./utils/parseParameters.js')
 
 app.use(cors())
 app.use(express.static('build'))
