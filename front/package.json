@@ -25,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "w_test": "set CI=true && react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ."
   },
