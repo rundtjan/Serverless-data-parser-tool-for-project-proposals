@@ -16,6 +16,7 @@ async function saveQuery(res, args) {
         text: {
           type: 'mrkdwn',
           text: `Your query is ready at : http://135.181.37.120:80/api/parse/${id}`,
+          //text: `Your query is ready at : http://localhost/api/parse/${id}`,
         },
       }
     ],
@@ -27,12 +28,12 @@ async function returnQuery(res, id) {
     if (id in savedQueries) {
       res.send(savedQueries[id])
     } else {
-      res.sendStatus(401)
+      res.sendStatus(400)
     }
   } catch (error) {
     if (error) {
       console.error(error)
-      res.sendStatus(501)
+      res.sendStatus(500)
     }
   }
 }
