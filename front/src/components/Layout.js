@@ -9,6 +9,7 @@ import Divider from '@mui/material/Divider'
 
 //Tomi Testikama
 import TestForm from './TestForm'
+import TestPage from './TestPage'
 
 //Components
 import DrawerParameters from './DrawerParameters'
@@ -21,7 +22,13 @@ const Layout = ({ children }) => {
   console.log(children)
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        backgroundColor: '#c8e6c9',
+        width: '100%'
+      }}
+    >
       {/* AppBar */}
       <AppBar
         sx={{
@@ -61,9 +68,10 @@ const Layout = ({ children }) => {
       {/*Main area*/}
       <Box
         component='main'
+        sx={{ flexGrow:1, p: 3 }}
       >
         <Toolbar />
-        MAin area
+        <TestPage />
       </Box>
     </Box>
   )
