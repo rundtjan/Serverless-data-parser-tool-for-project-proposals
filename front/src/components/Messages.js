@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 
 //Components
-import Message from './TestMessage'
+import Message from './Message'
 
 /**
  * Displays the messages from the slack.
