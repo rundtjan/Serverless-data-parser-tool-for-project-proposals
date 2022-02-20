@@ -32,9 +32,9 @@ const Layout = ({ children }) => {
       <CssBaseline />
       {/* AppBar */}
       <AppBar
+        position='fixed'
         sx={{
-          width: `calc(100% - ${drawerWidth}px)`,
-          ml: `${drawerWidth}px`
+          zIndex: (theme) => theme.zIndex.drawer + 1
         }}
       >
         <Toolbar>
