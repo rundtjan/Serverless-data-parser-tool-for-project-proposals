@@ -1,5 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+//Reducers
+import { getMessagesParameters } from '../reducers/dataReducer'
+import { clearAssignedWords } from '../reducers/assignReducer'
+
 
 //Mui stuff
 import Grid from '@mui/material/Grid'
@@ -13,7 +19,20 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
 const TestForm = () => {
+  const [channel, setChannel] = useState('')
+  const [user, setUser] = useState('')
+  const [hours, setHours] = useState('')
+  const dispatch = useDispatch()
+
   const channels = useSelector(state => state.channel)
+
+  const putParameters = async(event) => {
+    event.preventDefault()
+    dispatch(getMessagesParameters(channel, user, hours))
+    dispatch(clearAssignedWords())
+  }
+
+
 
   return(
     <Box
@@ -33,6 +52,7 @@ const TestForm = () => {
               label='Channel'
               defaultValue='general'
               input={<OutlinedInput label='Channel'/>}
+              onChange={({ target }) => setChannel(target.value)}
             >
               {channels.map((channel) => (
                 <MenuItem
@@ -50,6 +70,7 @@ const TestForm = () => {
               sx={{
                 mt:1
               }}
+              onChange={({ target }) => setUser(target.value)}
             />
             <TextField
               id='hours'
@@ -58,11 +79,18 @@ const TestForm = () => {
               sx={{
                 mt:1
               }}
+              onChange={({ target }) => setHours(target.value)}
             />
           </FormControl>
         </Grid>
         <Grid item>
-          <Button variant='outlined' id='submit'>Go</Button>
+          <Button
+            variant='outlined'
+            id='submit'
+            onClick={putParameters}
+          >
+            Go
+          </Button>
         </Grid>
 
       </Grid>

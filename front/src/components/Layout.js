@@ -26,8 +26,7 @@ const Layout = ({ children }) => {
     <Box
       sx={{
         display: 'flex',
-        backgroundColor: '#c8e6c9',
-        width: '100%'
+        backgroundColor: '#c8e6c9'
       }}
     >
       <CssBaseline />
