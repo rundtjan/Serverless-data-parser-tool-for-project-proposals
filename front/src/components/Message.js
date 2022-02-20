@@ -54,13 +54,15 @@ const Message = ({ message }) => {
     }
     return(
       <Collapse in={expanded}>
-        <List>
+        <List sx={{ py: 0, my: 0 }}>
           {threads.map(thread => (
             <ListItem
               key={thread.client_msg_id}
               divider
               sx={{
                 pl:4,
+                py: 0,
+                my: 0,
                 backgroundColor: '#eeeeee'
               }}
             >
@@ -100,8 +102,8 @@ const Message = ({ message }) => {
 
   return(
     <Box>
-      <ListItemButton onClick={handleExpandClick} divider>
-        <ListItemText primary={parseText(message)}/>
+      <ListItemButton onClick={handleExpandClick} divider sx={{ py:0, my:0 }}>
+        <ListItemText primary={parseText(message)} sx={{ py:0, my:0 }}/>
         {showExpandIcon()}
       </ListItemButton>
       {showThreads()}

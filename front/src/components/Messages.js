@@ -56,7 +56,7 @@ const Messages = () => {
       </Typography>
       <Divider />
       <Box sx={{ overflow: 'scroll', minHeigth: 0 }}>
-        <List dense>
+        <List sx={{ py: 0, my:0 }}>
           {messages.map(message => (
             <Message key={message.client_msg_id} message={message}/>
           ))}
