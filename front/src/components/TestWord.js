@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -15,11 +14,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 //Reducers
 import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
-import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
+import { setAssignedWord } from '../reducers/assignReducer'
 import { IconButton } from '@mui/material'
 
 
-const TestWord = ({ word }) => {
+const Word = ({ word }) => {
   const [checked, setChecked] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -107,4 +106,4 @@ const TestWord = ({ word }) => {
   )
 }
 
-export default TestWord
+export default Word

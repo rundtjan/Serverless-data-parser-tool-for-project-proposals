@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 import TestWord from './TestWord'
 
 
-const TestWords = () => {
+const Words = () => {
   const words = useSelector(state => state.data.words)
   const [ category, setCategory ] = useState('Show all')
   const filterCategories = ['Technology', 'Number', 'Date', 'Show all']
@@ -168,4 +168,4 @@ const TestWords = () => {
   )
 }
 
-export default TestWords
+export default Words

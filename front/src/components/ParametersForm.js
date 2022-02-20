@@ -17,7 +17,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
-const UserForm = () => {
+const ParametersForm = () => {
   const [channel, setChannel] = useState('')
   const [user, setUser] = useState('')
   const [hours, setHours] = useState('')
@@ -97,4 +97,4 @@ const UserForm = () => {
   )
 }
 
-export default UserForm
+export default ParametersForm

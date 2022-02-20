@@ -8,19 +8,15 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import CssBaseline from '@mui/material/CssBaseline'
 
-//Tomi Testikama
-import TestForm from './TestForm'
-import TestPage from './TestPage'
 
 //Components
 import DrawerParameters from './DrawerParameters'
+import ParametersForm from './ParametersForm'
 
 const drawerWidth = 240
 
 
 const Layout = ({ children }) => {
-
-  console.log(children)
 
   return (
     <Box
@@ -64,7 +60,7 @@ const Layout = ({ children }) => {
         <Divider />
         <DrawerParameters />
         <Divider />
-        <TestForm />
+        <ParametersForm />
       </Drawer>
       {/*Main area*/}
       <Box
@@ -72,7 +68,7 @@ const Layout = ({ children }) => {
         sx={{ flexGrow:1, p: 3 }}
       >
         <Toolbar />
-        <TestPage />
+        { children }
       </Box>
     </Box>
   )

@@ -15,7 +15,7 @@ import TestMessage from './TestMessage'
  * - Uses box layout
  * @returns Box containing messages
  */
-const TestMessages = () => {
+const Messages = () => {
   const messages = useSelector(state => state.data.messages)
 
   if(!messages) {
@@ -66,4 +66,4 @@ const TestMessages = () => {
   )
 }
 
-export default TestMessages
+export default Messages

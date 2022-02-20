@@ -21,7 +21,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
  * @param {*} category
  * @returns Grid-item containing box for category
  */
-const TestCategory = ({ category }) => {
+const Category = ({ category }) => {
   const assignedWords = useSelector(state => state.assignedWords.filter(word => word.category === category))
   const dispatch = useDispatch()
 
@@ -79,4 +79,4 @@ const TestCategory = ({ category }) => {
   )
 }
 
-export default TestCategory
+export default Category

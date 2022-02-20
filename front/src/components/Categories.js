@@ -7,14 +7,14 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 //Components
-import TestCategory from './TestCategory'
+import Category from './Category'
 
 
 /**
  * Layout for the categories
  * @returns Grid containing category boxes
  */
-const TestCategories = () => {
+const Categories = () => {
   const categories = useSelector(state => state.data.categories)
 
   if(!categories) {
@@ -40,9 +40,9 @@ const TestCategories = () => {
 
   return(
     <Grid container item xs={12} id='categoryGrid' justifyContent='space-between' spacing={2}>
-      {categories.map(category => <TestCategory key={category} category={category}/>)}
+      {categories.map(category => <Category key={category} category={category}/>)}
     </Grid>
   )
 }
 
-export default TestCategories
+export default Categories

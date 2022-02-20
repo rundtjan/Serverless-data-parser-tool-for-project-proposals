@@ -13,7 +13,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 
 
-const TestMessage = ({ message }) => {
+const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
   const highlightWords = useSelector(state => state.highlightWord)
 
@@ -109,4 +109,4 @@ const TestMessage = ({ message }) => {
   )
 }
 
-export default TestMessage
+export default Message
