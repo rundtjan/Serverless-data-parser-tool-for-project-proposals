@@ -67,8 +67,8 @@ const TestWord = ({ word }) => {
       key={word.word}
       disablePadding
       secondaryAction={
-        <IconButton edge='end' aria-label='category'>
-          <MenuIcon onClick={handleMenuOpen}/>
+        <IconButton edge='end' aria-label='category' onClick={handleMenuOpen}>
+          <MenuIcon />
         </IconButton>
       }
     >
