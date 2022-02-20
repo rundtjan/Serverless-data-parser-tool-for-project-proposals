@@ -25,7 +25,7 @@ const TestMessage = ({ message }) => {
 
   /**
    * If message has threads, returns correct expand-icon according to the state.
-   * Returns null, if message does not have threads
+   * - Returns null, if message does not have threads
    * @returns ExpandIcon for message
    */
   const showExpandIcon = () => {
@@ -72,6 +72,12 @@ const TestMessage = ({ message }) => {
     )
   }
 
+  /**
+   * Adds highlighting functionality to the text.
+   * - Uses RexExp to split the text.
+   * @param {Object} obj - Object containing the text
+   * @returns Typography containing higlights
+   */
   const parseText = (obj) => {
 
     if(highlightWords.length === 0) {

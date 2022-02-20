@@ -16,11 +16,20 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 
-
+/**
+ * Component for category.
+ * @param {*} category
+ * @returns Grid-item containing box for category
+ */
 const TestCategory = ({ category }) => {
   const assignedWords = useSelector(state => state.assignedWords.filter(word => word.category === category))
   const dispatch = useDispatch()
 
+  /**
+   * Removes the word from the category.
+   * @see unAssignWord
+   * @param {*} word
+   */
   const handleRemoveFromCategory = (word) => {
     dispatch(unAssignWord(word))
   }

@@ -4,13 +4,16 @@ import { useSelector } from 'react-redux'
 //Mui componennts
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typograpy'
 
-//Tomin testikamaa
+//Components
 import TestCategory from './TestCategory'
-import { Typography } from '@mui/material'
 
 
-
+/**
+ * Layout for the categories
+ * @returns Grid containing category boxes
+ */
 const TestCategories = () => {
   const categories = useSelector(state => state.data.categories)
 

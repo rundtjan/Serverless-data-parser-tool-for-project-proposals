@@ -3,18 +3,17 @@ import React from 'react'
 //Mui components
 import Grid from '@mui/material/Grid'
 
-
-//Tomin testi componentit
+//Components
 import TestMessages from '../components/TestMessages'
 import TestWords from '../components/TestWords'
 import TestCategories from './TestCategories'
 
 
-
+/**
+ * Default page for the parsa-app
+ * @returns Homepage content
+ */
 const TestPage = () => {
-
-
-
 
   return(
     <Grid container spacing={3}>

@@ -3,15 +3,18 @@ import { useSelector } from 'react-redux'
 
 //Mui components
 import Box from '@mui/material/Box'
-//import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 
-
-//Tomi Testikama
+//Components
 import TestMessage from './TestMessage'
 
+/**
+ * Displays the messages from the slack.
+ * - Uses box layout
+ * @returns Box containing messages
+ */
 const TestMessages = () => {
   const messages = useSelector(state => state.data.messages)
 
@@ -53,7 +56,6 @@ const TestMessages = () => {
       </Typography>
       <Divider />
       <Box sx={{ overflow: 'scroll', minHeigth: 0 }}>
-        {/*Slack Messages*/}
         <List dense>
           {messages.map(message => (
             <TestMessage key={message.client_msg_id} message={message}/>
