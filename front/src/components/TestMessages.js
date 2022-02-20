@@ -17,9 +17,24 @@ const TestMessages = () => {
 
   if(!messages) {
     return(
-      <div>
-        loading
-      </div>
+      <Box
+        sx={{
+          backgroundColor: '#fafafa',
+          height: 600,
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <Typography variant='h6' textAlign='center' justifyContent='center'>
+          Slack Messages
+        </Typography>
+        <Divider />
+        <Box>
+          <Typography variant='h5' textAlign='center'>
+            Loading...
+          </Typography>
+        </Box>
+      </Box>
     )
   }
 

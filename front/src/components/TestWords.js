@@ -59,9 +59,47 @@ const TestWords = () => {
 
   if(!words) {
     return(
-      <div>
-        loading
-      </div>
+      <Box
+        sx={{
+          backgroundColor: '#fafafa',
+          height: 600,
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <Typography variant='h6' textAlign='center'>
+          Words from messages
+        </Typography>
+        <Divider />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            m: 1
+          }}
+        >
+          <Typography>
+            Filter: {category}
+          </Typography>
+          <Button
+            id='filter-button'
+            aria-controls={open ? 'filter-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            variant='contained'
+            size='small'
+          >
+        Filter words
+          </Button>
+        </Box>
+        <Box>
+          <Typography variant='h5' textAlign='center'>
+          Loading...
+          </Typography>
+        </Box>
+      </Box>
     )
   }
 

@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux'
 
 //Mui componennts
 import Grid from '@mui/material/Grid'
-//import Box from '@mui/material/Box'
+import Box from '@mui/material/Box'
 
 //Tomin testikamaa
 import TestCategory from './TestCategory'
+import { Typography } from '@mui/material'
 
 
 
@@ -15,9 +16,22 @@ const TestCategories = () => {
 
   if(!categories) {
     return(
-      <div>
-        loading
-      </div>
+      <Box
+        sx={{
+          backgroundColor: '#fafafa',
+          height: 200,
+          width: '100%',
+          display: 'flex',
+          ml: 3,
+          mt: 3,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Typography variant='h5' textAlign='center' justifyContent='center'>
+          Loading...
+        </Typography>
+      </Box>
     )
   }
 
