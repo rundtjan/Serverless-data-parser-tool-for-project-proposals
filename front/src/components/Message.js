@@ -85,7 +85,7 @@ const Message = ({ message }) => {
     if(highlightWords.length === 0) {
       return(
         <Typography component='span'>
-          {obj.text}
+          {obj.text} [{obj.real_name}]
         </Typography>
       )
     }
@@ -95,7 +95,7 @@ const Message = ({ message }) => {
 
     return(
       <Typography component='span'>
-        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)}
+        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} [{obj.real_name}]
       </Typography>
     )
   }
