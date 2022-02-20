@@ -50,9 +50,9 @@ const parameterIsValidChannel = async (param) => {
  * Checks the amount and type of parameters e.g "24" as a number, @user.name as a user and so on.
  * All parameters are optional: {"channel": CHANNEL_NAME, "user": USER_NAME, "hours": HOW_MANY_HOURS_BACK}
  * TODO: Possibly in the future to work with 2 parametersm e.g "@user.name, 24" or "general, 24" and so on.
- * @param {*} parameters 
- * @param {*} source_channel 
- * @returns 
+ * @param {An object of parameters, expected 0, 1 or 3} parameters 
+ * @param {Channel where the command is sent e.g "general" or "random"} source_channel 
+ * @returns arguments depending on the parameters which are passed then forward.
  */
 const parseParameters = async (parameters, source_channel) => {
   if (parameters.length === 0) {
@@ -91,7 +91,6 @@ const parseParameters = async (parameters, source_channel) => {
     }
   }
   if (parameters.length === 3) {
-    console.log(parameters)
     const isValidChannel = await parameterIsValidChannel(parameters[0])
     if(!isValidChannel) throw new Error('Invalid Channel')
     const channel = parameters[0] || 'general'
