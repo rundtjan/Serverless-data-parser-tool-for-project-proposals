@@ -17,16 +17,15 @@ const parameterIsHours = (param) => {
 
 const parameterIsValidChannel = async (param) => {
   const validChannels = await slack.getChannels()
-
-  for (const channel in validChannels) {
-    if (param === channel) {
+  for (const channel in validChannels.channels) {
+    if (param === validChannels.channels[channel].name) {      
       return true
     }
   }
   return false
 }
 
-const parseParameters = (parameters, source_channel) => {
+const parseParameters = async (parameters, source_channel) => {
   //expects a post with data in format, all parameters are optional: {"channel": CHANNEL_NAME, "user": USER_NAME, "hours": HOW_MANY_HOURS_BACK}
   if (parameters.length === 0) {
     const channel = source_channel
@@ -59,9 +58,14 @@ const parseParameters = (parameters, source_channel) => {
       const oldest = parseTimestamp(Date.now() * 1000, null)
       const args = { channel, user, oldest }
       return args
+    } else {
+      throw new Error('Invalid parameter(s).')
     }
   }
   if (parameters.length === 3) {
+    console.log(parameters)
+    const isValidChannel = await parameterIsValidChannel(parameters[0])
+    if(!isValidChannel) throw new Error('Invalid Channel')
     const channel = parameters[0] || 'general'
     // username wil be in format @user.name for example @aleksi.suuronen and needs to be implemented
     const user = parameters[1]

@@ -12,7 +12,8 @@ const {
 } = require('./controllers/slackController.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
 const { parseParameters } = require('./utils/parseParameters')
-const invalidNumberOfArguments = require('./utils/slackErrorResponses')
+const { invalidNumberOfArguments,errorResponseObject } = require('./utils/slackErrorResponses')
+//const errorResponseObject = require('./utils/slackErrorResponses')
 app.use(cors())
 app.use(express.static('build'))
 app.use(
@@ -51,16 +52,19 @@ app.post('/api/data', (req, res) => {
   importHistory(res, args)
 })
 
-app.post('/api/parse', (req, res) => {
+app.post('/api/parse', async (req, res) => {
+  if(!req.body.text && !req.body.channel_name) res.sendStatus(400)
   try {
     const params = req.body.text.split(' ').filter(Boolean)
     if (params.length < 2 || params.length === 3) {
-      const parsedParams = parseParameters(params, req.body.channel_name)
+      const parsedParams = await parseParameters(params, req.body.channel_name)
       saveQuery(res, parsedParams)
     } else {
       res.json(invalidNumberOfArguments(params.length))
     }
-  } catch {res.sendStatus(500)}
+  } catch (error){
+    res.json(errorResponseObject(error.message))
+  }
 })
 
 app.get('/api/parse/:id', (req, res) => {

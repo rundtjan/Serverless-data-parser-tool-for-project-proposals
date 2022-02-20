@@ -1,15 +1,30 @@
-const invalidAmountOfArguments = (number) => {
+const invalidNumberOfArguments = (number) => {
   const obj = {
     blocks: [
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `incorrect number of parameters : ${number}`,
+          text: `Incorrect number of parameters : ${number}`,
         },
       },
     ],
   }
   return obj
 }
-module.exports = invalidAmountOfArguments
+
+const errorResponseObject = (message) => {
+  const obj = {
+    blocks: [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `Sorry, that didn't work: ${message}`,
+        },
+      },
+    ],
+  }
+  return obj
+}
+module.exports = {invalidNumberOfArguments, errorResponseObject}
