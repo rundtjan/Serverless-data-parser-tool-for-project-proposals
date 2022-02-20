@@ -6,6 +6,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
+import CssBaseline from '@mui/material/CssBaseline'
 
 //Tomi Testikama
 import TestForm from './TestForm'
@@ -29,6 +30,7 @@ const Layout = ({ children }) => {
         width: '100%'
       }}
     >
+      <CssBaseline />
       {/* AppBar */}
       <AppBar
         sx={{

@@ -60,7 +60,8 @@ const TestMessage = ({ message }) => {
               key={thread.client_msg_id}
               divider
               sx={{
-                pl:4
+                pl:4,
+                backgroundColor: '#eeeeee'
               }}
             >
               {parseText(thread)}
@@ -86,7 +87,7 @@ const TestMessage = ({ message }) => {
 
     return(
       <Typography component='span'>
-        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
+        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)}
       </Typography>
     )
   }
