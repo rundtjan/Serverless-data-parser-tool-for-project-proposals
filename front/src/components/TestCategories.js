@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 //Mui componennts
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typograpy'
+import Typography from '@mui/material/Typography'
 
 //Components
 import TestCategory from './TestCategory'
