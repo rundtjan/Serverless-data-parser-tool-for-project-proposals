@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 //Reducers
 import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
-import { setAssignedWord } from '../reducers/assignReducer'
+import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
 import { IconButton } from '@mui/material'
 
 
@@ -31,6 +31,7 @@ const Word = ({ word }) => {
   const handleToggle = () => {
     if(checked) {
       dispatch(clearHighlightedWords(word.word))
+      dispatch(unAssignWord(word.word))
     } else {
       dispatch(addHighlightedWord(word.word))
     }
@@ -56,6 +57,7 @@ const Word = ({ word }) => {
   const handleMenuClose = (event) => {
     if(event.currentTarget.id) {
       dispatch(setAssignedWord(word.word, event.currentTarget.id))
+      if(!checked) handleToggle()
     }
     setAnchorEl(null)
   }

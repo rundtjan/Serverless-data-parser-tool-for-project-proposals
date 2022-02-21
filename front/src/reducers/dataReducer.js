@@ -6,6 +6,9 @@ const reducer = (state = [], action) => {
     return action.data
   case 'UPDATE_MESSAGES':
     return action.data
+  case 'ADD_CHECKED':{
+    return state.data.checked[action.data.word] = true
+  }
   default:
     return state
   }
