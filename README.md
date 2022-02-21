@@ -1,4 +1,4 @@
-# Serverless data parser tool for project proposals
+# Parsa aka Serverless data parser tool for project proposals
 
 ![CI workflow](https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals/actions/workflows/main.yml/badge.svg)
 
