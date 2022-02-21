@@ -51,7 +51,7 @@ const Category = ({ category }) => {
         <Divider />
         <Box
           sx={{
-            overflow: 'scroll', minHeigth: 0
+            overflow: 'scroll', minHeight: 170
           }}
         >
           <List dense>
