@@ -60,10 +60,8 @@ const Category = ({ category }) => {
                 key={word.word + '-assignItem'}
                 divider
                 secondaryAction={
-                  <IconButton edge='end'>
-                    <DeleteIcon
-                      onClick={() => handleRemoveFromCategory(word.word)}
-                    />
+                  <IconButton edge='end' onClick={() => handleRemoveFromCategory(word.word)}>
+                    <DeleteIcon/>
                   </IconButton>
                 }
               >

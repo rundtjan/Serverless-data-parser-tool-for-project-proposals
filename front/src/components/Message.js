@@ -74,6 +74,19 @@ const Message = ({ message }) => {
     )
   }
 
+  const parseTime = (ts) => {
+    const a = new Date(ts * 1000)
+    const hours = a.getHours()
+    let minutes = a.getMinutes()
+    const date = a.getDate()
+    const month = a.getMonth() + 1
+
+    return(
+      hours + ':' + minutes + '(' + date + '.' + month + ')'
+    )
+  }
+
+
   /**
    * Adds highlighting functionality to the text.
    * - Uses RexExp to split the text.
@@ -85,7 +98,7 @@ const Message = ({ message }) => {
     if(highlightWords.length === 0) {
       return(
         <Typography component='span'>
-          {obj.text} [{obj.real_name}]
+          {obj.text} [{obj.real_name}][{parseTime(obj.ts)}]
         </Typography>
       )
     }
@@ -95,7 +108,7 @@ const Message = ({ message }) => {
 
     return(
       <Typography component='span'>
-        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} [{obj.real_name}]
+        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} [{obj.real_name}][{parseTime(obj.ts)}]
       </Typography>
     )
   }
