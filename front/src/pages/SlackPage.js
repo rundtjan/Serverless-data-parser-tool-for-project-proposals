@@ -1,5 +1,7 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+
 //Mui components
 import Grid from '@mui/material/Grid'
 
@@ -9,16 +11,15 @@ import Words from '../components/Words'
 import Categories from '../components/Categories'
 import Layout from '../components/Layout'
 
-import { initializeMessages } from '../reducers/dataReducer'
+//Reducers
+import { getParamMessages } from '../reducers/dataReducer'
 
 
-
-const HomePage = () => {
-
+const SlackPage = () => {
+  const id = useParams().id.toString()
   const dispatch = useDispatch()
 
-  dispatch(initializeMessages())
-
+  dispatch(getParamMessages(id))
 
   return(
     <Layout>
@@ -35,4 +36,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default SlackPage
