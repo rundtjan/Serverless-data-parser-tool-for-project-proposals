@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 //Mui components
 import Grid from '@mui/material/Grid'
@@ -6,6 +7,45 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 const DrawerParameters = () => {
+  const parameters = useSelector(state => state.parameters)
+
+  if (!parameters){
+    return(
+      <Box
+        bgcolor='#f9f9f9'
+        sx={{
+          p: 2
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+            >
+                  Current parameters
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+                  Channel: ...
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+                  User: ...
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+                  Hours: ...
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    )
+  }
 
   return(
     <Box
@@ -26,17 +66,17 @@ const DrawerParameters = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Channel: todo
+                Channel: { parameters[0] }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                User: todo
+                User: { parameters[1] }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Hours: todo
+                Hours: { parameters[2] }
           </Typography>
         </Grid>
       </Grid>
