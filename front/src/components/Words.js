@@ -37,7 +37,7 @@ const Words = () => {
   const getWordsList = () => {
     if(category === 'Show all') {
       return(
-        <List dense>
+        <List sx={{ py: 0, my:0 }}>
           {words.map(word => (
             <Word key={word.word} word={word}/>
           ))}
@@ -46,7 +46,7 @@ const Words = () => {
     }
 
     return(
-      <List dense>
+      <List sx={{ py: 0, my:0 }}>
         {words.filter(word => word.category === category).map(word => (
           <Word key={word.word} word={word}/>
         ))}
@@ -158,9 +158,7 @@ const Words = () => {
           overflow: 'scroll', minHeigth: 0
         }}
       >
-        <List dense>
-          {getWordsList()}
-        </List>
+        {getWordsList()}
       </Box>
     </Box>
   )

@@ -76,14 +76,18 @@ const Word = ({ word }) => {
         onClick={handleToggle}
         onMouseOver={() => handleAddHighlight()}
         onMouseOut={() => handleClearHighlight()}
+        sx={{ py: 0, my:0 }}
       >
         <ListItemIcon>
           <Checkbox
             edge='start'
             checked={checked}
+            sx={{ py: 0, my:0 }}
           />
         </ListItemIcon>
-        <ListItemText>
+        <ListItemText
+          sx={{ py: 0, my:0 }}
+        >
           {word.word}: {word.count}
         </ListItemText>
       </ListItemButton>
