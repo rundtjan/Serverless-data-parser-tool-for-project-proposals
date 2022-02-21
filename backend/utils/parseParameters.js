@@ -61,7 +61,19 @@ const parseParameters = async (parameters, source_channel) => {
     const oldest = parseTimestamp(Date.now() * 1000, null)
     const args = { channel, user, oldest }
     return args
-  }
+  } else {
+    const args = { channel: false, user: null, oldest: false}
+    parameters.forEach(element => {
+      if (parameterIsUsername(element) && !args.user) args.user = element
+      else if (parameterIsHours(element) && !args.oldest) args.oldest = parseTimestamp(Date.now() * 1000, element)
+      else if (parameterIsValidChannel(element) && !args.channel) args.channel = element
+      else throw new Error('Invalid parameters')
+    })
+    if (!args.channel) args.channel = source_channel
+    return args
+}
+
+/*
   if (parameters.length === 1) {
     
     if (parameterIsHours(parameters[0])) {
@@ -99,7 +111,7 @@ const parseParameters = async (parameters, source_channel) => {
     const oldest = parseTimestamp(Date.now() * 1000, hours)
     const args = { channel, user, oldest }
     return args
-  }
+  }*/
 }
 
 module.exports = { parseParameters }

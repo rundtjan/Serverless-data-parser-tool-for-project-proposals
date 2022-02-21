@@ -56,7 +56,7 @@ app.post('/api/parse', async (req, res) => {
   if(!req.body.text && !req.body.channel_name) res.sendStatus(400)
   try {
     const params = req.body.text.split(' ').filter(Boolean)
-    if (params.length < 2 || params.length === 3) {
+    if (params.length <= 3) {
       const parsedParams = await parseParameters(params, req.body.channel_name)
       saveQuery(res, parsedParams)
     } else {
