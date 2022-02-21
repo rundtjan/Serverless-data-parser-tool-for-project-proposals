@@ -74,12 +74,17 @@ const Message = ({ message }) => {
     )
   }
 
+  /**
+   * Parses timestamp to easier string to read
+   * @param {*} ts
+   * @returns Time in stringformat: [hours:minutes(day.month)]
+   */
   const parseTime = (ts) => {
     const a = new Date(ts * 1000)
-    const hours = a.getHours()
-    let minutes = a.getMinutes()
-    const date = a.getDate()
-    const month = a.getMonth() + 1
+    const hours = ('0' + a.getHours()).slice(-2)
+    const minutes = ('0' + a.getMinutes()).slice(-2)
+    const date = ('0' + a.getDate()).slice(-2)
+    const month = ('0' + (a.getMonth() + 1)).slice(-2)
 
     return(
       hours + ':' + minutes + '(' + date + '.' + month + ')'
