@@ -24,6 +24,16 @@ describe('Data parser tool ', function() {
         cy.get('#messageList').find('button').first().parent().parent().parent().children().should('have.length.of.at.least', 2)
     })
 
+    it('Message without an expander has no thread', function(){
+        cy.get('#messageList').find('ul').first().find('.MuiGrid-root').each(($el, index, $list) => {
+        cy.log($el)
+        if ($el.find('button').length == 0){//message has no expander
+            cy.log('not finding any button')
+
+        }
+        })
+    })
+
     it('Message which is not a thread does not have an expander', function() {
         cy.contains('Slack messages')
         cy.contains('Diba daba sent by Jan Rundt')
