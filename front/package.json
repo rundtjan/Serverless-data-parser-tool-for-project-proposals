@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.3.1",
     "@mui/material": "^5.3.1",
     "@mui/styled-engine-sc": "^5.3.0",
+    "@mui/styles": "^5.4.2",
     "@mui/system": "^5.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
@@ -25,6 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "w_test": "set CI=true && react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ."
   },
