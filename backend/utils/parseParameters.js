@@ -49,7 +49,7 @@ const parameterIsValidChannel = async (param) => {
  * Function which takes the Slash command parameters sent from the Slack workspace.
  * Checks the amount and type of parameters e.g "24" as a number, @user.name as a user and so on.
  * All parameters are optional: {"channel": CHANNEL_NAME, "user": USER_NAME, "hours": HOW_MANY_HOURS_BACK}
- * TODO: Possibly in the future to work with 2 parametersm e.g "@user.name, 24" or "general, 24" and so on.
+ * TODO: Possibly in the future to work with 2 parameters e.g "@user.name, 24" or "general, 24" and so on.
  * @param {An object of parameters, expected 0, 1 or 3} parameters 
  * @param {Channel where the command is sent e.g "general" or "random"} source_channel 
  * @returns arguments depending on the parameters which are passed then forward.
@@ -74,4 +74,10 @@ const parseParameters = async (parameters, source_channel) => {
   }
 }
 
-module.exports = { parseParameters }
+module.exports = {
+  parseParameters,
+  isNumeric,
+  parameterIsHours,
+  parameterIsUsername,
+  parameterIsValidChannel
+}
