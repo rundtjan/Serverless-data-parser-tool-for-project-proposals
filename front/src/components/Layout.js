@@ -12,6 +12,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 //Components
 import DrawerParameters from './DrawerParameters'
 import ParametersForm from './ParametersForm'
+import SendToHubspot from './SendToHubspot'
 
 const drawerWidth = 240
 
@@ -61,6 +62,8 @@ const Layout = ({ children }) => {
         <DrawerParameters />
         <Divider />
         <ParametersForm />
+        <Divider />
+        <SendToHubspot />
       </Drawer>
       {/*Main area*/}
       <Box
