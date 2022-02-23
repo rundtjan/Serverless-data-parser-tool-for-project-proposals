@@ -1,92 +1,131 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import CardContent from '@mui/material/CardContent'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import IconButton from '@mui/material/IconButton'
-import { styled } from '@mui/material/styles'
-import { ListItem, Typography, List } from '@mui/material'
-import Collapse from '@mui/material/Collapse'
+//Mui components
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import ListItem from '@mui/material/ListItem'
+import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Collapse from '@mui/material/Collapse'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 
-const ExpandMore = styled((props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { expand, ...other } = props
-  return <IconButton {...other} />
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}))
 
 const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
   const highlightWords = useSelector(state => state.highlightWord)
 
-
-  /**
-   * Parses the message to highlight the word which is hovered over with mouse, or tagged withh checkbox
-   * @returns Message with highlight
-   */
-  const parseMessageText = (obj) => {
-
-    if(highlightWords.length === 0) {
-      return(
-        <Typography component='span'>
-          {obj.text} sent by {obj.real_name}
-        </Typography>
-      )
-    }
-
-    const pattern = highlightWords.map(highlightword => `\\b${highlightword}\\b`).join('|')
-
-    const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
-
-    return(
-      <Typography component='span'>
-        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} sent by {obj.real_name}
-      </Typography>
-    )
-
-  }
-
+  const threads = message.thread_array
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
 
-  return(
-    <Grid item xs={12}>
-      <Card elevation={3}>
-        <CardContent>
-          <Typography component='div' id={'text-'+message.client_msg_id}>
-            {parseMessageText(message)}
-            {message.thread_array.length !== 0 && <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-              id={'button-'+message.client_msg_id}
+  /**
+   * If message has threads, returns correct expand-icon according to the state.
+   * - Returns null, if message does not have threads
+   * @returns ExpandIcon for message
+   */
+  const showExpandIcon = () => {
+    if(threads.length === 0) {
+      return null
+    }
+
+    if(expanded) {
+      return(
+        <ExpandLess />
+      )
+    } else {
+      return(
+        <ExpandMore />
+      )
+    }
+  }
+
+  /**
+   * If message has threads, returns them in a list.
+   * @returns Collapse containing threads list
+   */
+  const showThreads = () => {
+    if(threads.length === 0) {
+      return null
+    }
+    return(
+      <Collapse in={expanded}>
+        <List sx={{ py: 0, my: 0 }}>
+          {threads.map(thread => (
+            <ListItem
+              key={thread.client_msg_id}
+              divider
+              sx={{
+                pl:4,
+                py: 0,
+                my: 0,
+                backgroundColor: '#eeeeee'
+              }}
             >
-              <ExpandMoreIcon />
-            </ExpandMore>}
-          </Typography>
-        </CardContent>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <List>
-              {message.thread_array.map(thread => (
-                <ListItem key={thread.client_msg_id}>{parseMessageText(thread)}</ListItem>
-              ))}
-            </List>
-          </CardContent>
-        </Collapse>
-      </Card>
-    </Grid>
+              {parseText(thread)}
+            </ListItem>
+          ))}
+        </List>
+      </Collapse>
+    )
+  }
+
+  /**
+   * Parses timestamp to easier string to read
+   * @param {*} ts
+   * @returns Time in stringformat: [hours:minutes(day.month)]
+   */
+  const parseTime = (ts) => {
+    const a = new Date(ts * 1000)
+    const hours = ('0' + a.getHours()).slice(-2)
+    const minutes = ('0' + a.getMinutes()).slice(-2)
+    const date = ('0' + a.getDate()).slice(-2)
+    const month = ('0' + (a.getMonth() + 1)).slice(-2)
+
+    return(
+      hours + ':' + minutes + '(' + date + '.' + month + ')'
+    )
+  }
+
+
+  /**
+   * Adds highlighting functionality to the text.
+   * - Uses RexExp to split the text.
+   * @param {Object} obj - Object containing the text
+   * @returns Typography containing higlights
+   */
+  const parseText = (obj) => {
+
+    if(highlightWords.length === 0) {
+      return(
+        <Typography component='span'>
+          {obj.text} [{obj.real_name}][{parseTime(obj.ts)}]
+        </Typography>
+      )
+    }
+
+    const pattern = highlightWords.map(highlightword => `\\b${highlightword}\\b`).join('|')
+    const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
+
+    return(
+      <Typography component='span'>
+        {words.map((word, index) => (highlightWords.map(highlight => highlight.toLowerCase()).includes(word.toLowerCase())) ? <Typography key={index} component='span'><Box sx={{ backgroundColor: '#ffeb3b' }}component='span'>{word}</Box></Typography> : word)} [{obj.real_name}][{parseTime(obj.ts)}]
+      </Typography>
+    )
+  }
+
+  return(
+    <Box>
+      <ListItemButton onClick={handleExpandClick} divider sx={{ py:0, my:0 }}>
+        <ListItemText primary={parseText(message)} sx={{ py:0, my:0 }}/>
+        {showExpandIcon()}
+      </ListItemButton>
+      {showThreads()}
+    </Box>
   )
 }
 

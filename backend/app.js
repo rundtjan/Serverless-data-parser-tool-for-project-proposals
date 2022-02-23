@@ -71,4 +71,6 @@ app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
 })
 
+app.use('/:id', express.static('build'))
+
 module.exports = app
