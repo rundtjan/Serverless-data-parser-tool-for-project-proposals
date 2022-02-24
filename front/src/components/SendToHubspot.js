@@ -1,8 +1,8 @@
 import React from 'react'
-//import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 //Reducers
-//import { clearAssignedWords } from '../reducers/assignReducer'
+import { sendPending, sendAssignedJSON } from '../reducers/sendReducer'
 
 
 //Mui stuff
@@ -11,11 +11,14 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
 const SendToHubspot = () => {
-  //const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const sendJson = async(event) => {
+
     event.preventDefault()
+    dispatch(sendPending())
     //dispatch(clearAssignedWords())
+    dispatch(sendAssignedJSON())
   }
 
 
