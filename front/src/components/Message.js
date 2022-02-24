@@ -12,6 +12,9 @@ import Collapse from '@mui/material/Collapse'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 
+//Helper
+import { escapeRegExp } from '../utils/helper'
+
 
 const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
@@ -94,7 +97,7 @@ const Message = ({ message }) => {
   const checkWord = (word) => {
     const specials = ['!', '"', '#', '$', '%', '&', '\'', '()', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', 'ä', 'ö', 'å', '€' ]
     if (specials.includes(word.charAt(word.length-1))) {
-      return `\\b${word}\\B`
+      return `\\b${escapeRegExp(word)}\\B`
     }
     return `\\b${word}\\b`
   }
