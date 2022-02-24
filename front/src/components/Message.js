@@ -91,6 +91,13 @@ const Message = ({ message }) => {
     )
   }
 
+  const checkWord = (word) => {
+    const specialCharacters = new Set('!', '"', '#', '$', '%', '&', '\'', '()', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', 'ä', 'ö', 'å')
+    if (specialCharacters.has(word.charAt(word.length-1))) {
+      return `\\b${word}\\B`
+    }
+    return `\\b${word}\\b`
+  }
 
   /**
    * Adds highlighting functionality to the text.
@@ -108,7 +115,10 @@ const Message = ({ message }) => {
       )
     }
 
-    const pattern = highlightWords.map(highlightword => `\\b${highlightword}\\b`).join('|')
+    //`\\b${highlightword}\\b`
+    //\\b${highlightword}\\b hyväksyy ääkkösillä alkavat, .NET, €100
+    //\\b${highlightword}\\B hyväksyy esim 10.000€, F#, C# ja ääkkösiin loppuvat
+    const pattern = highlightWords.map(highlightword => checkWord(highlightword)).join('|')
     const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
 
     return(
