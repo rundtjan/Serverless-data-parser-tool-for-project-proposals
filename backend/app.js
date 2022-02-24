@@ -71,6 +71,12 @@ app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
 })
 
+app.post('/api/sendJSON', (req, res) => {
+  console.log(req.body)
+  //do some sending to HubSpot here
+  res.send('success')
+})
+
 app.use('/:id', express.static('build'))
 
 module.exports = app

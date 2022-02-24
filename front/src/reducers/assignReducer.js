@@ -33,6 +33,5 @@ export const clearAssignedWords = () => {
   }
 }
 
-
 export default reducer
 
