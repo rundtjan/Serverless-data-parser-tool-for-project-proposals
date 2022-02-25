@@ -94,6 +94,11 @@ const Message = ({ message }) => {
     )
   }
 
+  /**
+   * Checks if word ends in a special character
+   * @param {word} word to be checked
+   * @returns a regex pattern depending of the word
+   */
   const checkWord = (word) => {
     const specials = ['!', '"', '#', '$', '%', '&', '\'', '()', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', 'ä', 'ö', 'å', '€' ]
     if (specials.includes(word.charAt(word.length-1))) {
@@ -118,11 +123,7 @@ const Message = ({ message }) => {
       )
     }
 
-    //`\\b${highlightword}\\b`
-    //\\b${highlightword}\\b hyväksyy ääkkösillä alkavat, .NET, €100
-    //\\b${highlightword}\\B hyväksyy esim 10.000€, F#, C# ja ääkkösiin loppuvat
     const pattern = highlightWords.map(highlightword => checkWord(highlightword)).join('|')
-    console.log(pattern)
     const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
 
     return(
