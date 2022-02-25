@@ -72,10 +72,6 @@ app.get('/api/parse/:id', (req, res) => {
 })
 
 app.post('/api/messageshortcut', (req, res) => {
-  console.log(req)
-  console.log('===================')
-  console.log(res)
-  console.log('hello world')
   const payload = req.body.payload
   console.log(payload)
   res.sendStatus(200)
