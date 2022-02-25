@@ -71,6 +71,16 @@ app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
 })
 
+app.post('/api/messageshortcut', (req, res) => {
+  console.log(req)
+  console.log('===================')
+  console.log(res)
+  console.log('hello world')
+  const payload = req.body.payload
+  console.log(payload)
+  res.sendStatus(200)
+})
+
 app.use('/:id', express.static('build'))
 
 module.exports = app
