@@ -10,6 +10,7 @@ const {
   returnQuery,
   saveQuery,
 } = require('./controllers/slackController.js')
+const hubspotController = require('./controllers/hubspotController')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
 const { parseParameters } = require('./utils/parseParameters')
 const { invalidNumberOfArguments,errorResponseObject } = require('./utils/slackErrorResponses')
@@ -71,10 +72,24 @@ app.get('/api/parse/:id', (req, res) => {
   returnQuery(res, req.params.id)
 })
 
+app.get('/api/hubspot/deals', (req, res) => {
+  hubspotController.getAllDeals(res)
+})
+
+app.get('/api/hubspot/contacts', (req, res) => {
+  hubspotController.getAllContacts(res)
+})
+
 app.post('/api/sendJSON', (req, res) => {
-  console.log(req.body)
+  // auth, validate, sanitize goes here
+  //console.log(req.body)
+  //hubspotController.getOwners(res)
+  hubspotController.createDeal(res, req.body)
+  //hubspotController.updateDeal(res)
+  //hubspotController.getAllDeals(res)
+  //hubspotController.getAllContacts(res)
   //do some sending to HubSpot here
-  res.send('success')
+  //res.send('success')
 })
 
 app.use('/:id', express.static('build'))
