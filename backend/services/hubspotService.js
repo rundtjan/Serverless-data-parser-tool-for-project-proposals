@@ -39,6 +39,7 @@ const hubspotService = ({ hubspotClient }) => {
   }
 
   const updateDeal = async (id, properties) => {
+    // Placeholder, not done.
     try {
       const SimplePublicObjectInput = { properties }
       const response = await hubspotClient.crm.deals.basicApi.update(id, SimplePublicObjectInput)
