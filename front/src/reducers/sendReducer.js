@@ -26,7 +26,7 @@ export const sendAssignedJSON = () => {
     const assignedWords = getState().assignedWords
     const data = await sendJSONService.sendJSON(assignedWords)
     console.log(data)
-    if (data === 'sucess') {
+    if (data === 'success') {
       dispatch(clearAssignedWords())
       dispatch({
         type: 'SEND_SUCCESS'
