@@ -45,6 +45,12 @@ export const clearAssignedWords = () => {
   }
 }
 
+export const sendReset = () => {
+  return {
+    type: 'SEND_RESET'
+  }
+}
+
 
 export default reducer
 
