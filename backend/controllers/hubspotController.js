@@ -27,7 +27,7 @@ const updateDeal = async (res, obj) => {
   // TODO: CREATE NEEDED PROPERTIES FROM OBJ
   // TODO: CREATE CUSTOM DEAL PROPERTIES IN HUBSPOT DEALS WEBSITE?
   // TODO: ID REQUIRED ( How to find? )
-  try {    
+  try {
     const result = await hubspot.updateDeal(obj)
     if (result) res.send(result)
     else res.status(500).send('No result : updateDeal')
@@ -38,18 +38,25 @@ const updateDeal = async (res, obj) => {
 
 const createDeal = async (res, obj) => {
   // Simple "placeholder". This works and deal is created to hubspot account but its mostly blank.
-  // TODO: Create custom properties for hubspot deals? 
+  // TODO: Create custom properties for hubspot deals?
   // TODO: Ask about possible hubspot test environment.
-  const SimplePublicObjectInput = { obj }
-  try {    
+  //const SimplePublicObjectInput = { dealname: 'NoNameForThisDeal', properties: obj }
+  console.log(obj.client)
+
+  const SimplePublicObjectInput = {
+    properties: {dealname: `Deal ${obj.client || 'no client'}`,  amount: `${obj.amount || 0 }`}
+  }
+  console.log(SimplePublicObjectInput)
+  try {
     const result = await hubspot.createDeal(SimplePublicObjectInput)
-    if(result.id) res.send('success')
+    if (result.id) res.send('success')
     else res.send('error')
   } catch (e) {
+    console.log(e)
     res.send('error')
   }
 }
-const getOwners = async () => {  
+const getOwners = async () => {
   // For testing, remove later.
   const email = undefined
   const after = undefined
@@ -57,12 +64,7 @@ const getOwners = async () => {
   const archived = false
 
   try {
-    const apiResponse = await hubspot.crm.owners.ownersApi.getPage(
-      email,
-      after,
-      limit,
-      archived
-    )
+    const apiResponse = await hubspot.crm.owners.ownersApi.getPage(email, after, limit, archived)
     console.log(JSON.stringify(apiResponse.body, null, 2))
   } catch (e) {
     e.message === 'HTTP request failed'
