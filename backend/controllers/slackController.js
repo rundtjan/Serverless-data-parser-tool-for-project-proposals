@@ -98,6 +98,17 @@ async function slackGetAllByUser(res, id) {
     res.send(error)
   }
 }
+
+async function getAllMessagesFromThread(payload) {
+  console.log(payload)
+  const a = slack.getThreadMessages(payload)
+  console.log('============================')
+  console.log(a)
+  console.log('==========================')
+  const b = slack.getAllThreadsMessages(payload)
+  console.log(b)
+}
+
 module.exports = {
   importHistory,
   slackChannels,
@@ -105,4 +116,5 @@ module.exports = {
   slackGetAllByUser,
   saveQuery,
   returnQuery,
+  getAllMessagesFromThread,
 }

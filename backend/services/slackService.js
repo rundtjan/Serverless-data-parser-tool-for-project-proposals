@@ -134,7 +134,8 @@ const slackService = ({ slackClient }) => {
     getChannelWithParameters,
     getThreadMessages,
     findAllByUser,
-    sendMessage
+    sendMessage,
+    getAllThreadsMessages,
   })
 }
 
