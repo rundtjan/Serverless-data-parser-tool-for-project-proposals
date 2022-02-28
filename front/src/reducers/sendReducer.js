@@ -26,7 +26,7 @@ export const sendAssignedJSON = () => {
     const assignedWords = getState().assignedWords
     const data = await sendJSONService.sendJSON(assignedWords)
     console.log(data)
-    if (data === 'sucess') {
+    if (data === 'success') {
       dispatch(clearAssignedWords())
       dispatch({
         type: 'SEND_SUCCESS'
@@ -42,6 +42,12 @@ export const sendAssignedJSON = () => {
 export const clearAssignedWords = () => {
   return {
     type: 'CLEAR_ASSIGNED'
+  }
+}
+
+export const sendReset = () => {
+  return {
+    type: 'SEND_RESET'
   }
 }
 

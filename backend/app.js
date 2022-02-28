@@ -74,7 +74,7 @@ app.get('/api/parse/:id', (req, res) => {
 app.post('/api/sendJSON', (req, res) => {
   console.log(req.body)
   //do some sending to HubSpot here
-  res.send('success')
+  setTimeout(() => res.send('success'), 3000)
 })
 
 app.use('/:id', express.static('build'))
