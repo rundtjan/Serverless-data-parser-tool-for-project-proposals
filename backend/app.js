@@ -74,7 +74,7 @@ app.get('/api/parse/:id', (req, res) => {
 
 app.post('/api/messageshortcut', (req, res) => {
   const payload = req.body.payload
-  console.log(payload)
+  //console.log(payload)
   getAllMessagesFromThread(payload)
   res.sendStatus(200)
 })

@@ -105,7 +105,8 @@ async function getAllMessagesFromThread(payload) {
   console.log('============================')
   console.log(a)
   console.log('==========================')
-  const b = slack.getAllThreadsMessages(payload)
+  const ts_list = [payload.thread_ts]
+  const b = slack.getAllThreadsMessages(payload.channel.id, ts_list)
   console.log(b)
 }
 
