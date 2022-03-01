@@ -56,7 +56,11 @@ const slackService = ({ slackClient }) => {
     }
   }
 
-  // TODO: not tested
+  /**
+   * Gets a Slack message and all of it's replies by channel Id and timestamp.
+   * @param {Object} args In the form of {channel: CHANNEL_ID, ts: THREAD_TIMESTAMP}
+   * @returns All messages from the desired thread
+   */
   const getThreadMessages = async (args) => {
     try {
       const apiResult = await slackClient.conversations.replies(args)

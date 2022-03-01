@@ -99,12 +99,16 @@ async function slackGetAllByUser(res, id) {
   }
 }
 
+/**
+ * Parses parameters and calls an api to get messages from a single thread.
+ * @param {Object} payload Gives essential information when shortcut is used in workspace.
+ */
 async function getAllMessagesFromSingleThread(payload) {
   const payloadObject = JSON.parse(payload)
   const channelId = payloadObject.channel.id
   const threadTimestamp = payloadObject.message.thread_ts
-  const args = {channelId: channelId, timestamp: threadTimestamp}
-  const threadWithResponses = slack.getThreadMessages(args)
+  const args = {channel: channelId, ts: threadTimestamp}
+  const threadWithResponses = await slack.getThreadMessages(args)
   console.log(threadWithResponses)
 }
 
