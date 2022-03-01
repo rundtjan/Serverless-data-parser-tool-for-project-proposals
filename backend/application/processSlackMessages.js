@@ -23,6 +23,7 @@ async function addThreadsToMessages(res, slack, args) {
       const query_args = { channel: channelId, ts: threadTimestamps[i] }
       if (oldest) query_args.oldest = oldest
       let threadWithReplies = await slack.getThreadMessages(query_args)
+      console.log(threadWithReplies)
       parentIndex = AddThreadToParent(threadWithReplies, messages, parentIndex)
     }
     const resultObj = await addNamesToMessages(res, slack, messages, oldest, user)
