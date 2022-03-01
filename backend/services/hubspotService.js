@@ -1,7 +1,7 @@
 const hubspotService = ({ hubspotClient }) => {
   
   const getAllDeals = async () => {
-    const limit = 10
+    const limit = 100
     const after = undefined
     const properties = undefined
     const propertiesWithHistory = undefined
@@ -17,7 +17,7 @@ const hubspotService = ({ hubspotClient }) => {
         associations,
         archived
       )
-      if (apiResponse.results) result = apiResponse.results
+      if (apiResponse.results) result = apiResponse.results.reverse()
     } catch (e) {
       throw new Error(`Error in getAll: ${e.message}`)
     }
