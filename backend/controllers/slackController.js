@@ -99,16 +99,13 @@ async function slackGetAllByUser(res, id) {
   }
 }
 
-async function getAllMessagesFromThread(payload) {
-  console.log(payload)
-  const obj = JSON.parse(payload)
-  const channelId = obj.channel.id
-  console.log(channelId)
-  const threadTimestamp = obj.thread_ts
-  console.log(threadTimestamp)
+async function getAllMessagesFromSingleThread(payload) {
+  const payloadObject = JSON.parse(payload)
+  const channelId = payloadObject.channel.id
+  const threadTimestamp = payloadObject.message.thread_ts
   const args = {channelId: channelId, timestamp: threadTimestamp}
-  const x = slack.getThreadsMessagesFromSingleThread(args)
-  console.log(x)
+  const threadWithResponses = slack.getThreadMessages(args)
+  console.log(threadWithResponses)
 }
 
 module.exports = {
@@ -118,5 +115,5 @@ module.exports = {
   slackGetAllByUser,
   saveQuery,
   returnQuery,
-  getAllMessagesFromThread,
+  getAllMessagesFromSingleThread,
 }

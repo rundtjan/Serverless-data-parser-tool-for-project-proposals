@@ -56,15 +56,6 @@ const slackService = ({ slackClient }) => {
     }
   }
 
-  const getThreadsMessagesFromSingleThread = async (args) => {
-    try {
-      const apiResult = await slackClient.conversations.replies(args)
-      return apiResult.messages
-    } catch (error) {
-      throw new Error(`Error in getThreadMessages: ${error}`)
-    }
-  }
-
   // TODO: not tested
   const getThreadMessages = async (args) => {
     try {
@@ -145,7 +136,6 @@ const slackService = ({ slackClient }) => {
     findAllByUser,
     sendMessage,
     getAllThreadsMessages,
-    getThreadsMessagesFromSingleThread,
   })
 }
 

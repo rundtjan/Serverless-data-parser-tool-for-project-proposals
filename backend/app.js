@@ -9,7 +9,7 @@ const {
   slackGetAllByUser,
   returnQuery,
   saveQuery,
-  getAllMessagesFromThread,
+  getAllMessagesFromSingleThread,
 } = require('./controllers/slackController.js')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
 const { parseParameters } = require('./utils/parseParameters')
@@ -74,7 +74,7 @@ app.get('/api/parse/:id', (req, res) => {
 
 app.post('/api/messageshortcut', (req, res) => {
   const payload = req.body.payload
-  getAllMessagesFromThread(payload)
+  getAllMessagesFromSingleThread(payload)
   res.sendStatus(200)
 })
 
