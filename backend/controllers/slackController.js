@@ -101,9 +101,10 @@ async function slackGetAllByUser(res, id) {
 
 async function getAllMessagesFromThread(payload) {
   console.log(payload)
-  const channelId = payload.channel.id
+  const obj = JSON.parse(payload)
+  const channelId = obj.channel.id
   console.log(channelId)
-  const threadTimestamp = payload.thread_ts
+  const threadTimestamp = obj.thread_ts
   console.log(threadTimestamp)
   const args = {channelId: channelId, timestamp: threadTimestamp}
   const x = slack.getThreadsMessagesFromSingleThread(args)
