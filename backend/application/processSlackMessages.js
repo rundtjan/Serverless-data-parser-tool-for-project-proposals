@@ -19,13 +19,11 @@ async function processSlackMessages(slack, args) {
   // channel, oldest, user are contained in args
   const { channel } = args
   try {
-    console.log('ch',channel)
     const channels = await slack.getChannels()
-    console.log(channel)
+
     var channelId = channels.channels.filter((obj) => {
       return obj.name == channel || obj.id == channel
     })[0].id
-    console.log('hdosahdfas')
     const result = await slack.getChannelMessages(channelId)
     let messages = result.reverse()
 
@@ -34,7 +32,7 @@ async function processSlackMessages(slack, args) {
     args.channelId = channelId
 
     const resultObj = await addThreadsToMessages(slack, args)
-    console.log(resultObj)
+
     return resultObj
   } catch (error) {
     throw new Error(error.message)
@@ -45,14 +43,24 @@ async function addThreadsToMessages(slack, args) {
   const { channelId, oldest, user, messages } = args
   const threads = GetThreads(messages)
   const threadTimestamps = GetTimeStamps(threads)
+  const promises = []
+  var parentIndex = 0
+  console.time('apicalls')
   try {
-    var parentIndex = 0
+    // Send all api queries at once.
     for (let i = 0; i < threadTimestamps.length; i++) {
       const query_args = { channel: channelId, ts: threadTimestamps[i] }
       if (oldest) query_args.oldest = oldest
-      let threadWithReplies = await slack.getThreadMessages(query_args)
-      parentIndex = AddThreadToParent(threadWithReplies, messages, parentIndex)
+      let apiResponse = slack.getThreadMessages(query_args)
+      promises.push(apiResponse)
     }
+    // Wait for all api queries to complete.
+    const threadsWithResponses = await Promise.all(promises)
+    // Then process threads.
+    for (let i = 0; i < threadsWithResponses.length; i++) {
+      parentIndex = AddThreadToParent(threadsWithResponses[i], messages, parentIndex)
+    }
+    console.timeEnd('apicalls')
     const resultObj = await addNamesToMessages(slack, messages, oldest, user)
     return resultObj
   } catch (error) {
