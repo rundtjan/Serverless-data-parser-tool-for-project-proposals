@@ -1,16 +1,20 @@
 import sendReducer from '../reducers/sendReducer'
 import { createSendAssignedJSON } from '../reducers/sendReducer'
 import deepFreeze from 'deep-freeze'
-import mockAxios from 'axios'
-
-jest.mock('axios')
-mockAxios.get.mockResolvedValue('success')
 
 const mockDispatch = jest.fn()
+const mockCall = jest.fn()
 
-//const res = mockAxios.get('hello')
-//console.log('res', res)
-const sendAssignedJSON = createSendAssignedJSON(mockAxios.get)
+//own async mock function to replace axios.get, because standard library not cooperating
+const mockGet = async (args) => {
+  mockCall(args)
+  let myPromise = new Promise(function(resolve) {
+    resolve('success');
+  });
+  return myPromise
+}
+
+const sendAssignedJSON = createSendAssignedJSON(mockGet)
 
 const getState = () => {
   return { 'assignedWords': ['hello'] }
@@ -53,10 +57,15 @@ describe('sendReducer', () => {
     expect(newState).toBe('success')
   })
 
-  //could be developed further -- could not get mockDispatch to be called etc.
-  test('SendAssignedJSON calls api with correct parameters', () => {
+  test('SendAssignedJSON calls api with correct parameters', async () => {
     const funk = sendAssignedJSON()
-    funk(mockDispatch, getState)
-    expect(mockAxios.get).toHaveBeenCalledWith(['hello'])
+    await funk(mockDispatch, getState)
+    expect(mockCall).toHaveBeenCalledWith(['hello'])
+  })
+
+  test('SendAssignedJSON dispatches SUCCESS if success', async () => {
+    const funk = sendAssignedJSON()
+    await funk(mockDispatch, getState)
+    expect(mockDispatch).toHaveBeenCalledWith({type: 'SEND_SUCCESS'})
   })
 })
