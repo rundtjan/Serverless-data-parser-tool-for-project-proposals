@@ -26,7 +26,6 @@ export const createSendAssignedJSON = (sendJSONService) => {
     return async (dispatch, getState) => {
       const assignedWords = getState().assignedWords
       const data = await sendJSONService(assignedWords)
-      console.log(data)
       if (data === 'success') {
         dispatch(clearAssignedWords())
         dispatch({
@@ -42,25 +41,6 @@ export const createSendAssignedJSON = (sendJSONService) => {
 }
 
 export const sendAssignedJSON = createSendAssignedJSON(sendJSONService.sendJSON)
-
-
-/*export const sendAssignedJSON = () => {
-  return async (dispatch, getState) => {
-    const assignedWords = getState().assignedWords
-    const data = await sendJSONService.sendJSON(assignedWords)
-    console.log(data)
-    if (data === 'success') {
-      dispatch(clearAssignedWords())
-      dispatch({
-        type: 'SEND_SUCCESS'
-      })
-    } else {
-      dispatch({
-        type: 'SEND_ERROR'
-      })
-    }
-  }
-}*/
 
 export const clearAssignedWords = () => {
   return {

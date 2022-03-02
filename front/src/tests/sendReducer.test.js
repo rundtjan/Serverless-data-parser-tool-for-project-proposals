@@ -1,10 +1,20 @@
 import sendReducer from '../reducers/sendReducer'
 import { createSendAssignedJSON } from '../reducers/sendReducer'
 import deepFreeze from 'deep-freeze'
+import mockAxios from "axios";
 
-const sendJSONmock = jest.fn();
-sendJSONmock.mockReturnValueOnce('success').mockReturnValueOnce('success')
-const sendAssignedJSON = createSendAssignedJSON(sendJSONmock)
+jest.mock("axios");
+mockAxios.get.mockResolvedValue('success')
+
+const mockDispatch = jest.fn()
+
+//const res = mockAxios.get('hello')
+//console.log('res', res)
+const sendAssignedJSON = createSendAssignedJSON(mockAxios.get)
+
+const getState = () => {
+  return {'assignedWords': ['hello']}
+}
 
 describe('sendReducer', () => {
   test('SEND_RESET returns empty state', () => {
@@ -45,10 +55,12 @@ describe('sendReducer', () => {
 
   //this test needs to be developed with redux-mocks etc.
   test('SendAssignedJSON calls api with correct parameters', () => {
-    const result = sendAssignedJSON()
-    console.log(result)
-    console.log(sendJSONmock.mock.calls[0])
-
+    const funk = sendAssignedJSON()
+    funk(mockDispatch, getState)
+    expect(mockAxios.get).toHaveBeenCalledWith(['hello'])
+    //expect(mockDispatch.mock.calls[0][0]).toBe({type: 'SEND_ERROR'})
+    //expect(mockDispatch).toHaveBeenCalledWith({'type': 'SEND_ERROR'})
+    console.log(mockDispatch.mock.calls)
     expect(1).toBe(1)
   })
 })
