@@ -43,7 +43,7 @@ const Messages = () => {
 
 
   return(
-    <Box
+    <Box id='messageList'
       sx={{
         backgroundColor: '#fafafa',
         height: 600,
