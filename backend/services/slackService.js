@@ -1,12 +1,26 @@
+const nodeCache = require('node-cache')
+
 const slackService = ({ slackClient }) => {
-  // Only dependency is api client given as parameter for Dependency Injection.
+  const slackCache = new nodeCache({ stdTTL: 600 })
+
   const getUsers = async () => {
     const users = []
+    let apiResult = undefined
     try {
-      const apiResult = await slackClient.users.list({})
+      let cacheResult = await slackCache.get('users')
+      if (!cacheResult) {
+        const newApiResult = await slackClient.users.list({})
+        const cacheSuccess = slackCache.set('users', newApiResult)
+        if (!cacheSuccess) throw new Error('set Cache error in getUsers')
+        
+        apiResult = newApiResult
+      } else apiResult = cacheResult
+      
       apiResult.members
         .filter((elem) => !elem.is_bot)
-        .forEach((elem) => users.push({ id: elem.id, real_name: elem.real_name, username: elem.name }))
+        .forEach((elem) =>
+          users.push({ id: elem.id, real_name: elem.real_name, username: elem.name })
+        )
     } catch (error) {
       throw new Error(`Error in getUsers: ${error}`)
     }
@@ -26,9 +40,7 @@ const slackService = ({ slackClient }) => {
     const channels = []
     try {
       const result = await slackClient.conversations.list({})
-      result.channels
-        .filter((elem) => elem.is_channel)
-        .forEach((elem) => channels.push(elem.name))
+      result.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push(elem.name))
     } catch (error) {
       throw new Error(`Error in getChannels: ${error}`)
     }
@@ -38,15 +50,13 @@ const slackService = ({ slackClient }) => {
   const getChannelIds = async () => {
     const channels = []
     const result = await slackClient.conversations.list({})
-    result.channels
-      .filter((elem) => elem.is_channel)
-      .forEach((elem) => channels.push(elem.id))
+    result.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push(elem.id))
     return channels
   }
 
   const getChannelMessages = async (channelId) => {
     try {
-      console.log('CHA ID: ',channelId)
+      console.log('CHA ID: ', channelId)
       const apiResult = await slackClient.conversations.history({
         channel: channelId,
       })
@@ -118,9 +128,9 @@ const slackService = ({ slackClient }) => {
   const sendMessage = async (channelId, text) => {
     const result = await slackClient.chat.postMessage({
       channel: channelId,
-      text: text
+      text: text,
     })
-  
+
     console.log('sendMessage : ', channelId, text)
     console.log('Result : ', result)
   }
@@ -134,7 +144,7 @@ const slackService = ({ slackClient }) => {
     getChannelWithParameters,
     getThreadMessages,
     findAllByUser,
-    sendMessage
+    sendMessage,
   })
 }
 
