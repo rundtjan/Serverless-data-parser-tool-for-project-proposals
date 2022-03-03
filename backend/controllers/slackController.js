@@ -4,6 +4,7 @@ const slack = slackService({ slackClient })
 const { addThreadsToMessages } = require('../application/processSlackMessages')
 const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
 const savedQueries = {}
+const app = require('../app')
 
 async function saveQuery(res, args) {
   try {
@@ -104,12 +105,40 @@ async function slackGetAllByUser(res, id) {
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
 async function getAllMessagesFromSingleThread(payload) {
-  const payloadObject = JSON.parse(payload)
-  const channelId = payloadObject.channel.id
-  const threadTimestamp = payloadObject.message.thread_ts
+  const channelId = payload.channel.id
+  const threadTimestamp = payload.message.thread_ts
+  const triggerId = payload.trigger_id
+  console.log(triggerId)
   const args = {channel: channelId, ts: threadTimestamp}
   const threadWithResponses = await slack.getThreadMessages(args)
+
+  const viewObject = {
+    'trigger_id': triggerId,
+    'title': {
+      'type': 'plain_text',
+      'text': 'Parsing a thread'
+    },
+    'submit': {
+      'type': 'plain_text',
+      'text': 'Submit'
+    },
+    'blocks': [
+      {
+        'type': 'section',
+        'text': {
+          'type': 'plain_text',
+          'text': 'Are you sure you want to send this thread to Parsa?',
+          'emoji': true
+        }
+      }
+    ],
+    'type': 'modal'
+  }
   console.log(threadWithResponses)
+  app.post('https://slack.com/api/views.open', (viewObject, res) => {
+    console.log(viewObject)
+    console.log(res)
+  })
 }
 
 module.exports = {
