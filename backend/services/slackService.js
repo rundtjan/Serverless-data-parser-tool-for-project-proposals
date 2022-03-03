@@ -7,11 +7,11 @@ const slackService = ({ slackClient }) => {
     const users = []
     let apiResult = undefined
     try {
-      let cacheResult = await slackCache.get('users')
+      const cacheResult = await slackCache.get('users')
       if (!cacheResult) {
         const newApiResult = await slackClient.users.list({})
-        const cacheSuccess = slackCache.set('users', newApiResult)
-        if (!cacheSuccess) throw new Error('set Cache error in getUsers')
+        const setCacheSuccess = slackCache.set('users', newApiResult)
+        if (!setCacheSuccess) throw new Error('set Cache error in getUsers')
         
         apiResult = newApiResult
       } else apiResult = cacheResult
@@ -28,8 +28,19 @@ const slackService = ({ slackClient }) => {
   }
 
   const getChannels = async () => {
+    let result = {}
     try {
-      const result = await slackClient.conversations.list({})
+      const cacheResult = await slackCache.get('channels')
+      if (!cacheResult) {
+        const newApiResult = await slackClient.conversations.list({})
+        console.log('NEW CALL : ', newApiResult)
+        const setCacheSuccess = slackCache.set('channels', newApiResult)
+        if (!setCacheSuccess) throw new Error('set Cache error in getChannels')        
+        result = newApiResult
+      } else{
+        result = cacheResult
+        console.log('FOUND IN CACHE, ', result)
+      }
       return result
     } catch (error) {
       throw new Error(`Error in getChannels: ${error}`)
