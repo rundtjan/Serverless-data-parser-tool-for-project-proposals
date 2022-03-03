@@ -15,8 +15,8 @@ const mockCalls = jest.fn()
 const mockGet = async (args) => {
   mockCalls(args)
   let myPromise = new Promise(function(resolve) {
-    resolve('success');
-  });
+    resolve('success')
+  })
   return myPromise
 }
 
@@ -28,8 +28,8 @@ const mockGet = async (args) => {
 const errorMockGet = async (args) => {
   mockCalls(args)
   let myPromise = new Promise(function(resolve) {
-    resolve('error');
-  });
+    resolve('error')
+  })
   return myPromise
 }
 
@@ -93,18 +93,18 @@ describe('sendReducer', () => {
   test('SendAssignedJSON dispatches SEND_SUCCESS if response from api-call is success', async () => {
     const funk = sendAssignedJSON()
     await funk(mockDispatch, getState)
-    expect(mockDispatch).toHaveBeenCalledWith({type: 'SEND_SUCCESS'})
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'SEND_SUCCESS' })
   })
 
   test('SendAssignedJSON dispatches SEND_ERROR if resonpse from api-call is error', async () => {
     const funk = errorSendAssignedJSON()
     await funk(mockDispatch, getState)
-    expect(mockDispatch).toHaveBeenCalledWith({type: 'SEND_ERROR'})
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'SEND_ERROR' })
   })
 
   test('SendAssignedJSON dispatches SEND_ERROR if no words are chosen', async () => {
     const funk = errorSendAssignedJSON()
     await funk(mockDispatch, getEmptyState)
-    expect(mockDispatch).toHaveBeenCalledWith({type: 'SEND_ERROR'})
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'SEND_ERROR' })
   })
 })
