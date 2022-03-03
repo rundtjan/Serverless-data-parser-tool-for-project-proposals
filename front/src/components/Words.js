@@ -104,6 +104,7 @@ const Words = () => {
 
   return(
     <Box
+      id='wordList'
       sx={{
         backgroundColor: '#fafafa',
         height: 600,
