@@ -18,6 +18,7 @@ import Fade from '@mui/material/Fade'
 const SendToHubspot = () => {
   const dispatch = useDispatch()
   const sendStatus = useSelector(state => state.sendStatus)
+  const assignedWords = useSelector(state => state.assignedWords)
 
   const sendJson = async(event) => {
     event.preventDefault()
@@ -47,7 +48,7 @@ const SendToHubspot = () => {
                   variant='outlined'
                   id='submit'
                   onClick={sendJson}
-                  disabled={sendStatus === 'pending'}
+                  disabled={(sendStatus === 'pending' || assignedWords.length === 0)}
                 >
                 Send To Hubspot
                 </Button>
