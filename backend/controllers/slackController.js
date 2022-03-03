@@ -4,7 +4,6 @@ const slack = slackService({ slackClient })
 const { addThreadsToMessages } = require('../application/processSlackMessages')
 const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
 const savedQueries = {}
-const app = require('../app')
 
 async function saveQuery(res, args) {
   try {
@@ -111,7 +110,6 @@ async function getAllMessagesFromSingleThread(payload) {
   console.log(triggerId)
   const args = {channel: channelId, ts: threadTimestamp}
   const threadWithResponses = await slack.getThreadMessages(args)
-
   const viewObject = {
     'trigger_id': triggerId,
     'title': {
@@ -134,11 +132,9 @@ async function getAllMessagesFromSingleThread(payload) {
     ],
     'type': 'modal'
   }
+  // POST PYYNTÖ https://slack.com/api/views.open payloadina viewObject
+  slack.sendModalView(triggerId, viewObject)
   console.log(threadWithResponses)
-  app.post('https://slack.com/api/views.open', (viewObject, res) => {
-    console.log(viewObject)
-    console.log(res)
-  })
 }
 
 module.exports = {

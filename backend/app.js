@@ -79,6 +79,11 @@ app.post('/api/messageshortcut', (req, res) => {
   res.sendStatus(200)
 })
 
+app.post('https://slack.com/api/views.open', (viewObject, res) => {
+  console.log(viewObject)
+  console.log(res)
+})
+
 app.use('/:id', express.static('build'))
 
 module.exports = app
