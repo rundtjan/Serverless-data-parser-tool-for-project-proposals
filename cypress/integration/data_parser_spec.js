@@ -9,14 +9,18 @@ describe('Data parser tool ', function() {
         cy.contains('Words from messages')
     })
 
+    /**This test loops through all messages and checks for a button. If has button checks for a thread */
     it('Message with an expander has a thread', function(){
-        cy.get('#messageList').find('svg').first().click()
-        cy.get('#messageList').find('svg').first().parent().parent().children().should('have.length.of.at.least', 2)
+        cy.get('#messageList').find('ul').first().find('.MuiBox-root').each(($el, index, $list) => {
+        if ($el.find('svg').length !== 0){//message has an expander
+            cy.wrap($el).children().should('have.length.of.at.least', 2)
+        }
+        })
     })
 
+    /**This test loops through all messages and checks that there isn't a button. If has button checks that there's no thread */
     it('Message without an expander has no thread', function(){
         cy.get('#messageList').find('ul').first().find('.MuiBox-root').each(($el, index, $list) => {
-        cy.log($el)
         if ($el.find('svg').length == 0){//message has no expander
             cy.wrap($el).children().should('have.length', 1)
         }
@@ -32,25 +36,20 @@ describe('Data parser tool ', function() {
         cy.contains('Technology')
     })
 
+    /**This test needs to get the second button (index eq(1)), because the first button is the filter-button. */
     it('Clicking a checkbox opens a drop down menu', function() {
-        cy.get('#wordList').parent().find('button').each(($el, index, $list) => {
-            if (index === 1) {cy.wrap($el).click()}
-        })//the first button is the filterbutton, this loop is to get to the second button => the first dropdown menu button
+        cy.get('#wordList').parent().find('button').eq(1).click()
         cy.get('#basic-menu').should('exist')
     })
 
     it('Choosing a category shows the word in category column', function() {
-        cy.get('#wordList').parent().find('button').each(($el, index, $list) => {
-            if (index === 1) {cy.wrap($el).click()}
-        })//the first button is the filterbutton, this loop is to get to the second button => the first dropdown menu button
+        cy.get('#wordList').parent().find('button').eq(1).click()
         cy.get('#basic-menu').find('li').first().click()
         cy.get('#categoryGrid').find('li').should('exist')
     })
 
     it('Unchecking the checkbox removes the word from the column', function() {
-        cy.get('#wordList').parent().find('button').each(($el, index, $list) => {
-            if (index === 1) {cy.wrap($el).click()}
-        })//the first button is the filterbutton, this loop is to get to the second button => the first dropdown menu button
+        cy.get('#wordList').parent().find('button').eq(1).click()
         cy.get('#basic-menu').find('li').first().click()
         cy.get('#categoryGrid').find('li').should('exist')
         cy.contains('Words from messages').parent().find('input').first().click()
@@ -76,5 +75,17 @@ describe('Data parser tool ', function() {
         cy.get('#filter-menu').find('li').first().click()
         cy.contains('python')
         !cy.contains('kissa')
+    })
+
+    it('If clicking SendToHubSpot when no words are chosen, an error label is shown', function(){
+        cy.get('#sendToHubSpotButton').click()
+        cy.get('#HubSpotError').should('be.visible')
+    })
+
+    it('After choosing words and clicking SendToHubSpot and waiting, a success or error label is shown', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#sendToHubSpotButton').click()
+        cy.get('#HubSpotSuccess').should('be.visible') || cy.get('#HubSpotError').should('be.visible')
     })
 })

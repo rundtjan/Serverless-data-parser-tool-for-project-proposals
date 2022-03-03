@@ -21,10 +21,21 @@ export const sendPending = () => {
   }
 }
 
+/**
+ * A function which produces an action to send a JSON containing categorized words to the api.
+ * @param {*} sendJSONService The function which does the api-call. Can be replaced with a mock, that's why it's an injected dependency.
+ * @returns A dispatch to switch the state of sendStatus - from pending to success or error.
+ */
 export const createSendAssignedJSON = (sendJSONService) => {
   return () => {
     return async (dispatch, getState) => {
       const assignedWords = getState().assignedWords
+      if (assignedWords.length === 0) {
+        dispatch({
+          type: 'SEND_ERROR'
+        })
+        return
+      }
       const data = await sendJSONService(assignedWords)
       if (data === 'success') {
         dispatch(clearAssignedWords())
