@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals#readme",
   "dependencies": {
+    "@hubspot/api-client": "^6.0.1-beta3",
     "@slack/web-api": "^6.5.1",
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",

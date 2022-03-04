@@ -6,7 +6,7 @@ const slackService = ({ slackClient }) => {
       const apiResult = await slackClient.users.list({})
       apiResult.members
         .filter((elem) => !elem.is_bot)
-        .forEach((elem) => users.push({ id: elem.id, name: elem.real_name }))
+        .forEach((elem) => users.push({ id: elem.id, real_name: elem.real_name, username: elem.name }))
     } catch (error) {
       throw new Error(`Error in getUsers: ${error}`)
     }
@@ -115,6 +115,16 @@ const slackService = ({ slackClient }) => {
     return messages
   }
 
+  const sendMessage = async (channelId, text) => {
+    const result = await slackClient.chat.postMessage({
+      channel: channelId,
+      text: text
+    })
+  
+    console.log('sendMessage : ', channelId, text)
+    console.log('Result : ', result)
+  }
+
   return Object.freeze({
     getUsers,
     getChannels,
@@ -124,6 +134,7 @@ const slackService = ({ slackClient }) => {
     getChannelWithParameters,
     getThreadMessages,
     findAllByUser,
+    sendMessage
   })
 }
 

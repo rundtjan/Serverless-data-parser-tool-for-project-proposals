@@ -1,104 +1,124 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setHighlightedWord, clearHighlightedWord } from '../reducers/highlightReducer'
-import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
-
+//Mui components
 import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
 import Checkbox from '@mui/material/Checkbox'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import MenuIcon from '@mui/icons-material/Menu'
 
-const Word = ({ obj }) => {
+
+//Reducers
+import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
+import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
+import { IconButton } from '@mui/material'
+
+
+const Word = ({ word }) => {
   const [checked, setChecked] = useState(false)
-  const [showMenu, setShowMenu] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
-  const categories = useSelector(state => state.data.categories)
   const open = Boolean(anchorEl)
+
+
+  const categories = useSelector(state => state.data.categories)
+  const sendStatus = useSelector(state => state.sendStatus)
   const dispatch = useDispatch()
 
-  const handleToggle = (event) => {
-    if (checked) {
-      dispatch(unAssignWord(obj.word))
+
+  const handleToggle = () => {
+    if(checked) {
+      dispatch(clearHighlightedWords(word.word))
+      dispatch(unAssignWord(word.word))
     } else {
-      setShowMenu(true)
-      setAnchorEl(event.currentTarget)
+      dispatch(addHighlightedWord(word.word))
     }
     setChecked(!checked)
   }
 
   const handleAddHighlight = () => {
-    dispatch(setHighlightedWord(obj.word))
+    if(!checked) {
+      dispatch(addHighlightedWord(word.word))
+    }
   }
 
   const handleClearHighlight = () => {
-    dispatch(clearHighlightedWord())
+    if(!checked) {
+      dispatch(clearHighlightedWords(word.word))
+    }
   }
 
-  const handleClose = (event) => {
-    if (!event.currentTarget.id) setChecked(false)
-    else dispatch(setAssignedWord(obj.word, event.currentTarget.id))
+  const unCheck = () => {
+    if (checked) {
+      setChecked(!checked)
+      dispatch(clearHighlightedWords(word.word))
+    }
+  }
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleMenuClose = (event) => {
+    if(event.currentTarget.id) {
+      dispatch(setAssignedWord(word.word, event.currentTarget.id))
+      if(!checked) handleToggle()
+    }
     setAnchorEl(null)
-    setShowMenu(false)
   }
 
-  if (!showMenu){
-    return(
-      <ListItem
-        key={obj.word}
-        disableGutters
-        secondaryAction={
-          <Checkbox
-            edge="end"
-            onChange={handleToggle}
-            checked={checked}
-          />
-        }
-      >
-        <ListItemText
-          onMouseOver={() => handleAddHighlight()}
-          onMouseOut={() => handleClearHighlight()}
-        >
-          {obj.word}: {obj.count}
-        </ListItemText>
-      </ListItem>
-    )
-  }
 
   return(
     <ListItem
-      key={obj.word}
-      disableGutters
+      key={word.word}
+      disablePadding
       secondaryAction={
-        <Checkbox
-          edge="end"
-          onChange={handleToggle}
-          checked={checked}
-        />
+        <IconButton edge='end' aria-label='category' onClick={handleMenuOpen}>
+          <MenuIcon />
+        </IconButton>
       }
     >
-      <ListItemText
+      <ListItemButton
+        divider
+        onClick={handleToggle}
         onMouseOver={() => handleAddHighlight()}
         onMouseOut={() => handleClearHighlight()}
+        sx={{ py: 0, my:0 }}
       >
-        {obj.word}: {obj.count}
-      </ListItemText>
+        <ListItemIcon>
+          {sendStatus === 'success' && unCheck()}
+          <Checkbox
+            edge='start'
+            checked={checked}
+            sx={{ py: 0, my:0 }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          sx={{ py: 0, my:0 }}
+        >
+          {word.word}: {word.count}
+        </ListItemText>
+      </ListItemButton>
       <Menu
-        id="basic-menu"
+        id='basic-menu'
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleMenuClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >
-        {categories.map(category => (<MenuItem key={category} id={category} onClick={handleClose}>{category}</MenuItem>))}
+        {categories.map(category => (
+          <MenuItem key={category} id={category} onClick={handleMenuClose}>
+            {category}
+          </MenuItem>
+        ))}
       </Menu>
     </ListItem>
   )
-
-
 }
 
 export default Word

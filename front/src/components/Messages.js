@@ -1,43 +1,69 @@
 import React from 'react'
-
 import { useSelector } from 'react-redux'
-import '@fontsource/roboto/300.css'
 
-import { Grid, Typography, List } from '@mui/material'
+//Mui components
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import List from '@mui/material/List'
+
+//Components
 import Message from './Message'
 
-
+/**
+ * Displays the messages from the slack.
+ * - Uses box layout
+ * @returns Box containing messages
+ */
 const Messages = () => {
   const messages = useSelector(state => state.data.messages)
 
-
   if(!messages) {
     return(
-      <Grid container>
-        <Grid item>
-          <Typography
-            variant="body1"
-            component="div"
-            color="textSecondary"
-          >
-          Loading messages...
+      <Box
+        sx={{
+          backgroundColor: '#fafafa',
+          height: 600,
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <Typography variant='h6' textAlign='center' justifyContent='center'>
+          Slack Messages
+        </Typography>
+        <Divider />
+        <Box>
+          <Typography variant='h5' textAlign='center'>
+            Loading...
           </Typography>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     )
   }
 
-  return(
-    <Grid item id='messageList'>
-      <Typography variant="h4">Slack messages</Typography>
-      <List>
-        {messages.map(message => (
-          <Message key={message.client_msg_id} message={message}/>
-        ))}
-      </List>
-    </Grid>
-  )
 
+  return(
+    <Box id='messageList'
+      sx={{
+        backgroundColor: '#fafafa',
+        height: 600,
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <Typography variant='h6' textAlign='center'>
+        Slack Messages
+      </Typography>
+      <Divider />
+      <Box sx={{ overflow: 'scroll', minHeigth: 0 }}>
+        <List sx={{ py: 0, my:0 }}>
+          {messages.map(message => (
+            <Message key={message.client_msg_id} message={message}/>
+          ))}
+        </List>
+      </Box>
+    </Box>
+  )
 }
 
 export default Messages

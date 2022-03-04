@@ -3,8 +3,44 @@ const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { addThreadsToMessages } = require('../application/processSlackMessages')
 const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
+const savedQueries = {}
 
-async function importHistory(res, args) {
+async function saveQuery(res, args) {
+  try {
+    const id = await importHistory(res, args, true)
+    res.json({
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `Your query is ready at : http://135.181.37.120:80/${id}`,
+            //text: `Your query is ready at : http://localhost/api/parse/${id}`,
+          },
+        },
+      ],
+    })
+  } catch(error) {
+    console.log(error)
+  }
+}
+
+async function returnQuery(res, id) {
+  try {
+    if (id in savedQueries) {
+      res.send(savedQueries[id])
+    } else {
+      res.sendStatus(400)
+    }
+  } catch (error) {
+    if (error) {
+      console.error(error)
+      res.sendStatus(500)
+    }
+  }
+}
+
+async function importHistory(res, args, save = false) {
   // channel, oldest, user are contained in args
   const { channel } = args
   try {
@@ -20,11 +56,18 @@ async function importHistory(res, args) {
     args.channelId = channelId
 
     const resultObj = await addThreadsToMessages(res, slack, args)
-    res.send(resultObj)
+    if (!save) res.send(resultObj)
+    else {
+      const id = Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1)
+      savedQueries[id] = resultObj
+      return id
+    }
   } catch (error) {
     if (error) {
       console.error(error)
-      res.send('Error in getting data.', error)
+      res.status(500).send(`${error.message}`)
     }
   }
 }
@@ -55,4 +98,11 @@ async function slackGetAllByUser(res, id) {
     res.send(error)
   }
 }
-module.exports = { importHistory, slackChannels, slackUsers, slackGetAllByUser }
+module.exports = {
+  importHistory,
+  slackChannels,
+  slackUsers,
+  slackGetAllByUser,
+  saveQuery,
+  returnQuery,
+}
