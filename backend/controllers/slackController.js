@@ -110,7 +110,7 @@ async function getAllMessagesFromSingleThread(payload) {
   console.log(triggerId)
   const args = {channel: channelId, ts: threadTimestamp}
   const threadWithResponses = await slack.getThreadMessages(args)
-  const viewObject = {
+  const modalView = {
     'trigger_id': triggerId,
     'title': {
       'type': 'plain_text',
@@ -132,6 +132,7 @@ async function getAllMessagesFromSingleThread(payload) {
     ],
     'type': 'modal'
   }
+  const viewObject = {trigger_id:triggerId, view:modalView}
   // POST PYYNTÖ https://slack.com/api/views.open payloadina viewObject
   slack.sendModalView(triggerId, viewObject)
   console.log(threadWithResponses)
