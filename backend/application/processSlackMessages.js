@@ -11,10 +11,6 @@ const {
 
 const categories = require('./categories.json')
 
-// TODO : Create parent function that does api calls all at once and remove args drilling or do this in controller
-// TODO : remove Unnecessary api calls, info is already somewhere.
-// TODO : Throw errors to controller that sends error response?
-
 async function processSlackMessages(slack, args) {
   // channel, oldest, user are contained in args
   const { channel } = args
@@ -45,7 +41,7 @@ async function addThreadsToMessages(slack, args) {
   const threadTimestamps = GetTimeStamps(threads)
   const promises = []
   var parentIndex = 0
-  console.time('apicalls')
+  
   try {
     // Send all api queries at once.
     for (let i = 0; i < threadTimestamps.length; i++) {
@@ -55,12 +51,11 @@ async function addThreadsToMessages(slack, args) {
       promises.push(apiResponse)
     }
     // Wait for all api queries to complete.
-    const threadsWithResponses = await Promise.all(promises)
+    const threadResponses = await Promise.all(promises)
     // Then process threads.
-    for (let i = 0; i < threadsWithResponses.length; i++) {
-      parentIndex = AddThreadToParent(threadsWithResponses[i], messages, parentIndex)
+    for (let i = 0; i < threadResponses.length; i++) {
+      parentIndex = AddThreadToParent(threadResponses[i], messages, parentIndex)
     }
-    console.timeEnd('apicalls')
     const resultObj = await addNamesToMessages(slack, messages, oldest, user)
     return resultObj
   } catch (error) {

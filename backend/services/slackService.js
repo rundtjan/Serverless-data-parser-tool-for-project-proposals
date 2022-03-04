@@ -67,7 +67,6 @@ const slackService = ({ slackClient }) => {
 
   const getChannelMessages = async (channelId) => {
     try {
-      console.log('CHA ID: ', channelId)
       const apiResult = await slackClient.conversations.history({
         channel: channelId,
       })
@@ -77,7 +76,6 @@ const slackService = ({ slackClient }) => {
     }
   }
 
-  // TODO: not tested
   const getThreadMessages = async (args) => {
     try {
       const apiResult = await slackClient.conversations.replies(args)
