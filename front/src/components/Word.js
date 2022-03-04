@@ -25,6 +25,7 @@ const Word = ({ word }) => {
 
 
   const categories = useSelector(state => state.data.categories)
+  const sendStatus = useSelector(state => state.sendStatus)
   const dispatch = useDispatch()
 
 
@@ -46,6 +47,13 @@ const Word = ({ word }) => {
 
   const handleClearHighlight = () => {
     if(!checked) {
+      dispatch(clearHighlightedWords(word.word))
+    }
+  }
+
+  const unCheck = () => {
+    if (checked) {
+      setChecked(!checked)
       dispatch(clearHighlightedWords(word.word))
     }
   }
@@ -81,6 +89,7 @@ const Word = ({ word }) => {
         sx={{ py: 0, my:0 }}
       >
         <ListItemIcon>
+          {sendStatus === 'success' && unCheck()}
           <Checkbox
             edge='start'
             checked={checked}
