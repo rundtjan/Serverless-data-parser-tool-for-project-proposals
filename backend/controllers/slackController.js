@@ -107,18 +107,13 @@ async function getAllMessagesFromSingleThread(payload) {
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
   const triggerId = payload.trigger_id
-  console.log(triggerId)
   const args = {channel: channelId, ts: threadTimestamp}
   const threadWithResponses = await slack.getThreadMessages(args)
   const modalView = {
-    'trigger_id': triggerId,
+    'type': 'modal',
     'title': {
       'type': 'plain_text',
       'text': 'Parsing a thread'
-    },
-    'submit': {
-      'type': 'plain_text',
-      'text': 'Submit'
     },
     'blocks': [
       {
@@ -129,11 +124,9 @@ async function getAllMessagesFromSingleThread(payload) {
           'emoji': true
         }
       }
-    ],
-    'type': 'modal'
+    ]
   }
   const viewObject = {trigger_id:triggerId, view:modalView}
-  // POST PYYNTÖ https://slack.com/api/views.open payloadina viewObject
   slack.sendModalView(triggerId, viewObject)
   console.log(threadWithResponses)
 }
