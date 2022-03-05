@@ -2,10 +2,7 @@ const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
-const {
-  GetWordsFromMessages,
-  GetHumanMessagesFromSlack,
-} = require('../application/filterSlackResponse')
+const { processMessageShortcut } = require('../application/processMessageShortcut')
 const savedQueries = {}
 
 async function saveQuery(res, args) {
@@ -96,13 +93,17 @@ async function getAllMessagesFromSingleThread(requestPayload, response) {
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
   const args = {channel: channelId, ts: threadTimestamp}
-  const threadWithResponses = await slack.getThreadMessages(args)
-  console.log(threadWithResponses)
-  const messages = GetHumanMessagesFromSlack(threadWithResponses)
-  console.log(messages)
-  const words = GetWordsFromMessages(messages)
-  console.log(words)
-  const modalView = response.json({
+  try {
+    const threadWithResponses = await slack.getThreadMessages(args)
+    const resultObj = await processMessageShortcut(slack, threadWithResponses)
+    console.log(resultObj)
+  } catch (error) {
+    response.send(error)
+  }
+  /**
+   * Modal thing, not working and gives a mysterious "Invalid arguments" error
+   * Says a type is missing or something
+  const modalView = {
     'type': 'modal',
     'title': {
       'type': 'plain_text',
@@ -118,10 +119,12 @@ async function getAllMessagesFromSingleThread(requestPayload, response) {
         }
       }
     ]
-  })
+  }
   const triggerId = payload.trigger_id
   const viewObject = {trigger_id:triggerId, view:modalView}
-  slack.sendModalView(triggerId, viewObject)
+  const x = await slack.sendModalView(triggerId, viewObject)
+  console.log(x)
+  */
 }
 
 module.exports = {
