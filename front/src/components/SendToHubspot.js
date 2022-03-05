@@ -18,8 +18,11 @@ import Fade from '@mui/material/Fade'
 const SendToHubspot = () => {
   const dispatch = useDispatch()
   const sendStatus = useSelector(state => state.sendStatus)
+  //const assignedWords = useSelector(state => state.assignedWords)
+  //console.log(assignedWords)
 
   const sendJson = async(event) => {
+    //console.log(assignedWords)
     event.preventDefault()
     dispatch(sendPending())
     //dispatch(clearAssignedWords())
@@ -28,7 +31,7 @@ const SendToHubspot = () => {
 
   const delayedReset = () => {
     if (sendStatus === 'success') dispatch(clearAssignedWords())
-    setTimeout(() => dispatch(sendReset()), 10000)
+    setTimeout(() => dispatch(sendReset()), 5000)
   }
 
   return(
@@ -45,7 +48,7 @@ const SendToHubspot = () => {
               <Box sx={{ position: 'relative' }}>
                 <Button
                   variant='outlined'
-                  id='submit'
+                  id='sendToHubSpotButton'
                   onClick={sendJson}
                   disabled={sendStatus === 'pending'}
                 >
@@ -54,6 +57,7 @@ const SendToHubspot = () => {
                 {(sendStatus === 'error' || sendStatus ==='success') && delayedReset()}
                 {<Fade in={sendStatus === 'success'}>
                   <CheckIcon
+                    id='HubSpotSuccess'
                     sx={{
                       color: 'white',
                       bgcolor: green[500],
@@ -65,6 +69,7 @@ const SendToHubspot = () => {
                 }
                 {<Fade in={sendStatus === 'error'}>
                   <ErrorIcon
+                    id='HubSpotError'
                     sx={{
                       color: 'white',
                       bgcolor: red[500],

@@ -1,21 +1,23 @@
 const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
-const { addThreadsToMessages } = require('../application/processSlackMessages')
-const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
+const { processSlackMessages } = require('../application/processSlackMessages')
 const savedQueries = {}
 
 async function saveQuery(res, args) {
   try {
-    const id = await importHistory(res, args, true)
+    const id = await slackMessages(res, args, true)
+    let user =   args.user ? `user: ${args.user}` : 'user: not given'
+    let channel = `channel: ${args.channel}`
+    let time = args.hours ? `time: ${args.hours} h` : 'time: not given'
     res.json({
       blocks: [
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `Your query is ready at : http://135.181.37.120:80/${id}`,
-            //text: `Your query is ready at : http://localhost/api/parse/${id}`,
+            text: `Your query, with parameters: ${user}, ${channel} and ${time} is ready at : http://135.181.37.120:80/${id}`,
+            // text: `Your query is ready at : http://localhost/api/parse/${id}`,
           },
         },
       ],
@@ -40,35 +42,17 @@ async function returnQuery(res, id) {
   }
 }
 
-async function importHistory(res, args, save = false) {
-  // channel, oldest, user are contained in args
-  const { channel } = args
+async function slackMessages(res, args, save = false) {
   try {
-    const channels = await slack.getChannels()
-    var channelId = channels.channels.filter((obj) => {
-      return obj.name == channel || obj.id == channel
-    })[0].id
-    const result = await slack.getChannelMessages(channelId)
-    let messages = result.reverse()
-
-    messages = GetHumanMessagesFromSlack(result)
-    args.messages = messages
-    args.channelId = channelId
-
-    const resultObj = await addThreadsToMessages(res, slack, args)
+    const resultObj = await processSlackMessages(slack, args)
     if (!save) res.send(resultObj)
     else {
-      const id = Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1)
+      const id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
       savedQueries[id] = resultObj
       return id
     }
   } catch (error) {
-    if (error) {
-      console.error(error)
-      res.status(500).send(`${error.message}`)
-    }
+    res.send(error.error)
   }
 }
 
@@ -135,7 +119,7 @@ async function getAllMessagesFromSingleThread(payload) {
 }
 
 module.exports = {
-  importHistory,
+  slackMessages,
   slackChannels,
   slackUsers,
   slackGetAllByUser,
