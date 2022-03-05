@@ -158,7 +158,7 @@ const slackService = ({ slackClient }) => {
     try {
       const result = await slackClient.views.open({
         trigger_id:triggerId,
-        view: viewObject
+        view: viewObject,
       })
       console.log(result)
     }

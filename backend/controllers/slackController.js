@@ -2,6 +2,10 @@ const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
+const {
+  GetWordsFromMessages,
+  GetHumanMessagesFromSlack,
+} = require('../application/filterSlackResponse')
 const savedQueries = {}
 
 async function saveQuery(res, args) {
@@ -87,14 +91,18 @@ async function slackGetAllByUser(res, id) {
  * Parses parameters and calls an api to get messages from a single thread.
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
-async function getAllMessagesFromSingleThread(payload) {
+async function getAllMessagesFromSingleThread(requestPayload, response) {
+  const payload = JSON.parse(requestPayload)
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
-  //const triggerId = payload.trigger_id
   const args = {channel: channelId, ts: threadTimestamp}
   const threadWithResponses = await slack.getThreadMessages(args)
-  /**
-  const modalView = {
+  console.log(threadWithResponses)
+  const messages = GetHumanMessagesFromSlack(threadWithResponses)
+  console.log(messages)
+  const words = GetWordsFromMessages(messages)
+  console.log(words)
+  const modalView = response.json({
     'type': 'modal',
     'title': {
       'type': 'plain_text',
@@ -110,12 +118,10 @@ async function getAllMessagesFromSingleThread(payload) {
         }
       }
     ]
-  }
+  })
+  const triggerId = payload.trigger_id
   const viewObject = {trigger_id:triggerId, view:modalView}
   slack.sendModalView(triggerId, viewObject)
-   */
-  console.log(threadWithResponses)
-  
 }
 
 module.exports = {

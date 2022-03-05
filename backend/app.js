@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const { getAllMessagesFromSingleThread } = require('./controllers/slackController.js')
 const slackController = require('./controllers/slackController.js')
 const hubspotController = require('./controllers/hubspotController')
 const { parseTimestamp } = require('./utils/parseSlackTimestamp')
@@ -75,10 +74,7 @@ app.get('/api/hubspot/contacts', (req, res) => {
 })
 
 app.post('/api/messageshortcut', (req, res) => {
-  const payload = req.body.payload
-  const payloadJSON = JSON.parse(payload)
-  getAllMessagesFromSingleThread(payloadJSON)
-  res.sendStatus(200)
+  slackController.getAllMessagesFromSingleThread(req.body.payload, res)
 })
 
 
