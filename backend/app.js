@@ -79,6 +79,13 @@ app.post('/api/messageshortcut', (req, res) => {
   res.sendStatus(200)
 })
 
+
+app.post('/api/sendJSON', (req, res) => {
+  console.log(req.body)
+  //do some sending to HubSpot here
+  setTimeout(() => res.send('success'), 3000)
+})
+
 app.use('/:id', express.static('build'))
 
 module.exports = app

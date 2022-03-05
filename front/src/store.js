@@ -9,13 +9,15 @@ import channelReducer from './reducers/channelReducer'
 import highlightReducer from './reducers/highlightReducer'
 import assignReducer from './reducers/assignReducer'
 import parameterReducer from './reducers/parameterReducer'
+import sendReducer from './reducers/sendReducer'
 
 const reducer = combineReducers({
   data: dataReducer,
   channel: channelReducer,
   highlightWord: highlightReducer,
   assignedWords: assignReducer,
-  parameters: parameterReducer
+  parameters: parameterReducer,
+  sendStatus: sendReducer
 })
 
 const store = createStore(

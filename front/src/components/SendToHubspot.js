@@ -1,24 +1,35 @@
 import React from 'react'
-//import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 //Reducers
-//import { clearAssignedWords } from '../reducers/assignReducer'
+import { sendPending, sendAssignedJSON, sendReset, clearAssignedWords } from '../reducers/sendReducer'
 
 
 //Mui stuff
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+import { yellow, green, red } from '@mui/material/colors'
+import CheckIcon from '@mui/icons-material/Check'
+import ErrorIcon from '@mui/icons-material/Error'
+import Fade from '@mui/material/Fade'
 
 const SendToHubspot = () => {
-  //const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const sendStatus = useSelector(state => state.sendStatus)
 
   const sendJson = async(event) => {
     event.preventDefault()
+    dispatch(sendPending())
     //dispatch(clearAssignedWords())
+    dispatch(sendAssignedJSON())
   }
 
-
+  const delayedReset = () => {
+    if (sendStatus === 'success') dispatch(clearAssignedWords())
+    setTimeout(() => dispatch(sendReset()), 10000)
+  }
 
   return(
     <Box
@@ -30,13 +41,54 @@ const SendToHubspot = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Grid item>
-            <Button
-              variant='outlined'
-              id='submit'
-              onClick={sendJson}
-            >
-              Send To Hubspot
-            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'left' }}>
+              <Box sx={{ position: 'relative' }}>
+                <Button
+                  variant='outlined'
+                  id='submit'
+                  onClick={sendJson}
+                  disabled={sendStatus === 'pending'}
+                >
+                Send To Hubspot
+                </Button>
+                {(sendStatus === 'error' || sendStatus ==='success') && delayedReset()}
+                {<Fade in={sendStatus === 'success'}>
+                  <CheckIcon
+                    sx={{
+                      color: 'white',
+                      bgcolor: green[500],
+                      position: 'absolute',
+                      marginTop: '5px',
+                      marginLeft: '12px'
+                    }} />
+                </Fade>
+                }
+                {<Fade in={sendStatus === 'error'}>
+                  <ErrorIcon
+                    sx={{
+                      color: 'white',
+                      bgcolor: red[500],
+                      position: 'absolute',
+                      marginTop: '5px',
+                      marginLeft: '12px'
+                    }} />
+                </Fade>
+                }
+                {(sendStatus === 'pending') && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      color: yellow[500],
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+              </Box>
+            </Box>
           </Grid>
         </Grid>
       </Grid>
