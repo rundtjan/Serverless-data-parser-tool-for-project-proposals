@@ -106,9 +106,10 @@ async function slackGetAllByUser(res, id) {
 async function getAllMessagesFromSingleThread(payload) {
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
-  const triggerId = payload.trigger_id
+  //const triggerId = payload.trigger_id
   const args = {channel: channelId, ts: threadTimestamp}
   const threadWithResponses = await slack.getThreadMessages(args)
+  /**
   const modalView = {
     'type': 'modal',
     'title': {
@@ -128,7 +129,9 @@ async function getAllMessagesFromSingleThread(payload) {
   }
   const viewObject = {trigger_id:triggerId, view:modalView}
   slack.sendModalView(triggerId, viewObject)
+   */
   console.log(threadWithResponses)
+  
 }
 
 module.exports = {
