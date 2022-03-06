@@ -8,6 +8,12 @@ const {
 } = require('../application/filterSlackResponse')
 const { addNamesToThreadMessages } = require('../application/processSlackMessages')
 
+/**
+ * 
+ * @param {*} slack 
+ * @param {*} threadWithResponses 
+ * @returns 
+ */
 async function processMessageShortcut(slack, threadWithResponses) {
   const oldest = undefined
   const user = undefined
