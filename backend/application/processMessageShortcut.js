@@ -2,11 +2,15 @@
 // it should create an similar object what "processSlackMessages" create
 // this makes the frontend behave like assumed and prevents the frontend from exploding
 
-const {
-  GetHumanMessagesFromSlack,
-  addNamesToMessages,
-} = require('../application/filterSlackResponse')
+const { GetHumanMessagesFromSlack } = require('./filterSlackResponse')
+const { addNamesToMessages } = require('./processSlackMessages')
 
+/**
+ * 
+ * @param {*} slack 
+ * @param {*} threadWithResponses 
+ * @returns 
+ */
 async function processMessageShortcut(slack, threadWithResponses) {
   const oldest = undefined
   const user = undefined
