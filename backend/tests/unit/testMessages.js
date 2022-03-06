@@ -221,6 +221,50 @@ const emojis = [
   },
 ]
 
+const englishFillerWords = [
+  {
+    client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d7',
+    type: 'message',
+    text: 'across after beside javascript neither although',
+    user: 'U02UF7S2DN1',
+    ts: '1642531226.000400',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+  },
+  {
+    client_msg_id: '5f4c8f69-e34b-42d0-b16e-f16d4c046497',
+    type: 'message',
+    text: 'boldly cheerfully ibm achingly',
+    user: 'U02UHPPRMJ6',
+    ts: '1642531226.000401',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+    reactions: [[Object]],
+  },
+]
+
+const finnishFillerWords = [
+  {
+    client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d7',
+    type: 'message',
+    text: 'vaikka ovat silloin aivan typescript',
+    user: 'U02UF7S2DN1',
+    ts: '1642531226.000400',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+  },
+  {
+    client_msg_id: '5f4c8f69-e34b-42d0-b16e-f16d4c046497',
+    type: 'message',
+    text: 'seis niinku eficode jotain',
+    user: 'U02UHPPRMJ6',
+    ts: '1642531226.000401',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+    reactions: [[Object]],
+  },
+]
+
 const testMessageWithThreadResponse = [
   {
     client_msg_id: '6b5f5a7d-6c01-4baa-b764-a33d0d934c4d',
@@ -281,4 +325,4 @@ const testMessageWithThreadResponse = [
     ],
   },
 ]
-module.exports = { threadTestMessages, singleMessage, messages, emojis,testMessageWithThreadResponse }
+module.exports = { threadTestMessages, singleMessage, messages, englishFillerWords, finnishFillerWords, emojis,testMessageWithThreadResponse }
