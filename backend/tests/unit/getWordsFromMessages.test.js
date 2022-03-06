@@ -2,9 +2,9 @@ const wordsFromMessages =
   require('../../application/filterSlackResponse').GetWordsFromMessages
 
 const testJson = require('./dataForWordTest.json')
-const { singleMessage, messages, emojis, testMessageWithThreadResponse } = require('./testMessages')
+const { singleMessage, messages, englishFillerWords, finnishFillerWords, emojis, testMessageWithThreadResponse } = require('./testMessages')
 
-test('Words are returned correctly from test data', () => {
+/*test('Words are returned correctly from test data', () => {
   const result = wordsFromMessages(messages)
   expect(result.length).toBeGreaterThan(7)
   expect(result[result.length-1].word).toBe('daba')
@@ -74,6 +74,7 @@ test('amounts are correct', () => {
   expect(response[2].word).toBe('5.000,00€')
   expect(response[3].word).toBe('€5.000')
 })
+
 test('Company suffix is added to previous word', () => {
   const response = wordsFromMessages([
     {
@@ -91,6 +92,7 @@ test('Company suffix is added to previous word', () => {
   expect(response[2]['word']).toEqual('osakeyhtiö oy')
   expect(response[3]['word']).toEqual('yhtiö co')
 })
+
 test('short messages are returned correctly', () => {
   const response = wordsFromMessages([
     {
@@ -106,6 +108,7 @@ test('short messages are returned correctly', () => {
   expect(response[0]['word']).toEqual('oy')
   expect(response[1]['word']).toEqual('ab')
 })
+
 test('empty message returns []', () => {
   const res = wordsFromMessages([
     {
@@ -119,4 +122,14 @@ test('empty message returns []', () => {
     },
   ])
   expect(res).toStrictEqual([])
+})*/
+
+test('English filler words are filtered out', () => {
+  const res = wordsFromMessages(englishFillerWords)
+  expect(res).toHaveLength(2)
+})
+
+test('Finnish filler words are filtered out', () => {
+  const res = wordsFromMessages(finnishFillerWords)
+  expect(res).toHaveLength(2)
 })
