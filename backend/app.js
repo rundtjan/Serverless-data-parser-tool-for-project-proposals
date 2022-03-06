@@ -74,6 +74,7 @@ app.get('/api/hubspot/contacts', (req, res) => {
 })
 
 app.post('/api/messageshortcut', (req, res) => {
+  console.log(req)
   slackController.getAllMessagesFromSingleThread(req.body.payload, res)
 })
 

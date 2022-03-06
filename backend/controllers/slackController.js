@@ -89,6 +89,7 @@ async function slackGetAllByUser(res, id) {
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
 async function getAllMessagesFromSingleThread(requestPayload, response) {
+  response.send(200)
   const payload = JSON.parse(requestPayload)
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
@@ -97,6 +98,10 @@ async function getAllMessagesFromSingleThread(requestPayload, response) {
     const threadWithResponses = await slack.getThreadMessages(args)
     const resultObj = await processMessageShortcut(slack, threadWithResponses)
     console.log(resultObj)
+    const id = Math.floor((1+Math.random())*0x10000)
+      .toString(16)
+      .substring(1)
+    savedQueries[id] = resultObj
   } catch (error) {
     response.send(error)
   }
