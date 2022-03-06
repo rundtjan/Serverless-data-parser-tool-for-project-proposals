@@ -6,7 +6,7 @@
  * @returns Escaped string
  */
 export const escapeRegExp = (string) => {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return string.replace(/[.*+?#^${}()|[\]\\]/g, '\\$&')
 }
 
 const specials = ['+', '.', '-', '€', '#']

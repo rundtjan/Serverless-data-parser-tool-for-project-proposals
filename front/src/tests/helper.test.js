@@ -7,6 +7,20 @@ describe('escapeRegExp', () => {
 
     expect(result).toBe('c\\+\\+')
   })
+
+  test('escapes correctly f', () => {
+    const word = 'f'
+    const result = escapeRegExp(word)
+
+    expect(result).toBe('f')
+  })
+
+  test('escapes correctly f', () => {
+    const word = 'F#'
+    const result = escapeRegExp(word)
+
+    expect(result).toBe('F\\#')
+  })
 })
 
 describe('tokenWord', () => {
@@ -30,6 +44,13 @@ describe('tokenWord', () => {
 
     expect(result).toBe('\\bCustomer\\b')
   })
+
+  test('adds tokens correctly to F', () => {
+    const word = 'F'
+    const result = tokenWord(word)
+
+    expect(result).toBe('\\bF\\b')
+  })
 })
 
 describe('patternHighlights', () => {
@@ -40,7 +61,16 @@ describe('patternHighlights', () => {
 
     expect(result).toBe(ans)
   })
+
+  test('patterns highlights correctly 2', () => {
+    const highlights = ['C++', 'C', 'F', 'F#']
+    const result = patternHighlights(highlights)
+    const ans = '\\bC\\+\\+\\B|\\bC\\b|\\bF\\b|\\bF\\#\\B'
+
+    expect(result).toBe(ans)
+  })
 })
+
 
 describe('splitTextByHighlights', () => {
   test('splits text correctly 1', () => {
