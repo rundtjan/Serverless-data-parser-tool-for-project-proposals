@@ -8,7 +8,7 @@ const savedQueries = {}
 async function saveQuery(res, args) {
   try {
     const id = await slackMessages(res, args, true)
-    let user =   args.user ? `user: ${args.user}` : 'user: not given'
+    let user = args.user ? `user: ${args.user}` : 'user: not given'
     let channel = `channel: ${args.channel}`
     let time = args.hours ? `time: ${args.hours} h` : 'time: not given'
     res.json({
@@ -23,7 +23,7 @@ async function saveQuery(res, args) {
         },
       ],
     })
-  } catch(error) {
+  } catch (error) {
     console.log(error)
   }
 }
@@ -48,7 +48,9 @@ async function slackMessages(res, args, save = false) {
     const resultObj = await processSlackMessages(slack, args)
     if (!save) res.send(resultObj)
     else {
-      const id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+      const id = Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1)
       savedQueries[id] = resultObj
       return id
     }
@@ -88,17 +90,35 @@ async function slackGetAllByUser(res, id) {
  * Parses parameters and calls an api to get messages from a single thread.
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
-async function getAllMessagesFromSingleThread(requestPayload, response) {
+async function getAllMessagesFromSingleThread(res, requestPayload) {
   const payload = JSON.parse(requestPayload)
+  //console.log(payload)
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
-  const args = {channel: channelId, ts: threadTimestamp}
+  const args = { channel: channelId, ts: threadTimestamp }
   try {
     const threadWithResponses = await slack.getThreadMessages(args)
+    //console.log(threadWithResponses)
     const resultObj = await processMessageShortcut(slack, threadWithResponses)
     console.log(resultObj)
+    const id = Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1)
+    savedQueries[id] = resultObj
+    res.json({
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `Thread ready at : http://135.181.37.120:80/api/parse/${id}`,
+            // text: `Your query is ready at : http://localhost/api/parse/${id}`,
+          },
+        },
+      ],
+    })
   } catch (error) {
-    response.send(error)
+    res.send(error)
   }
   /**
    * Modal thing, not working and gives a mysterious "Invalid arguments" error

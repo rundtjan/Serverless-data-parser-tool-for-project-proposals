@@ -3,18 +3,18 @@
 // this makes the frontend behave like assumed and prevents the frontend from exploding
 
 const {
-  GetWordsFromMessages,
   GetHumanMessagesFromSlack,
+  
 } = require('../application/filterSlackResponse')
+const { addNamesToThreadMessages } = require('../application/processSlackMessages')
 
 async function processMessageShortcut(slack, threadWithResponses) {
-  const humanMessagesFromThread = GetHumanMessagesFromSlack(threadWithResponses)
-  const wordsFromThread = GetWordsFromMessages(threadWithResponses)
-  console.log(humanMessagesFromThread)
-  console.log(wordsFromThread)
+  const oldest = undefined
+  const user = undefined
   try {
-    console.log(slack)
-    console.log(threadWithResponses)
+    const humanMessagesFromThread = GetHumanMessagesFromSlack(threadWithResponses)
+    const resultObj = await addNamesToThreadMessages(slack, humanMessagesFromThread, oldest, user)    
+    return resultObj
   } catch (error) {
     throw new Error(error.message)
   }
