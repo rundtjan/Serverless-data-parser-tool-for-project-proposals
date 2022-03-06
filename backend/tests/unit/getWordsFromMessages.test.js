@@ -4,7 +4,7 @@ const wordsFromMessages =
 const testJson = require('./dataForWordTest.json')
 const { singleMessage, messages, englishFillerWords, finnishFillerWords, emojis, testMessageWithThreadResponse } = require('./testMessages')
 
-/*test('Words are returned correctly from test data', () => {
+test('Words are returned correctly from test data', () => {
   const result = wordsFromMessages(messages)
   expect(result.length).toBeGreaterThan(7)
   expect(result[result.length-1].word).toBe('daba')
@@ -122,7 +122,7 @@ test('empty message returns []', () => {
     },
   ])
   expect(res).toStrictEqual([])
-})*/
+})
 
 test('English filler words are filtered out', () => {
   const res = wordsFromMessages(englishFillerWords)

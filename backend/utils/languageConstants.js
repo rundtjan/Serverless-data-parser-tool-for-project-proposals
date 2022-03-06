@@ -12,7 +12,7 @@ const companyIdentityTypes = [
   'kb',
   'co',
   'ltd',
-];
+]
 // following lists from https://www.kotus.fi/
 const particlesFin = [
   'josko',
@@ -42,7 +42,7 @@ const particlesFin = [
   'tai',
   'sekä',
   'ja',
-];
+]
 // following list from https://kaino.kotus.fi/sanat/taajuuslista/parole.php
 const top_freq_wordsFin = [
   'ja',
@@ -206,7 +206,7 @@ const top_freq_wordsFin = [
   'piti',
   'joku',
   'välillä',
-];
+]
 // https://scripta.kotus.fi/visk/sisallys.php?p=792
 const particle_groupsFin = [
   'ah',
@@ -400,7 +400,7 @@ const particle_groupsFin = [
   'terveppä',
   'hi',
   'heippa',
-];
+]
 // https://dictionary.cambridge.org/grammar/british-grammar/prepositions
 const particlesEng = [
   'about',
@@ -457,7 +457,7 @@ const particlesEng = [
   'with',
   'within',
   'without',
-];
+]
 // https://dictionary.cambridge.org/grammar/british-grammar/conjunctions
 const conjunctionsEng = [
   'and',
@@ -474,9 +474,9 @@ const conjunctionsEng = [
   'whilst',
   'provided',
   'since',
-];
+]
 // https://dictionary.cambridge.org/grammar/british-grammar/conditionals
-const conditionalsEng = ['if', 'should', 'unless', 'would'];
+const conditionalsEng = ['if', 'should', 'unless', 'would']
 // https://grammar.yourdictionary.com/parts-of-speech/adverbs/list-of-100-adverbs.html
 const adverbsEng = [
   'boldly',
@@ -626,6 +626,7 @@ const fillerWords = new Set(
     .concat(particle_groupsFin)
     .concat(particlesEng)
     .concat(conjunctionsEng)
+    .concat(conditionalsEng)
     .concat(adverbsEng)
 )
 
