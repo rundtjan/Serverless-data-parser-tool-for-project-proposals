@@ -4,6 +4,8 @@ const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
 const { processMessageShortcut } = require('../application/processMessageShortcut')
 const savedQueries = {}
+const axios = require('axios')
+const baseUrl = 'http://135.181.37.120'
 
 async function saveQuery(res, args) {
   try {
@@ -92,59 +94,21 @@ async function slackGetAllByUser(res, id) {
  */
 async function getAllMessagesFromSingleThread(res, requestPayload) {
   const payload = JSON.parse(requestPayload)
-  //console.log(payload)
   const channelId = payload.channel.id
   const threadTimestamp = payload.message.thread_ts
   const args = { channel: channelId, ts: threadTimestamp }
   try {
     const threadWithResponses = await slack.getThreadMessages(args)
-    //console.log(threadWithResponses)
     const resultObj = await processMessageShortcut(slack, threadWithResponses)
-    console.log(resultObj)
     const id = Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1)
     savedQueries[id] = resultObj
-    res.json({
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `Thread ready at : http://135.181.37.120:80/api/parse/${id}`,
-            // text: `Your query is ready at : http://localhost/api/parse/${id}`,
-          },
-        },
-      ],
-    })
+    axios.post(payload.response_url, {'text': 'You have parsed a thread.'})
+    setTimeout(axios.post(payload.response_url, {'text': `Please check it out here: ${baseUrl}/${id}`}, 2000))
   } catch (error) {
     res.send(error)
   }
-  /**
-   * Modal thing, not working and gives a mysterious "Invalid arguments" error
-   * Says a type is missing or something
-  const modalView = {
-    'type': 'modal',
-    'title': {
-      'type': 'plain_text',
-      'text': 'Parsing a thread'
-    },
-    'blocks': [
-      {
-        'type': 'section',
-        'text': {
-          'type': 'plain_text',
-          'text': 'Are you sure you want to send this thread to Parsa?',
-          'emoji': true
-        }
-      }
-    ]
-  }
-  const triggerId = payload.trigger_id
-  const viewObject = {trigger_id:triggerId, view:modalView}
-  const x = await slack.sendModalView(triggerId, viewObject)
-  console.log(x)
-  */
 }
 
 module.exports = {
