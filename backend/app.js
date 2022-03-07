@@ -52,6 +52,7 @@ app.post('/api/parse', async (req, res) => {
     const params = req.body.text.split(' ').filter(Boolean)
     if (params.length <= 3) {
       const parsedParams = await parseParameters(params, req.body.channel_name)
+      console.log('res: ' + res.json)
       slackController.saveQuery(res, parsedParams)
     } else {
       res.json(invalidNumberOfArguments(params.length))
