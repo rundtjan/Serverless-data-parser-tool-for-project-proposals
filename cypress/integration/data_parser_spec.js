@@ -70,16 +70,14 @@ describe('Data parser tool ', function() {
         cy.contains('Show all')
     })
 
-    it('Category Technology shows right words', function() {
-        cy.get('#wordList').find('#filter-button').click()
-        cy.get('#filter-menu').find('li').first().click()
-        cy.contains('python')
-        !cy.contains('kissa')
+    it('If no words are shown, the SendToHubSpot-button is disabled', function(){
+        cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
-    it('If clicking SendToHubSpot when no words are chosen, an error label is shown', function(){
-        cy.get('#sendToHubSpotButton').click()
-        cy.get('#HubSpotError').should('be.visible')
+    it('After choosing a word to a category, the SendToHubSpot-button is not disabled', function(){
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#sendToHubSpotButton').should('not.be.disabled')
     })
 
     it('After choosing words and clicking SendToHubSpot and waiting, a success or error label is shown', function() {
