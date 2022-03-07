@@ -12,12 +12,15 @@ import Collapse from '@mui/material/Collapse'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 
+//Helper
+import { escapeRegExp } from '../utils/helper'
+
 
 const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
   const highlightWords = useSelector(state => state.highlightWord)
 
-  const threads = message.thread_array
+  const threads = message.thread_array || []
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -91,6 +94,18 @@ const Message = ({ message }) => {
     )
   }
 
+  /**
+   * Checks if word ends in a special character
+   * @param {word} word to be checked
+   * @returns a regex pattern depending of the word
+   */
+  const checkWord = (word) => {
+    const specials = ['!', '"', '#', '$', '%', '&', '\'', '()', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', 'ä', 'ö', 'å', '€' ]
+    if (specials.includes(word.charAt(word.length-1))) {
+      return `\\b${escapeRegExp(word)}\\B`
+    }
+    return `\\b${word}\\b`
+  }
 
   /**
    * Adds highlighting functionality to the text.
@@ -108,7 +123,7 @@ const Message = ({ message }) => {
       )
     }
 
-    const pattern = highlightWords.map(highlightword => `\\b${highlightword}\\b`).join('|')
+    const pattern = highlightWords.map(highlightword => checkWord(highlightword)).join('|')
     const words = obj.text.split(new RegExp(`(${pattern})`, 'gi'))
 
     return(

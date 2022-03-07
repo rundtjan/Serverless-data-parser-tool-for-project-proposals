@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 //Reducers
 import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
 import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
+import { readyToSend } from '../reducers/readyToSendReducer'
 import { IconButton } from '@mui/material'
 
 
@@ -25,6 +26,7 @@ const Word = ({ word }) => {
 
 
   const categories = useSelector(state => state.data.categories)
+  const sendStatus = useSelector(state => state.sendStatus)
   const dispatch = useDispatch()
 
 
@@ -50,6 +52,13 @@ const Word = ({ word }) => {
     }
   }
 
+  const unCheck = () => {
+    if (checked) {
+      setChecked(!checked)
+      dispatch(clearHighlightedWords(word.word))
+    }
+  }
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -57,6 +66,7 @@ const Word = ({ word }) => {
   const handleMenuClose = (event) => {
     if(event.currentTarget.id) {
       dispatch(setAssignedWord(word.word, event.currentTarget.id))
+      dispatch(readyToSend())
       if(!checked) handleToggle()
     }
     setAnchorEl(null)
@@ -81,6 +91,7 @@ const Word = ({ word }) => {
         sx={{ py: 0, my:0 }}
       >
         <ListItemIcon>
+          {sendStatus === 'success' && unCheck()}
           <Checkbox
             edge='start'
             checked={checked}
