@@ -461,11 +461,13 @@ const particlesEng = [
 // https://dictionary.cambridge.org/grammar/british-grammar/conjunctions
 const conjunctionsEng = [
   'and',
+  'both',
   'but',
   'either',
   'or',
   'neither',
   'although',
+  'also',
   'if',
   'so',
   'when',
