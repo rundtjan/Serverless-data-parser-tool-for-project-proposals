@@ -42,10 +42,6 @@ const createDeal = async (res, obj) => {
   // TODO: Ask about possible hubspot test environment.
   //const SimplePublicObjectInput = { dealname: 'NoNameForThisDeal', properties: obj }
   //console.log('obj', obj)
-  var description = ''
-  Object.keys(obj).forEach((key) => {
-    if (key !== 'Customer' && key !== 'Price') description += `${key}: ${obj[key]}, `
-  })
   try {
     const price = String(obj.Price || '').replace(/[^0-9,]+/g, '')
     //console.log(price)
@@ -53,7 +49,6 @@ const createDeal = async (res, obj) => {
       properties: {
         dealname: `Deal ${obj.Customer || 'no client'}`,
         amount: `${Number(price) || 0}`,
-        description: description,
       },
     }
     //console.log(SimplePublicObjectInput)
