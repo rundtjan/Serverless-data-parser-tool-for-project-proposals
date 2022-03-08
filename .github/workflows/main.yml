@@ -37,10 +37,6 @@ jobs:
       # Sends coverage report to Codecov
       - name: Send coverage to Codecov
         uses: codecov/codecov-action@v2
-        with:
-          directory: ./coverage/
-          version: "v0.1.15"
-          files: /home/runner/clover.xml
 
       # Linting
       - name: lint server
