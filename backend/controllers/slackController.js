@@ -18,7 +18,6 @@ function slackResponse (args, id) {
         text: {
           type: 'mrkdwn',
           text: `Your query, with parameters: ${user}, ${channel} and ${time} is ready at : http://135.181.37.120:80/${id}`,
-          // text: `Your query is ready at : http://localhost/api/parse/${id}`,
         },
       },
     ],
@@ -108,7 +107,7 @@ async function getAllMessagesFromSingleThread(res, requestPayload) {
       .toString(16)
       .substring(1)
     savedQueries[id] = resultObj
-    axios.post(payload.response_url, {'text': 'You have parsed a thread.'})
+    axios.post(payload.response_url, {'text': `You have parsed a thread starting with: "${resultObj.messages[0].text.substring(0,50)}..."`})
     setTimeout(axios.post(payload.response_url, {'text': `Please check it out here: ${baseUrl}/${id}`}, 2000))
   } catch (error) {
     res.send(error)
