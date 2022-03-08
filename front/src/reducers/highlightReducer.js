@@ -5,6 +5,8 @@ const reducer = (state=[], action) => {
     return [...state, action.word]
   case 'CLEAR_HIGHLIGHTED_WORDS':
     return state.filter(w => w !== action.word)
+  case 'CLEAR_ALL':
+    return []
   default:
     return state
   }
@@ -24,6 +26,14 @@ export const clearHighlightedWords = (word) => {
     dispatch({
       type: 'CLEAR_HIGHLIGHTED_WORDS',
       word
+    })
+  }
+}
+
+export const clearAllHighlights = () => {
+  return async dispatch => {
+    dispatch({
+      type: 'CLEAR_ALL'
     })
   }
 }

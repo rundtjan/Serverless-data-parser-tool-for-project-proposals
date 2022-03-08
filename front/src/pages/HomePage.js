@@ -10,6 +10,7 @@ import Categories from '../components/Categories'
 import Layout from '../components/Layout'
 
 import { initializeMessages } from '../reducers/dataReducer'
+import { clearAllHighlights } from '../reducers/highlightReducer'
 
 
 
@@ -18,6 +19,7 @@ const HomePage = () => {
   const dispatch = useDispatch()
 
   dispatch(initializeMessages())
+  dispatch(clearAllHighlights())
 
 
   return(
