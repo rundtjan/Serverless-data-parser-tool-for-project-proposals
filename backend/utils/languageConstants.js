@@ -620,7 +620,7 @@ const adverbsEng = [
   'unexpectedly',
   'wildly',
 ]
-const miscEng = ['be', 'to', 'is', 'which', 'fully', 'anyone', 'someone', 'some', 'mostly', 'their', 'his', 'her', 'he', 'she', 'we', 'you', 'can', 'could', 'will', 'that', 'this', 'will', 'every', 'any', 'i', 'done', 'has', 'a', 'an', 'need']
+const miscEng = ['be', 'the', 'to', 'is', 'which', 'fully', 'anyone', 'someone', 'some', 'mostly', 'their', 'his', 'her', 'he', 'she', 'we', 'you', 'can', 'could', 'will', 'that', 'this', 'will', 'every', 'any', 'i', 'done', 'has', 'a', 'an', 'need']
 
 const co_Set = new Set(companyIdentityTypes)
 const fillerWords = new Set(
