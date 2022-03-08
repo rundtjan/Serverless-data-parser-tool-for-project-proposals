@@ -33,10 +33,6 @@ jobs:
       - name: Run the Jest tests
         run: cd backend && npm run test && cd ../front && npm run test -- --watchAll=false --verbose --coverage
       
-      # Install Codecov uploader
-      - name: Install Codecov
-        run: curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
-
       # Sends coverage report to Codecov
       - name: Send coverage to Codecov
         uses: codecov/codecov-action@v2
