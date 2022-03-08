@@ -32,7 +32,7 @@ jobs:
 
       # Runs Jest tests, separately in back- and frontend for convenience
       - name: Run the Jest tests
-        run: cd backend && npm run test && cd ../front && npm run test -- --watchAll=false --verbose --coverage
+        run: cd backend && npm run test -- --coverage && cd ../front && npm run test -- --watchAll=false --verbose --coverage
       
       # Sends coverage report to Codecov
       - name: Send coverage to Codecov
