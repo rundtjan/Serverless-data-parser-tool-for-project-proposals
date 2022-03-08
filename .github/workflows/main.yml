@@ -24,6 +24,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: codecov/codecov-action@v2
 
       # Install required dependecies
       - name: Install Dependencies
@@ -38,7 +39,8 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           directory: ./coverage/
-          files: ./clover.xml
+          version: "v0.1.15"
+          files: /home/runner/clover.xml
 
       # Linting
       - name: lint server
