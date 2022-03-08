@@ -33,6 +33,10 @@ jobs:
       - name: Run the Jest tests
         run: cd backend && npm run test && cd ../front && npm run test -- --watchAll=false --verbose
         
+      # Sends coverage report to Codecov
+      - name: Send coverage to Codecov
+        run: curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
+
       # Linting
       - name: lint server
         run: cd backend && npm run lint
