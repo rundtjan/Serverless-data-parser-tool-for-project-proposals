@@ -12,7 +12,7 @@ const GetHumanMessagesFromSlack = (messages) => {
 
 /**
  * Checks if the message is a thread. Slack API says that threads have a 'thread_ts'-field.
- * @param {A slack message object} message 
+ * @param {object} message a slack message object containing text, user, etc.
  * @returns True if message is a thread and False otherwise
  */
 const messageIsThreaded = (message) =>
@@ -20,8 +20,8 @@ const messageIsThreaded = (message) =>
 
 /**
  * Gets a list of timestamps of every threaded message.
- * @param {An object of Slack messages} messages 
- * @returns List of timestamps from every threaded message
+ * @param {object} messages a list of messages from Slack.
+ * @returns List of timestamps from every threaded message.
  */
 const GetTimeStamps = (messages) => {
   const result = messages.map((message) => {
@@ -34,7 +34,7 @@ const GetTimeStamps = (messages) => {
 
 /**
  * Adds an array for threads to message.
- * @param {A slack message object to which the array field is added} message 
+ * @param {object} message A slack message object to which the array field is added
  */
 const addThreadArrayToEachMessage = (message) => {
   message.thread_array = []
@@ -42,7 +42,7 @@ const addThreadArrayToEachMessage = (message) => {
 
 /**
  * Gets messages which are threads.
- * @param {An array of slack message objects} messages 
+ * @param {object} messages An array of slack message objects
  * @returns List of Slack message objects which are threads.
  */
 const GetThreads = (messages) => {
@@ -139,6 +139,11 @@ const GetRealNamesFromSlack = (messages, members) => {
   })
 }
 
+/**
+ * Checks if a word is an emoji.
+ * @param {object} word a word object to be checked. Emojis start with ":".
+ * @returns true if word is not an emoji and false otherwise.
+ */
 const notAnEmoji = (word) => word.charAt(0) !== ':'
 
 const filterOutOldMessages = (messages, oldest) => {
