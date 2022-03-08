@@ -20,7 +20,7 @@ const Message = ({ message }) => {
   const [expanded, setExpanded] = useState(false)
   const highlightWords = useSelector(state => state.highlightWord)
 
-  const threads = message.thread_array
+  const threads = message.thread_array || []
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
