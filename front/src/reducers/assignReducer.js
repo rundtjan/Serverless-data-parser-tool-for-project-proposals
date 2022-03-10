@@ -4,6 +4,11 @@ const reducer = (state = [], action) => {
     return state.filter(word => word.word !== action.data.word).concat(action.data)
   case 'DEL_ASSIGNED':
     return state.filter(word => word.word !== action.data.word)
+  case 'EDIT_ASSIGNED': {
+    const word = action.data.word
+    const edited = action.data.edited
+    return state.map(a => a.word === word ? { 'word': edited, 'category': a.category } : a)
+  }
   case 'CLEAR_ASSIGNED':
     return []
   default:
