@@ -4,10 +4,18 @@ const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
 const savedQueries = {}
 
+let paramUser = ''
+let paramChannel = 'general'
+let paramHours = ''
+
 function slackResponse (args, id) {
-  let user =   args.user ? `user: ${args.user}` : 'user: not given'
-  let channel = `channel: ${args.channel}`
-  let time = args.hours ? `time: ${args.hours} h` : 'time: not given'
+  const user =   args.user ? `user: ${args.user}` : 'user: not given'
+  const channel = `channel: ${args.channel}`
+  const time = args.hours ? `time: ${args.hours} h` : 'time: not given'
+  paramUser = args.user ? args.user : ''
+  paramChannel = args.channel
+  paramHours = args.hours ? args.hours : ''
+
   return  {
     blocks: [
       {
@@ -86,6 +94,14 @@ async function slackGetAllByUser(res, id) {
     res.send(error)
   }
 }
+async function getParams(res) {
+  try {
+    const params =  { paramChannel, paramUser, paramHours }
+    res.send(params)
+  } catch (error) {
+    res.send(error)
+  }
+}
 module.exports = {
   slackMessages,
   slackChannels,
@@ -94,4 +110,5 @@ module.exports = {
   saveQuery,
   returnQuery,
   slackResponse,
+  getParams,
 }

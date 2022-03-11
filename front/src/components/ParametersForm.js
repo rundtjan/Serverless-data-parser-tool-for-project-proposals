@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 //Reducers
 import { getMessagesParameters } from '../reducers/dataReducer'
 import { clearAssignedWords } from '../reducers/assignReducer'
+import { putParams } from '../reducers/parameterReducer'
 
 
 //Mui stuff
@@ -28,10 +29,9 @@ const ParametersForm = () => {
   const putParameters = async(event) => {
     event.preventDefault()
     dispatch(getMessagesParameters(channel, user, hours))
+    dispatch(putParams(channel, user, hours))
     dispatch(clearAssignedWords())
   }
-
-
 
   return(
     <Box
