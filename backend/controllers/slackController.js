@@ -103,7 +103,10 @@ async function getParams(res) {
   try {
     const params =  { paramChannel, paramUser, paramHours }
     res.send(params)
-
+  } catch (error) {
+    res.sed(error)
+  }  
+}
 
 /**
  * Parses parameters and calls an api to get messages from a single thread.
