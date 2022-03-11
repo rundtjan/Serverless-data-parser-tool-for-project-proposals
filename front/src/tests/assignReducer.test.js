@@ -1,5 +1,9 @@
 import assignReducer from '../reducers/assignReducer'
 import deepFreeze from 'deep-freeze'
+import configureStore from 'redux-mock-store'
+import { editAssignedWord } from '../reducers/assignReducer'
+
+const mockStore = configureStore([])
 
 
 describe('assignReducer', () => {
@@ -121,5 +125,36 @@ describe('assignReducer EDIT_ASSIGNED', () => {
 
     expect(third.word).toBe('20.2.2021')
     expect(third.category).toBe('startdate')
+  })
+})
+
+describe('assignReducer editAssignedWord', () => {
+
+  const initialState = [{ word: '14.2.2021', category: 'deadline' }, { word: 'Customer oy', category: 'customer' }]
+  const store = mockStore(initialState)
+
+  test('editAssignedWord dispatches correct action', () => {
+    const word = '14.2.2021'
+    const edited = '15.2.2022'
+
+    store.dispatch(editAssignedWord(word, edited))
+
+    const actions = store.getActions()
+    const expectedPayload = { type: 'EDIT_ASSIGNED', data: { word, edited } }
+
+    expect(actions).toEqual([expectedPayload])
+  })
+
+  test('editAssignedWord updates store correctly', () => {
+    const word = '14.2.2021'
+    const edited = '15.2.2022'
+
+    const action = store.dispatch(editAssignedWord(word, edited))
+
+    deepFreeze(initialState)
+
+    const newState = assignReducer(initialState, action)
+
+    expect(newState).toEqual([{ word: '15.2.2022', category: 'deadline' }, { word: 'Customer oy', category: 'customer' }])
   })
 })

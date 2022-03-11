@@ -42,6 +42,17 @@ export const unAssignWord = (word='', category='') => {
   }
 }
 
+export const editAssignedWord = (word, edited) => {
+  const data = {
+    word,
+    edited
+  }
+  return {
+    type: 'EDIT_ASSIGNED',
+    data
+  }
+}
+
 export const clearAssignedWords = () => {
   return {
     type: 'CLEAR_ASSIGNED'
