@@ -2,7 +2,10 @@ const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
+const { processMessageShortcut } = require('../application/processMessageShortcut')
 const savedQueries = {}
+const axios = require('axios')
+const baseUrl = 'http://135.181.37.120'
 
 let paramUser = ''
 let paramChannel = 'general'
@@ -23,7 +26,6 @@ function slackResponse (args, id) {
         text: {
           type: 'mrkdwn',
           text: `Your query, with parameters: ${user}, ${channel} and ${time} is ready at : http://135.181.37.120:80/${id}`,
-          // text: `Your query is ready at : http://localhost/api/parse/${id}`,
         },
       },
     ],
@@ -59,7 +61,9 @@ async function slackMessages(res, args, save = false) {
     const resultObj = await processSlackMessages(slack, args)
     if (!save) res.send(resultObj)
     else {
-      const id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+      const id = Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1)
       savedQueries[id] = resultObj
       return id
     }
@@ -94,14 +98,36 @@ async function slackGetAllByUser(res, id) {
     res.send(error)
   }
 }
+
 async function getParams(res) {
   try {
     const params =  { paramChannel, paramUser, paramHours }
     res.send(params)
+
+
+/**
+ * Parses parameters and calls an api to get messages from a single thread.
+ * @param {Object} payload Gives essential information when shortcut is used in workspace.
+ */
+async function getAllMessagesFromSingleThread(res, requestPayload) {
+  const payload = JSON.parse(requestPayload)
+  const channelId = payload.channel.id
+  const threadTimestamp = payload.message.thread_ts
+  const args = { channel: channelId, ts: threadTimestamp }
+  try {
+    const threadWithResponses = await slack.getThreadMessages(args)
+    const resultObj = await processMessageShortcut(slack, threadWithResponses)
+    const id = Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1)
+    savedQueries[id] = resultObj
+    axios.post(payload.response_url, {'text': `You have parsed a thread starting with: "${resultObj.messages[0].text.substring(0,50)}..."`})
+    setTimeout(axios.post(payload.response_url, {'text': `Please check it out here: ${baseUrl}/${id}`}, 2000))
   } catch (error) {
     res.send(error)
   }
 }
+
 module.exports = {
   slackMessages,
   slackChannels,
@@ -109,6 +135,7 @@ module.exports = {
   slackGetAllByUser,
   saveQuery,
   returnQuery,
+  getAllMessagesFromSingleThread,
   slackResponse,
   getParams,
 }

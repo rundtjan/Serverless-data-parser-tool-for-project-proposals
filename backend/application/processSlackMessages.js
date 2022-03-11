@@ -41,7 +41,7 @@ async function addThreadsToMessages(slack, args) {
   const threadTimestamps = GetTimeStamps(threads)
   const promises = []
   var parentIndex = 0
-  
+
   try {
     // Send all api queries at once.
     for (let i = 0; i < threadTimestamps.length; i++) {
@@ -65,6 +65,7 @@ async function addThreadsToMessages(slack, args) {
 
 async function addNamesToMessages(slack, messages, oldest, user) {
   var members = {}
+
   const users = await slack.getUsers()
   users.forEach(
     (elem) => (members[elem.id] = { username: elem.username, real_name: elem.real_name })
@@ -73,7 +74,19 @@ async function addNamesToMessages(slack, messages, oldest, user) {
   messages
     .filter((elem) => elem.thread_array.length > 0)
     .forEach((elem) => GetRealNamesFromSlack(elem.thread_array, members))
+  const result = applyFilters(messages, oldest, user)
+  return result
+}
 
+// TESTING FOR MESSAGE SHORTCUT, COPY FROM addNamesToMessages without message filtering.
+async function addNamesToThreadMessages(slack, messages, oldest, user) {
+  var members = {}
+
+  const users = await slack.getUsers()
+  users.forEach(
+    (elem) => (members[elem.id] = { username: elem.username, real_name: elem.real_name })
+  )
+  GetRealNamesFromSlack(messages, members)
   const result = applyFilters(messages, oldest, user)
   return result
 }
@@ -85,4 +98,4 @@ function applyFilters(messages, oldest, user) {
   return { messages: messages, words: words, categories: categories }
 }
 
-module.exports = { processSlackMessages }
+module.exports = { processSlackMessages, addNamesToThreadMessages }

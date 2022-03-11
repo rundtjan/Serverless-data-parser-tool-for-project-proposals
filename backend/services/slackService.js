@@ -76,6 +76,11 @@ const slackService = ({ slackClient }) => {
     }
   }
 
+  /**
+   * Gets a Slack message and all of it's replies by channel Id and timestamp.
+   * @param {Object} args In the form of {channel: CHANNEL_ID, ts: THREAD_TIMESTAMP}
+   * @returns All messages from the desired thread
+   */
   const getThreadMessages = async (args) => {
     try {
       const apiResult = await slackClient.conversations.replies(args)
@@ -144,6 +149,24 @@ const slackService = ({ slackClient }) => {
     console.log('Result : ', result)
   }
 
+  /**
+   * A function which opens a modal after using a message shortcut in slack.
+   * @param {string} triggerId 
+   * @param {object} viewObject 
+   */
+  const sendModalView = async (triggerId, viewObject) => {
+    try {
+      const result = await slackClient.views.open({
+        trigger_id:triggerId,
+        view: viewObject,
+      })
+      console.log(result)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
   return Object.freeze({
     getUsers,
     getChannels,
@@ -154,6 +177,8 @@ const slackService = ({ slackClient }) => {
     getThreadMessages,
     findAllByUser,
     sendMessage,
+    getAllThreadsMessages,
+    sendModalView,
   })
 }
 

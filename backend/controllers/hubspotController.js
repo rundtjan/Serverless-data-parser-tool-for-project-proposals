@@ -38,6 +38,11 @@ const createDeal = async (res, obj) => {
   // only customer & price are used for testing new deal creation.
   // No custom properties space available atm.
   // TODO: use existing custom properties to store our data? 
+  var description = ''
+  Object.keys(obj).forEach((key) => {
+    if (key !== 'Customer' && key !== 'Price') description += `${key}: ${obj[key]}, `
+  })
+  description = description.substring(0,description.length-2)
   try {
     const price = String(obj.Price || '').replace(/[^0-9,]+/g, '')
     //console.log(price)
@@ -45,6 +50,7 @@ const createDeal = async (res, obj) => {
       properties: {
         dealname: `Deal ${obj.Customer || 'no client'}`,
         amount: `${Number(price) || 0}`,
+        description: description,
       },
     }
 
