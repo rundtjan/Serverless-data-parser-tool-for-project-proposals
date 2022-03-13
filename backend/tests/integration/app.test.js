@@ -22,7 +22,7 @@ jest.mock('@slack/web-api', () => {
 })
 
 describe('Test Endpoints', () => {
-  test('GET /channels', (done) => {
+  test('GET /api/channels', (done) => {
     request(app)
       .get('/api/channels')
       .expect(200)
@@ -30,6 +30,24 @@ describe('Test Endpoints', () => {
       .expect((res) => {
         expect(res.body.length).toEqual(2)
         expect(res.body).toContain('test_general')
+      })
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+  })
+  test('GET /api/users', (done) => {
+    request(app)
+      .get('/api/users')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect((res) => {
+        expect(res.body.length).toEqual(3)
+        expect(res.body).toContainEqual({
+          id: 'U02UAB8HUFM',
+          real_name: 'RealNameTwo',
+          username: 'testusertwo'
+        })
       })
       .end((err) => {
         if (err) return done(err)
