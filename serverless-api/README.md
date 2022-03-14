@@ -15,3 +15,7 @@ You will need to add a local.settings.json, not included because it is somewhat 
   }
 }
 ```
+In order to run locally you will need the the npm-package Azure Functions Core Tools:
+```bash
+npm i -g azure-functions-core-tools@3 --unsafe-perm true
+```
