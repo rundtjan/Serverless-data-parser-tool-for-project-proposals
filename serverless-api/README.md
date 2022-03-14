@@ -20,3 +20,7 @@ In order to run locally you will need the the npm-package Azure Functions Core T
 ```bash
 npm i -g azure-functions-core-tools@3 --unsafe-perm true
 ```
+The api is currently running on (and any changes to this repo will be pushed to):
+```
+https://githubactionsparsa.azurewebsites.net/api/
+```
