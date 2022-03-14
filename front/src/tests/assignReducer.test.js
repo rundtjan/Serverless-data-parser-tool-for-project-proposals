@@ -1,13 +1,13 @@
 import assignReducer from '../reducers/assignReducer'
 import deepFreeze from 'deep-freeze'
 import configureStore from 'redux-mock-store'
-import { editAssignedWord } from '../reducers/assignReducer'
+import { editAssignedWord, clearAssignedWords, setAssignedWord } from '../reducers/assignReducer'
 
 const mockStore = configureStore([])
 
 
-describe('assignReducer', () => {
-  test('ADD_ASSIGNED adds word to assignedlist', () => {
+describe('assignReducer ADD_ASSIGNED', () => {
+  test('ADD_ASSIGNED adds word-category pair to the state 1', () => {
     const state = []
     const action = {
       type: 'ADD_ASSIGNED',
@@ -22,10 +22,60 @@ describe('assignReducer', () => {
     const newState = assignReducer(state, action)
 
     expect(newState).toContain(action.data)
+    expect(newState).toEqual([{ word: 'testword', category: 'testcategory' }])
+  })
+
+  test('ADD_ASSIGNED adds word-category pair to the state 2', () => {
+    const state = [{ word: 'test', category: 'testing' }]
+    const action = {
+      type: 'ADD_ASSIGNED',
+      data: {
+        word: 'testword',
+        category: 'testcategory',
+      }
+    }
+
+    deepFreeze(state)
+    deepFreeze(action)
+    const newState = assignReducer(state, action)
+
+    expect(newState).toContain(action.data)
+    expect(newState).toEqual([{  word: 'test', category: 'testing' }, { word: 'testword', category: 'testcategory' }])
   })
 })
 
-describe('assignReducer', () => {
+describe('assignReducer setAssignedWord', () => {
+
+  const initialState = [{ word: 'Customer oy', category: 'customer' }]
+  const store = mockStore(initialState)
+
+  test('setAssignedWord dispatches correct action', () => {
+    const word = '14.2.2021'
+    const category = 'deadline'
+
+    store.dispatch(setAssignedWord(word, category))
+
+    const actions = store.getActions()
+    const expectedPayload = { type: 'ADD_ASSIGNED', data: { word, category } }
+
+    expect(actions).toEqual([expectedPayload])
+  })
+
+  test('setAssignedWord adds correct data to the state', () => {
+    const word = '14.2.2021'
+    const category = 'deadline'
+
+    const action = store.dispatch(setAssignedWord(word, category))
+
+    deepFreeze(initialState)
+
+    const newState = assignReducer(initialState, action)
+
+    expect(newState).toEqual([{ word: 'Customer oy', category: 'customer' }, { word: '14.2.2021', category: 'deadline' } ])
+  })
+})
+
+describe('assignReducer DEL_ASSIGNED', () => {
   test('DEL_ASSIGNED deletes word from assignedlist', () => {
     const state = [{ 'word': 'testword', 'category': 'testcategory' }]
     const action = {
@@ -44,7 +94,7 @@ describe('assignReducer', () => {
   })
 })
 
-describe('assignReducer', () => {
+describe('assignReducer CLEAR_ASSIGNED', () => {
   test('CLEAR_ASSIGNED deletes all words from assignedlist', () => {
     const state = [{ 'word': 'testword', 'category': 'testcategory' }, { 'word': 'another word', 'category': 'another category' }]
     const action = {
@@ -56,6 +106,29 @@ describe('assignReducer', () => {
     const newState = assignReducer(state, action)
 
     expect(newState).toHaveLength(0)
+  })
+})
+
+describe('assignReducer clearAssignedWords', () => {
+  const initialState = [{ word: '14.2.2021', category: 'deadline' }, { word: 'Customer oy', category: 'customer' }]
+  const store = mockStore(initialState)
+
+  test('clearAssignedWords dispatches correct action', () => {
+    store.dispatch(clearAssignedWords())
+
+    const actions = store.getActions()
+    const expectedPayload = { type: 'CLEAR_ASSIGNED' }
+
+    expect(actions).toEqual([expectedPayload])
+  })
+
+  test('clearAssignedWords updates store correctly', () => {
+    const action = store.dispatch(clearAssignedWords())
+
+    deepFreeze(initialState)
+
+    const newState = assignReducer(initialState, action)
+    expect(newState).toEqual([])
   })
 })
 
