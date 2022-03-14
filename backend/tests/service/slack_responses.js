@@ -21,7 +21,7 @@ const users_response = {
       is_app_user: false,
       updated: 0,
       is_email_confirmed: false,
-      who_can_share_contact_card: 'EVERYONE'
+      who_can_share_contact_card: 'EVERYONE',
     },
     {
       id: 'U02U7N423SR',
@@ -43,7 +43,7 @@ const users_response = {
       is_app_user: false,
       updated: 1642595849,
       is_email_confirmed: true,
-      who_can_share_contact_card: 'EVERYONE'
+      who_can_share_contact_card: 'EVERYONE',
     },
     {
       id: 'U02UAB8HUFM',
@@ -65,7 +65,7 @@ const users_response = {
       is_app_user: false,
       updated: 1646381880,
       is_email_confirmed: true,
-      who_can_share_contact_card: 'EVERYONE'
+      who_can_share_contact_card: 'EVERYONE',
     },
     {
       id: 'U030KNYEC00',
@@ -87,8 +87,8 @@ const users_response = {
       is_app_user: false,
       updated: 1646836377,
       is_email_confirmed: false,
-      who_can_share_contact_card: 'EVERYONE'
-    }
+      who_can_share_contact_card: 'EVERYONE',
+    },
   ],
   cache_ts: 1646941046,
   response_metadata: {
@@ -102,10 +102,10 @@ const users_response = {
       'groups:read',
       'im:read',
       'mpim:read',
-      'users.profile:read'
+      'users.profile:read',
     ],
-    acceptedScopes: [ 'users:read' ]
-  }
+    acceptedScopes: ['users:read'],
+  },
 }
 const channels_response = {
   ok: true,
@@ -165,7 +165,7 @@ const channels_response = {
       purpose: [Object],
       previous_names: [],
       num_members: 9,
-    }
+    },
   ],
   response_metadata: {
     next_cursor: '',
@@ -182,4 +182,134 @@ const channels_response = {
     acceptedScopes: ['channels:read', 'groups:read', 'mpim:read', 'im:read', 'read'],
   },
 }
-module.exports = { users_response, channels_response }
+
+const history_response = {
+  ok: true,
+  messages: [
+    {
+      client_msg_id: '6e00d76e-0565-4356-b8f7-8fd80a8bd608',
+      type: 'message',
+      text: 'Eräs Oy projekti alkaa 01.04. budjetti 10.000€',
+      user: 'U02UAB8HUFM',
+      ts: '1645463475.350089',
+      team: 'T02UNV7V4GZ',
+      blocks: [
+        {
+          type: 'rich_text',
+          block_id: 'jV7W',
+          elements: [
+            {
+              type: 'rich_text_section',
+              elements: [
+                {
+                  type: 'text',
+                  text: '11.03.2022 klo 12.00 tapaaminen. Node.js ja express serverless ratkaisuna? Toimiiko aws / azure / google cloud.',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      thread_ts: '1645463475.350089',
+      reply_count: 1,
+      reply_users_count: 1,
+      latest_reply: '1645463537.640819',
+      reply_users: ['U02U7N423SR'],
+      is_locked: false,
+      subscribed: false,
+    },
+    {
+      client_msg_id: '57d0baa2-49ca-4dad-8566-96c608fd8ff3',
+      type: 'message',
+      text: '11.03.2022 klo 12.00 tapaaminen. Node.js ja express serverless ratkaisuna? Toimiiko aws / azure / google cloud.',
+      user: 'U02U7N423SR',
+      ts: '1645451953.737269',
+      team: 'T02UNV7V4GZ',
+      blocks: [Array],
+    },
+    {
+      type: 'message',
+      subtype: 'channel_join',
+      ts: '1645451626.131039',
+      user: 'U02UFPCEPLJ',
+      text: '<@U02UFPCEPLJ> has joined the channel',
+      inviter: 'U02UF7S2DN1',
+    },
+    {
+      type: 'message',
+      subtype: 'channel_join',
+      ts: '1645451526.403159',
+      user: 'U031XN15RRU',
+      text: '<@U031XN15RRU> has joined the channel',
+      inviter: 'U02UF7S2DN1',
+    },
+  ],
+  has_more: false,
+  pin_count: 0,
+  channel_actions_ts: null,
+  channel_actions_count: 0,
+  response_metadata: {
+    scopes: [
+      'channels:history',
+      'users:read',
+      'channels:read',
+      'commands',
+      'chat:write',
+      'groups:read',
+      'im:read',
+      'mpim:read',
+      'users.profile:read',
+    ],
+    acceptedScopes: ['channels:history', 'groups:history', 'mpim:history', 'im:history', 'read'],
+  },
+}
+
+const thread_response = {
+  ok: true,
+  messages: [
+    {
+      client_msg_id: '6e00d76e-0565-4356-b8f7-8fd80a8bd608',
+      type: 'message',
+      text: 'Eräs Oy projekti alkaa 01.04. budjetti 10.000€',
+      user: 'U02UAB8HUFM',
+      ts: '1645463475.350089',
+      team: 'T02UNV7V4GZ',
+      blocks: [Array],
+      thread_ts: '1645463475.350089',
+      reply_count: 1,
+      reply_users_count: 1,
+      latest_reply: '1645463537.640819',
+      reply_users: [Array],
+      is_locked: false,
+      subscribed: false,
+    },
+    {
+      client_msg_id: '3480404c-8998-4af4-9023-2ca5cf339f8f',
+      type: 'message',
+      text: 'Tämä on siis Django REST api projekti.',
+      user: 'U02U7N423SR',
+      ts: '1645463537.640819',
+      team: 'T02UNV7V4GZ',
+      blocks: [Array],
+      thread_ts: '1645463475.350089',
+      parent_user_id: 'U02UAB8HUFM',
+    },
+  ],
+  has_more: false,
+  response_metadata: {
+    scopes: [
+      'channels:history',
+      'users:read',
+      'channels:read',
+      'commands',
+      'chat:write',
+      'groups:read',
+      'im:read',
+      'mpim:read',
+      'users.profile:read',
+    ],
+    acceptedScopes: ['channels:history', 'groups:history', 'mpim:history', 'im:history', 'read'],
+  },
+}
+
+module.exports = { users_response, channels_response, history_response, thread_response }
