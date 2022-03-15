@@ -1,4 +1,5 @@
 const request = require('supertest')
+const assert = require('assert')
 
 const app = require('../../app')
 
@@ -111,7 +112,6 @@ describe('Test Slack Related Endpoints', () => {
           important: false,
           category: '',
         })
-        //expect(res.body.words).to({word: 'projekti'})
         expect(res.body.words).not.toEqual(
           expect.arrayContaining([expect.objectContaining({ word: 'siis' })])
         )
@@ -144,12 +144,37 @@ describe('Test Slack Related Endpoints', () => {
           important: false,
           category: 'Number',
         })
-
-        //expect(res.body.words).to({word: 'projekti'})
         expect(res.body.words).not.toEqual(
           expect.arrayContaining([expect.objectContaining({ word: 'on' })])
         )
       })
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+  })
+
+  test('POST /api/parse with channel and user parameter', (done) => {
+    request(app)
+      .post('/api/parse')
+      .send({ channel_name: 'test_channel', text: 'test_channel' })
+      .expect(200)
+      .expect((res) => {
+        assert.ok(
+          res.text.includes(
+            '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Your query, with parameters: user: not given, channel: test_channel and time: not given is ready at : http://135.181.37.120:80/'
+          )
+        )
+      })
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+      
+    request(app)
+      .post('/api/parse')
+      .send({ channel_name: 'test_channel' })
+      .expect(400)
       .end((err) => {
         if (err) return done(err)
         return done()
@@ -199,14 +224,13 @@ describe('Test Hubspot Related Endpoints', () => {
       .expect('Content-Type', /json/)
       .expect((res) => {
         expect(res.body.length).toEqual(3)
-        expect(res.body)
-          .toEqual(
-            expect.arrayContaining([
-              expect.objectContaining({
-                id: '6598797157'
-              })
-            ])
-          )
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              id: '6598797157',
+            }),
+          ])
+        )
       })
       .end((err) => {
         if (err) return done(err)
