@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography'
 
 const DrawerParameters = () => {
   const parameters = useSelector(state => state.parameters)
-
   if (!parameters){
     return(
       <Box
@@ -66,17 +65,17 @@ const DrawerParameters = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Channel: { parameters[0] }
+                Channel: { parameters.channel }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                User: { parameters[1] }
+                User: { parameters.user }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Hours: { parameters[2] }
+                Hours: { parameters.hours }
           </Typography>
         </Grid>
       </Grid>
