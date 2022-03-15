@@ -1,9 +1,7 @@
 const {
   isNumeric,
   parameterIsUsername,
-  parameterIsHours,
-  parameterIsValidChannel,
-  parseParameters,
+  parameterIsHours
 } = require('../../utils/parseParameters')
 
 test('Hours are parsed and returned correctly with valid value', () => {
@@ -36,46 +34,4 @@ test('Numeric values are parsed and returned correctly',() => {
   expect(isNumeric(numeric)).toBeTruthy
   const notNumeric = 'general'
   expect(isNumeric(notNumeric)).toBeFalsy
-})
-
-test('Valid channel name is found correctly', async () => {
-  const channels = [
-    {
-      id: 'C02UCV0GQJZ',
-      name: 'channel-two',
-    },
-    {
-      id: 'C02UNV80V7B',
-      name: 'general',
-    },
-    {
-      id: 'C02V02LBQGG',
-      name: 'random',
-    },
-    {
-      id: 'C033WM9HGAZ',
-      name: 'demo_channel',
-    }
-  ]
-  const result = await parameterIsValidChannel(channels[3])
-  expect(result).toBeTruthy
-})
-
-test('Invalid channel name gives error correctly', async() => {
-  const result = await parameterIsValidChannel('Cat-pictures')
-  expect(result).toBeFalsy
-})
-
-test('Parameters are returned correctly if zero parameters', async() => {
-  const params = []
-  const sourceChannel = 'demo_channel'
-  const res = await parseParameters(params, sourceChannel)
-  expect(res).toStrictEqual(
-    {
-      'channel': sourceChannel,
-      'user': null,
-      'oldest': false,
-      'hours': null,
-    }
-  )
 })
