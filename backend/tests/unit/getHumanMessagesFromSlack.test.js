@@ -1,9 +1,12 @@
-const humanMessagesFromSlack =
-  require('../../application/filterSlackResponse').GetHumanMessagesFromSlack
+const {
+  GetHumanMessagesFromSlack,
+  GetTimeStamps
+} = require('../../application/filterSlackResponse')
+const { threadTestMessages } = require('./testMessages')
 
 test('empty list of messages is empty', () => {
   const messages = []
-  const result = humanMessagesFromSlack(messages)
+  const result = GetHumanMessagesFromSlack(messages)
   expect(result).toEqual([])
 })
 
@@ -29,7 +32,7 @@ test('list of messages is returned correctly', () => {
       blocks: [[Object]],
     },
   ]
-  const result = humanMessagesFromSlack(messages)
+  const result = GetHumanMessagesFromSlack(messages)
   expect(result.length).toBe(2)
   expect(messages).not.toBeNull()
   expect(messages).not.toBeUndefined()
@@ -55,6 +58,12 @@ test('returned list is empty if no client_msg_id field', () => {
       blocks: [[Object]],
     },
   ]
-  const result = humanMessagesFromSlack(messages)
+  const result = GetHumanMessagesFromSlack(messages)
   expect(result.length).toBe(0)
+})
+
+test('Timestamps from messages are returned correctly', () => {
+  const timestamps = GetTimeStamps(threadTestMessages)
+  const filteredWithoutUndefinedValues = timestamps.filter(timestamp => timestamp !== undefined)
+  expect(filteredWithoutUndefinedValues.length).toBe(3)
 })
