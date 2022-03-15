@@ -325,5 +325,4 @@ const testMessageWithThreadResponse = [
     ],
   },
 ]
-
-module.exports = { threadTestMessages, singleMessage, messages, englishFillerWords, finnishFillerWords, emojis, testMessageWithThreadResponse }
+module.exports = { threadTestMessages, singleMessage, messages, englishFillerWords, finnishFillerWords, emojis,testMessageWithThreadResponse }
