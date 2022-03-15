@@ -11,6 +11,7 @@ import assignReducer from './reducers/assignReducer'
 import parameterReducer from './reducers/parameterReducer'
 import sendReducer from './reducers/sendReducer'
 import readyToSendReducer from './reducers/readyToSendReducer'
+import jsonReducer from './reducers/jsonReducer'
 
 const reducer = combineReducers({
   data: dataReducer,
@@ -19,7 +20,8 @@ const reducer = combineReducers({
   assignedWords: assignReducer,
   parameters: parameterReducer,
   sendStatus: sendReducer,
-  readyToSend: readyToSendReducer
+  readyToSend: readyToSendReducer,
+  json: jsonReducer
 })
 
 const store = createStore(
