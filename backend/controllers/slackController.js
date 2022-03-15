@@ -7,10 +7,18 @@ const savedQueries = {}
 const axios = require('axios')
 const baseUrl = 'http://135.181.37.120'
 
+let paramUser = ''
+let paramChannel = 'general'
+let paramHours = ''
+
 function slackResponse (args, id) {
-  let user =   args.user ? `user: ${args.user}` : 'user: not given'
-  let channel = `channel: ${args.channel}`
-  let time = args.hours ? `time: ${args.hours} h` : 'time: not given'
+  const user =   args.user ? `user: ${args.user}` : 'user: not given'
+  const channel = `channel: ${args.channel}`
+  const time = args.hours ? `time: ${args.hours} h` : 'time: not given'
+  paramUser = args.user ? args.user : ''
+  paramChannel = args.channel
+  paramHours = args.hours ? args.hours : ''
+
   return  {
     blocks: [
       {
@@ -91,6 +99,15 @@ async function slackGetAllByUser(res, id) {
   }
 }
 
+async function getParams(res) {
+  try {
+    const params =  { paramChannel, paramUser, paramHours }
+    res.send(params)
+  } catch (error) {
+    res.sed(error)
+  }  
+}
+
 /**
  * Parses parameters and calls an api to get messages from a single thread.
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
@@ -123,4 +140,5 @@ module.exports = {
   returnQuery,
   getAllMessagesFromSingleThread,
   slackResponse,
+  getParams,
 }
