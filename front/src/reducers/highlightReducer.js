@@ -1,4 +1,10 @@
+/*
+Should rename clearHighligtedWords
+Should rename clear_highlighted_words
+Fix imports after rename
 
+
+*/
 const reducer = (state=[], action) => {
   switch(action.type) {
   case 'SET_HIGHLIGHTED_WORDS':
