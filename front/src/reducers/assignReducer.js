@@ -1,9 +1,10 @@
+
 const reducer = (state = [], action) => {
   switch(action.type) {
   case 'ADD_ASSIGNED':
-    return state.filter(word => word.word !== action.data.word).concat(action.data)
+    return state.filter(word => word.word.toLowerCase() !== action.data.word.toLowerCase()).concat(action.data)
   case 'DEL_ASSIGNED':
-    return state.filter(word => word.word !== action.data.word)
+    return state.filter(word => word.word.toLowerCase() !== action.word.toLowerCase())
   case 'EDIT_ASSIGNED': {
     const word = action.data.word
     const edited = action.data.edited
@@ -16,7 +17,12 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const setAssignedWord = (word='', category='') => {
+/**
+ * Assigns given word to the category
+ * @param {String} word
+ * @param {String} category
+ */
+export const setAssignedWord = (word, category) => {
   const data = { word, category }
   return {
     type: 'ADD_ASSIGNED',
@@ -24,24 +30,22 @@ export const setAssignedWord = (word='', category='') => {
   }
 }
 
-export const unAssignWord = (word='', category='') => {
-  return (dispatch, getState) => {
-    console.log(getState().assignedWords.length)
-    const data = { word, category }
-    if (getState().assignedWords.length === 1){
-      dispatch({
-        type: 'CLEAR_ASSIGNED',
-        data
-      })
-    } else {
-      dispatch({
-        type: 'DEL_ASSIGNED',
-        data
-      })
-    }
+/**
+ * Removes word for category
+ * @param {String} word
+ */
+export const unAssignWord = (word) => {
+  return {
+    type: 'DEL_ASSIGNED',
+    word
   }
 }
 
+/**
+ * Updates the word in the category.
+ * @param {String} word old value
+ * @param {String} edited new value
+ */
 export const editAssignedWord = (word, edited) => {
   const data = {
     word,
@@ -53,6 +57,9 @@ export const editAssignedWord = (word, edited) => {
   }
 }
 
+/**
+ * Removes all words from all categories
+ */
 export const clearAssignedWords = () => {
   return {
     type: 'CLEAR_ASSIGNED'
