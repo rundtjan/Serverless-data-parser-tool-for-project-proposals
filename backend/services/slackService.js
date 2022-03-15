@@ -149,24 +149,6 @@ const slackService = ({ slackClient }) => {
     console.log('Result : ', result)
   }
 
-  /**
-   * A function which opens a modal after using a message shortcut in slack.
-   * @param {string} triggerId 
-   * @param {object} viewObject 
-   */
-  const sendModalView = async (triggerId, viewObject) => {
-    try {
-      const result = await slackClient.views.open({
-        trigger_id:triggerId,
-        view: viewObject,
-      })
-      console.log(result)
-    }
-    catch (error) {
-      console.error(error)
-    }
-  }
-
   return Object.freeze({
     getUsers,
     getChannels,
@@ -178,7 +160,6 @@ const slackService = ({ slackClient }) => {
     findAllByUser,
     sendMessage,
     getAllThreadsMessages,
-    sendModalView,
   })
 }
 
