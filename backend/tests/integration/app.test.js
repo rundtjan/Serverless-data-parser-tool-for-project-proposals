@@ -121,6 +121,7 @@ describe('Test Slack Related Endpoints', () => {
         return done()
       })
   })
+
   test('POST /api/data with channel and user parameter', (done) => {
     request(app)
       .post('/api/data')
@@ -145,6 +146,40 @@ describe('Test Slack Related Endpoints', () => {
         })
 
         //expect(res.body.words).to({word: 'projekti'})
+        expect(res.body.words).not.toEqual(
+          expect.arrayContaining([expect.objectContaining({ word: 'on' })])
+        )
+      })
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+  })
+
+  test('GET /api/data/:id', (done) => {
+    request(app)
+      .get('/api/data/C02UCV0GQJZ')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect((res) => {
+        expect(res.body.messages.length).toEqual(2)
+        expect(res.body.words).toContainEqual({
+          word: 'django',
+          message_ids: ['3480404c-8998-4af4-9023-2ca5cf339f8f'],
+          count: 1,
+          important: false,
+          category: 'Technology',
+        })
+        expect(res.body.words).toContainEqual({
+          word: 'projekti',
+          message_ids: [
+            '6e00d76e-0565-4356-b8f7-8fd80a8bd608',
+            '3480404c-8998-4af4-9023-2ca5cf339f8f',
+          ],
+          count: 2,
+          important: false,
+          category: '',
+        })
         expect(res.body.words).not.toEqual(
           expect.arrayContaining([expect.objectContaining({ word: 'on' })])
         )
