@@ -8,9 +8,6 @@ import Box from '@mui/material/Box'
 const JsonOfCategories = () => {
   const json = useSelector(state => state.json)
   console.log('json: ' + JSON.stringify(json))
-  // const dispatch = useDispatch()
-
-  // dispatch(initializeJson())
 
   return (
     <Grid container spacing={2}>

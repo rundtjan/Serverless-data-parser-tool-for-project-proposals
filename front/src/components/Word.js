@@ -70,8 +70,8 @@ const Word = ({ word }) => {
   const handleMenuClose = (event) => {
     if(event.currentTarget.id) {
       dispatch(setAssignedWord(word.word, event.currentTarget.id))
-      dispatch(updateJson(assignedWords))
       dispatch(readyToSend())
+      dispatch(updateJson(assignedWords))
       if(!checked) handleToggle()
     }
     setAnchorEl(null)
