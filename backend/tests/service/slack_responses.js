@@ -203,7 +203,7 @@ const history_response = {
               elements: [
                 {
                   type: 'text',
-                  text: '11.03.2022 klo 12.00 tapaaminen. Node.js ja express serverless ratkaisuna? Toimiiko aws / azure / google cloud.',
+                  text: 'Eräs Oy projekti alkaa 01.04. budjetti 10.000€',
                 },
               ],
             },
