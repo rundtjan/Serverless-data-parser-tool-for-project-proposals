@@ -10,6 +10,12 @@ const reducer = (state = [], action) => {
     return state
   }
 }
+
+/**
+ * Initializes parameters to the sidedrawer
+ * Used in App.js
+ * @see paramService
+ */
 export const initializeParameters = () => {
   return async dispatch => {
     const data = await paramsService.getParams()
@@ -23,6 +29,14 @@ export const initializeParameters = () => {
     })
   }
 }
+
+/**
+ * Updates parameters in the sidedrawer
+ * Used in ParametersForm.js
+ * @param {String} channel
+ * @param {String} user
+ * @param {String} hours
+ */
 export const putParams = (channel, user, hours) => {
   return async dispatch => {
     dispatch({
