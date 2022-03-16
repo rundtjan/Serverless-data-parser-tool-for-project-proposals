@@ -6,7 +6,7 @@ https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction
 ```
 Parses Slack slash commands at:  
 ```
-https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction?route=shashCommand
+https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction?route=slashCommand
 ```
 Serves data by parameters from:  
 ```
