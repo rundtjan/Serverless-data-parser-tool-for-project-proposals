@@ -9,7 +9,7 @@ const reducer = (state=[], action) => {
   switch(action.type) {
   case 'SET_HIGHLIGHTED_WORDS':
     return [...state, action.word]
-  case 'CLEAR_HIGHLIGHTED_WORDS':
+  case 'CLEAR_HIGHLIGHTED_WORD':
     return state.filter(w => w !== action.word)
   case 'CLEAR_ALL':
     return []
@@ -36,9 +36,9 @@ export const addHighlightedWord = (word) => {
  * - Used in Word.js
  * @param {*} word
  */
-export const clearHighlightedWords = (word) => {
+export const clearHighlightedWord = (word) => {
   return {
-    type: 'CLEAR_HIGHLIGHTED_WORDS',
+    type: 'CLEAR_HIGHLIGHTED_WORD',
     word
   }
 }
