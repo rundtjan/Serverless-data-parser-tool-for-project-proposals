@@ -89,7 +89,6 @@ const GetWordsFromMessages = (messages) => {
   const temp_word_obj = {}
 
   messages = messages.concat(AddThreadMessages(messages))
-  console.time('mergeCompany')
   messages.forEach((message) => {
     const words = message.text.split(' ')
     let parsedWords = ParseWords(words)
@@ -104,7 +103,6 @@ const GetWordsFromMessages = (messages) => {
         : (temp_word_obj[word] = Create_Word_Obj(word, message, category))
     })
   })
-  console.timeEnd('mergeCompany')
 
   Object.keys(temp_word_obj).forEach((key) => {
     result.push(temp_word_obj[key])
