@@ -1,41 +1,39 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+//Mui components
+import Grid from '@mui/material/Grid'
 
-//import Container from '@mui/material/Container'
-import { Grid } from '@mui/material'
-
-import { useSelector } from 'react-redux'
-
-
+//Components
 import Messages from '../components/Messages'
 import Words from '../components/Words'
-import UserForm from '../components/UserForm'
-import CategoryWords from '../components/CategoryWords'
+import Categories from '../components/Categories'
+import Layout from '../components/Layout'
+
+import { initializeMessages } from '../reducers/dataReducer'
+import { clearAllHighlights } from '../reducers/highlightReducer'
+
+
 
 const HomePage = () => {
-  const categories = useSelector(state => state.data.categories)
 
-  const addCategories = () => {
-    const categoryElement = categories.map(cat => <Grid key={cat + 'griditem'} item><CategoryWords key={cat + 'cat'} category={cat} /></Grid>)
-    return categoryElement
-  }
+  const dispatch = useDispatch()
+
+  dispatch(initializeMessages())
+  dispatch(clearAllHighlights())
+
 
   return(
-    <Grid container direction='row'>
-      <Grid container item justifyContent='center'>
-        <Grid item>
-          <UserForm />
-        </Grid>
-        <Grid item>
+    <Layout>
+      <Grid container spacing={3}>
+        <Grid item xs={8}>
           <Messages />
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <Words />
         </Grid>
+        <Categories />
       </Grid>
-      <Grid container item justifyContent='center' id='categoryGrid'>
-        { categories ? addCategories() : null }
-      </Grid>
-    </Grid>
+    </Layout>
   )
 }
 

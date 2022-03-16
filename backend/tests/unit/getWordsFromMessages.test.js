@@ -2,11 +2,12 @@ const wordsFromMessages =
   require('../../application/filterSlackResponse').GetWordsFromMessages
 
 const testJson = require('./dataForWordTest.json')
-const { singleMessage, messages, emojis } = require('./testMessages')
+const { singleMessage, messages, englishFillerWords, finnishFillerWords, emojis, testMessageWithThreadResponse } = require('./testMessages')
 
 test('Words are returned correctly from test data', () => {
   const result = wordsFromMessages(messages)
-  expect(result.length).toBe(13)
+  expect(result.length).toBeGreaterThan(7)
+  expect(result[result.length-1].word).toBe('daba')
 })
 
 test('Emojis are not counted as words', () => {
@@ -22,28 +23,28 @@ test('No messages return an empty list of words', () => {
 
 test('Words from threads are added', () => {
   const response = wordsFromMessages(testJson)
-  expect(response.length).toBe(41)
+  expect(response.length).toBeGreaterThan(22)
+  expect(response[21]).toMatchObject({ word: 'ihana' })
 })
 
 test('Word count uses all messages including threads', () => {
-  const response = wordsFromMessages(testJson)
-  expect(response[0].count).toBe(5)
-  expect(response[2].word).toBe('kissa')
+  const response = wordsFromMessages(testMessageWithThreadResponse)
+  expect(response[0].count).toBe(3)
 })
 
 test('Word is converted to lowercase', () => {
   const response = wordsFromMessages(singleMessage)
-  expect(response[0]).toMatchObject({ word: 'hi' })
+  expect(response[0]).toMatchObject({ word: 'everyone' })
 })
 
 test('Special character is removed', () => {
   const response = wordsFromMessages(singleMessage)
-  expect(response[1]).toMatchObject({ word: 'everyone' })
+  expect(response[0]).toMatchObject({ word: 'everyone' })
 })
 
 test('Word object is on correct format', () => {
   const response = wordsFromMessages(singleMessage)
-  expect(response[1]).toStrictEqual({
+  expect(response[0]).toStrictEqual({
     word: 'everyone',
     message_ids: ['e680e4bf-59b2-4f1c-b0fc-43a183b350d7'],
     count: 1,
@@ -71,9 +72,9 @@ test('amounts are correct', () => {
   expect(response[0].count).toBe(2)
   expect(response[1].word).toBe('5000€')
   expect(response[2].word).toBe('5.000,00€')
-  expect(response[3].word).toBe('tai')
-  expect(response[4].word).toBe('€5.000')
+  expect(response[3].word).toBe('€5.000')
 })
+
 test('Company suffix is added to previous word', () => {
   const response = wordsFromMessages([
     {
@@ -89,8 +90,9 @@ test('Company suffix is added to previous word', () => {
   expect(response[0]['word']).toEqual('oy jrt ab')
   expect(response[1]['word']).toEqual('2.700€')
   expect(response[2]['word']).toEqual('osakeyhtiö oy')
-  expect(response[4]['word']).toEqual('yhtiö co')
+  expect(response[3]['word']).toEqual('yhtiö co')
 })
+
 test('short messages are returned correctly', () => {
   const response = wordsFromMessages([
     {
@@ -106,6 +108,7 @@ test('short messages are returned correctly', () => {
   expect(response[0]['word']).toEqual('oy')
   expect(response[1]['word']).toEqual('ab')
 })
+
 test('empty message returns []', () => {
   const res = wordsFromMessages([
     {
@@ -119,4 +122,14 @@ test('empty message returns []', () => {
     },
   ])
   expect(res).toStrictEqual([])
+})
+
+test('English filler words are filtered out', () => {
+  const res = wordsFromMessages(englishFillerWords)
+  expect(res).toHaveLength(2)
+})
+
+test('Finnish filler words are filtered out', () => {
+  const res = wordsFromMessages(finnishFillerWords)
+  expect(res).toHaveLength(2)
 })

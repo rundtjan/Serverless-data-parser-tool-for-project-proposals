@@ -1,12 +1,26 @@
+const nodeCache = require('node-cache')
+
 const slackService = ({ slackClient }) => {
-  // Only dependency is api client given as parameter for Dependency Injection.
+  const slackCache = new nodeCache({ stdTTL: 600 })
+
   const getUsers = async () => {
     const users = []
+    let apiResult = undefined
     try {
-      const apiResult = await slackClient.users.list({})
+      const cacheResult = await slackCache.get('users')
+      if (!cacheResult) {
+        const newApiResult = await slackClient.users.list({})
+        const setCacheSuccess = slackCache.set('users', newApiResult)
+        if (!setCacheSuccess) throw new Error('set Cache error in getUsers')
+        
+        apiResult = newApiResult
+      } else apiResult = cacheResult
+      
       apiResult.members
         .filter((elem) => !elem.is_bot)
-        .forEach((elem) => users.push({ id: elem.id, name: elem.real_name }))
+        .forEach((elem) =>
+          users.push({ id: elem.id, real_name: elem.real_name, username: elem.name })
+        )
     } catch (error) {
       throw new Error(`Error in getUsers: ${error}`)
     }
@@ -14,9 +28,18 @@ const slackService = ({ slackClient }) => {
   }
 
   const getChannels = async () => {
+    let channels = []
     try {
-      const result = await slackClient.conversations.list({})
-      return result
+      const cacheResult = await slackCache.get('channels')
+      if (!cacheResult) {
+        const newApiResult = await slackClient.conversations.list({})
+        newApiResult.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push({name: elem.name, id: elem.id}))
+        const setCacheSuccess = slackCache.set('channels', channels)
+        if (!setCacheSuccess) throw new Error('set Cache error in getChannels')
+      } else{
+        channels = cacheResult
+      }
+      return channels
     } catch (error) {
       throw new Error(`Error in getChannels: ${error}`)
     }
@@ -26,9 +49,7 @@ const slackService = ({ slackClient }) => {
     const channels = []
     try {
       const result = await slackClient.conversations.list({})
-      result.channels
-        .filter((elem) => elem.is_channel)
-        .forEach((elem) => channels.push(elem.name))
+      result.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push(elem.name))
     } catch (error) {
       throw new Error(`Error in getChannels: ${error}`)
     }
@@ -38,15 +59,12 @@ const slackService = ({ slackClient }) => {
   const getChannelIds = async () => {
     const channels = []
     const result = await slackClient.conversations.list({})
-    result.channels
-      .filter((elem) => elem.is_channel)
-      .forEach((elem) => channels.push(elem.id))
+    result.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push(elem.id))
     return channels
   }
 
   const getChannelMessages = async (channelId) => {
     try {
-      console.log('CHA ID: ',channelId)
       const apiResult = await slackClient.conversations.history({
         channel: channelId,
       })
@@ -56,7 +74,11 @@ const slackService = ({ slackClient }) => {
     }
   }
 
-  // TODO: not tested
+  /**
+   * Gets a Slack message and all of it's replies by channel Id and timestamp.
+   * @param {Object} args In the form of {channel: CHANNEL_ID, ts: THREAD_TIMESTAMP}
+   * @returns All messages from the desired thread
+   */
   const getThreadMessages = async (args) => {
     try {
       const apiResult = await slackClient.conversations.replies(args)
@@ -115,6 +137,16 @@ const slackService = ({ slackClient }) => {
     return messages
   }
 
+  const sendMessage = async (channelId, text) => {
+    const result = await slackClient.chat.postMessage({
+      channel: channelId,
+      text: text,
+    })
+
+    console.log('sendMessage : ', channelId, text)
+    console.log('Result : ', result)
+  }
+
   return Object.freeze({
     getUsers,
     getChannels,
@@ -124,6 +156,8 @@ const slackService = ({ slackClient }) => {
     getChannelWithParameters,
     getThreadMessages,
     findAllByUser,
+    sendMessage,
+    getAllThreadsMessages,
   })
 }
 

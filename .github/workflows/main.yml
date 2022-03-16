@@ -24,15 +24,20 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: codecov/codecov-action@v2
 
       # Install required dependecies
       - name: Install Dependencies
         run: npm install
 
-      # Runs Jest tests
+      # Runs Jest tests, separately in back- and frontend for convenience
       - name: Run the Jest tests
-        run: npm test
-        
+        run: cd backend && npm run test -- --coverage && cd ../front && npm run test -- --watchAll=false --verbose --coverage
+      
+      # Sends coverage report to Codecov
+      - name: Send coverage to Codecov
+        uses: codecov/codecov-action@v2
+
       # Linting
       - name: lint server
         run: cd backend && npm run lint

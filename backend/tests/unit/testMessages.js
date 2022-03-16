@@ -220,4 +220,109 @@ const emojis = [
     reactions: [[Object]],
   },
 ]
-module.exports = {threadTestMessages, singleMessage, messages, emojis}
+
+const englishFillerWords = [
+  {
+    client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d7',
+    type: 'message',
+    text: 'across after beside javascript neither although',
+    user: 'U02UF7S2DN1',
+    ts: '1642531226.000400',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+  },
+  {
+    client_msg_id: '5f4c8f69-e34b-42d0-b16e-f16d4c046497',
+    type: 'message',
+    text: 'boldly cheerfully ibm achingly',
+    user: 'U02UHPPRMJ6',
+    ts: '1642531226.000401',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+    reactions: [[Object]],
+  },
+]
+
+const finnishFillerWords = [
+  {
+    client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d7',
+    type: 'message',
+    text: 'vaikka ovat silloin aivan typescript',
+    user: 'U02UF7S2DN1',
+    ts: '1642531226.000400',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+  },
+  {
+    client_msg_id: '5f4c8f69-e34b-42d0-b16e-f16d4c046497',
+    type: 'message',
+    text: 'seis niinku eficode jotain',
+    user: 'U02UHPPRMJ6',
+    ts: '1642531226.000401',
+    team: 'T02UNV7V4GZ',
+    blocks: [[Object]],
+    reactions: [[Object]],
+  },
+]
+
+const testMessageWithThreadResponse = [
+  {
+    client_msg_id: '6b5f5a7d-6c01-4baa-b764-a33d0d934c4d',
+    type: 'message',
+    text: 'Kissa On SuoSItuin, totta!',
+    user: 'U02UF7S2DN1',
+    ts: '1643359472.109509',
+    team: 'T02UNV7V4GZ',
+    blocks: [
+      {
+        type: 'rich_text',
+        block_id: 'Ca1iw',
+        elements: [
+          {
+            type: 'rich_text_section',
+            elements: [{ type: 'text', text: 'Kissa On SuoSItuin, totta!' }],
+          },
+        ],
+      },
+    ],
+    thread_ts: '1643359472.109509',
+    reply_count: 1,
+    reply_users_count: 1,
+    latest_reply: '1643359571.915789',
+    reply_users: ['U02UAB8HUFM'],
+    is_locked: false,
+    subscribed: false,
+    real_name: 'User5',
+    thread_array: [
+      {
+        client_msg_id: 'e317f184-aa35-406c-824c-3c23f1a9e8ee',
+        type: 'message',
+        text: 'Kissa On SuoSItuin, kissa',
+        user: 'U02UAB8HUFM',
+        ts: '1643359571.915789',
+        team: 'T02UNV7V4GZ',
+        blocks: [
+          {
+            type: 'rich_text',
+            block_id: 'KeV',
+            elements: [
+              {
+                type: 'rich_text_section',
+                elements: [
+                  {
+                    type: 'text',
+                    text: 'Kissa On SuoSItuin, kissa',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        thread_ts: '1643359472.109509',
+        parent_user_id: 'U02UF7S2DN1',
+        real_name: 'User7',
+      },
+    ],
+  },
+]
+module.exports = { threadTestMessages, singleMessage, messages, englishFillerWords, finnishFillerWords, emojis,testMessageWithThreadResponse }
