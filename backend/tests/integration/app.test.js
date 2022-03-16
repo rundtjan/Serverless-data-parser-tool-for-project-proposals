@@ -91,9 +91,8 @@ describe('Test Slack Related Endpoints', () => {
       .post('/api/data')
       .send({ channel: 'test_general' })
       .expect(200)
-      //.expect('Content-Type', /json/)
+      .expect('Content-Type', /json/)
       .expect((res) => {
-        //console.log(res.body)
         expect(res.body.messages.length).toEqual(2)
         expect(res.body.words).toContainEqual({
           word: 'django',
@@ -154,7 +153,8 @@ describe('Test Slack Related Endpoints', () => {
       })
   })
 
-  test('POST /api/parse with channel and user parameter', (done) => {
+  test('POST & GET /api/parse with channel and user parameter', (done) => {
+    let id = ''
     request(app)
       .post('/api/parse')
       .send({ channel_name: 'test_channel', text: 'test_channel' })
@@ -165,12 +165,33 @@ describe('Test Slack Related Endpoints', () => {
             '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Your query, with parameters: user: not given, channel: test_channel and time: not given is ready at : http://135.181.37.120:80/'
           )
         )
+        id = res.text.slice(-9, -5)
+
+        request(app)
+          .get(`/api/parse/${id}`)
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect((res) => {
+            expect(res.body.messages.length).toEqual(2)
+            expect(res.body.words).toContainEqual({
+              word: 'eräs oy',
+              message_ids: ['6e00d76e-0565-4356-b8f7-8fd80a8bd608'],
+              count: 1,
+              important: false,
+              category: '',
+            })
+            expect(res.body.messages[1].thread_array.length).toEqual(1)
+          })
+          .end((err) => {
+            if (err) return done(err)
+            return done()
+          })
       })
       .end((err) => {
         if (err) return done(err)
         return done()
       })
-      
+
     request(app)
       .post('/api/parse')
       .send({ channel_name: 'test_channel' })
