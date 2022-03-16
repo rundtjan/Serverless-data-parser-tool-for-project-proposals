@@ -39,7 +39,7 @@ export const clearHighlightedWord = (word) => {
 
 /**
  * Removes all the words from the highlight list
- * Used: Word.js and pages
+ * Used in Pages
  */
 export const clearAllHighlights = () => {
   return {
