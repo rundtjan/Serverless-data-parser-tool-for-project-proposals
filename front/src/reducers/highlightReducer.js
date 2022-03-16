@@ -1,13 +1,7 @@
-/*
-Should rename clearHighligtedWords
-Should rename clear_highlighted_words
-Fix imports after rename
 
-
-*/
 const reducer = (state=[], action) => {
   switch(action.type) {
-  case 'SET_HIGHLIGHTED_WORDS':
+  case 'ADD_HIGHLIGHTED_WORD':
     return [...state, action.word]
   case 'CLEAR_HIGHLIGHTED_WORD':
     return state.filter(w => w !== action.word)
@@ -26,7 +20,7 @@ const reducer = (state=[], action) => {
  */
 export const addHighlightedWord = (word) => {
   return {
-    type: 'SET_HIGHLIGHTED_WORDS',
+    type: 'ADD_HIGHLIGHTED_WORD',
     word
   }
 }
