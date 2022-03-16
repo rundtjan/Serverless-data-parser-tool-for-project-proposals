@@ -48,16 +48,12 @@ async function returnQuery(res, id) {
   }
 }
 
-async function slackMessages(context, args) {
-  try {
-    const channels = await slack.getChannels()
-  } catch (error){
-    console.log('cannot get channels')
-  }
+async function slackMessages(args) {
   try {
     const resultObj = await processSlackMessages(slack, args)
     return resultObj
   } catch (error) {
+    console.log(error)
     return error.error
   }
 }
@@ -67,7 +63,7 @@ async function slackChannels() {
     const result = await slack.getChannelNames()
     return result
   } catch (error) {
-    context.log(error)
+    console.log(error)
   }
 }
 

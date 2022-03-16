@@ -55,11 +55,11 @@ const createDeal = async (res, obj) => {
     }
 
     const result = await hubspot.createDeal(SimplePublicObjectInput)
-    if (result.id) res.send('success')
-    else res.send('error')
+    if (result.id) return 'success'
+    else return 'error'
   } catch (e) {
     console.log(e)
-    res.send('error')
+    return 'error'
   }
 }
 const getOwners = async () => {

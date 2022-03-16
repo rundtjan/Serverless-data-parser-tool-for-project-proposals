@@ -20,7 +20,6 @@ async function processSlackMessages(slack, args) {
       return obj.name == channel || obj.id == channel
     })[0].id
   } catch (error) {
-
     return new Error(error.message)
   }
 
