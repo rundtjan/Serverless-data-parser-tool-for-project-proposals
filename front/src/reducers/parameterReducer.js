@@ -1,10 +1,8 @@
 import paramsService from '../services/params'
 
-const reducer = (state = [], action) => {
+const reducer = (state = null, action) => {
   switch(action.type) {
-  case 'CHANGE_PARAMS':
-    return action.data
-  case 'INIT_PARAMETERS':
+  case 'SET_PARAMETERS':
     return action.data
   default:
     return state
@@ -20,7 +18,7 @@ export const initializeParameters = () => {
   return async dispatch => {
     const data = await paramsService.getParams()
     dispatch({
-      type: 'INIT_PARAMETERS',
+      type: 'SET_PARAMETERS',
       data: {
         channel: data.paramChannel,
         user: data.paramUser,
@@ -37,16 +35,14 @@ export const initializeParameters = () => {
  * @param {String} user
  * @param {String} hours
  */
-export const putParams = (channel, user, hours) => {
-  return async dispatch => {
-    dispatch({
-      type: 'CHANGE_PARAMS',
-      data: {
-        channel: channel,
-        user: user,
-        hours: hours
-      }
-    })
+export const updateParameters = (channel, user, hours) => {
+  return{
+    type: 'SET_PARAMETERS',
+    data: {
+      channel: channel,
+      user: user,
+      hours: hours
+    }
   }
 }
 
