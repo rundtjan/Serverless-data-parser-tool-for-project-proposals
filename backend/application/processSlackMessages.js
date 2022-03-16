@@ -17,7 +17,7 @@ async function processSlackMessages(slack, args) {
   try {
     const channels = await slack.getChannels()
 
-    var channelId = channels.channels.filter((obj) => {
+    const channelId = channels.filter((obj) => {
       return obj.name == channel || obj.id == channel
     })[0].id
     const result = await slack.getChannelMessages(channelId)
