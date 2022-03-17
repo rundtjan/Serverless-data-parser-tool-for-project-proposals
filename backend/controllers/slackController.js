@@ -11,6 +11,12 @@ let paramUser = ''
 let paramChannel = 'general'
 let paramHours = ''
 
+/**
+ * Function which posts a message to slack and which is only visible to the person who sent the "/parse" command.
+ * @param {Object} args JSON object in with fields "user", "channel" and "hours".
+ * @param {Number} id Unique id of the query which has the data.
+ * @returns a message to slack Channel giving the url to Parsa which has the requested data.
+ */
 function slackResponse (args, id) {
   const user =   args.user ? `user: ${args.user}` : 'user: not given'
   const channel = `channel: ${args.channel}`
@@ -32,6 +38,11 @@ function slackResponse (args, id) {
   }
 }
 
+/**
+ * Get's the id for the query and passes it to the function which gives the URL.
+ * @param {Object} res HTTP Response.
+ * @param {Object} args a object which has the arguments used in filtering the messages.
+ */
 async function saveQuery(res, args) {
   try {
     const id = await slackMessages(res, args, true)
@@ -41,6 +52,11 @@ async function saveQuery(res, args) {
   }
 }
 
+/**
+ * Get's query by id from the global object which stores the queries.
+ * @param {Object} res HTTP response.
+ * @param {Number} id Id of the query which is wanted.
+ */
 async function returnQuery(res, id) {
   try {
     if (id in savedQueries) {
@@ -56,6 +72,13 @@ async function returnQuery(res, id) {
   }
 }
 
+/**
+ * Generates the id for the query and stores it to the global query object.
+ * @param {Object} res HTTP Response.
+ * @param {Object} args Contains user, channel and oldest parameters which are used in filtering.
+ * @param {Boolean} save flag which tells should the query be saved or sent immediately.
+ * @returns 
+ */
 async function slackMessages(res, args, save = false) {
   try {
     const resultObj = await processSlackMessages(slack, args)
@@ -72,6 +95,10 @@ async function slackMessages(res, args, save = false) {
   }
 }
 
+/**
+ * Get's every channel name from the Slack workspace.
+ * @param {Object} res HTTP Response.
+ */
 async function slackChannels(res) {
   try {
     const result = await slack.getChannelNames()
@@ -81,6 +108,10 @@ async function slackChannels(res) {
   }
 }
 
+/**
+ * Get's every user from the Slack Workspace.
+ * @param {Object} res HTTP response.
+ */
 async function slackUsers(res) {
   try {
     const result = await slack.getUsers()
@@ -90,6 +121,11 @@ async function slackUsers(res) {
   }
 }
 
+/**
+ * Get every message from a Slack user by user's id.
+ * @param {Object} res HTTP Response.
+ * @param {Object} id Users id in Slack.
+ */
 async function slackGetAllByUser(res, id) {
   try {
     const messages = await slack.findAllByUser(id)
@@ -99,6 +135,10 @@ async function slackGetAllByUser(res, id) {
   }
 }
 
+/**
+ * Get's global parameters which are needed for showing the parameters in the UI.
+ * @param {Object} res HTTP Response.
+ */
 async function getParams(res) {
   try {
     const params =  { paramChannel, paramUser, paramHours }
