@@ -86,4 +86,16 @@ describe('Data parser tool ', function() {
         cy.get('#sendToHubSpotButton').click()
         cy.get('#HubSpotSuccess').should('be.visible') || cy.get('#HubSpotError').should('be.visible')
     })
+
+    /** Assigns the first word to customer and then again the same word to price. Json is updated */
+    it('Json field is updated when word is assigned multiple times', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#jsonField').find('#json').should('exist')
+        cy.get('#jsonField').find('#json').contains('Customer')
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').eq(1).click()
+        cy.get('#jsonField').find('#json').contains('Price')
+
+    }) 
 })

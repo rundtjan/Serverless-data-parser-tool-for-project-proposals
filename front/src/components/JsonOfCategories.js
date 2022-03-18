@@ -26,14 +26,14 @@ const JsonOfCategories = () => {
 
   return (
     <Box sx={{ p:2 }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} id='jsonField'>
         <Grid item xs={12}>
           <Typography variant='h6' textAlign='left' component='div'>
               JSON to Hubspot
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography key={json}>
+          <Typography key={json} id='json'>
             { JSON.stringify(json) }
           </Typography>
         </Grid>
