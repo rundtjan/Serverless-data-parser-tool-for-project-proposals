@@ -1,15 +1,24 @@
 import React from 'react'
-import { useSelector /*useDispatch*/  } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-// import { initializeJson } from '../reducers/jsonReducer'
-
 const JsonOfCategories = () => {
-  const json = useSelector(state => state.json)
-  console.log('json: ' + JSON.stringify(json))
+  const assignedWords = useSelector(state => state.assignedWords)
+
+
+  const makeJson = (assignedWords) => {
+    const JSONObj = {}
+    assignedWords.forEach(word => {
+      if (!JSONObj[word.category]) JSONObj[word.category] = []
+      JSONObj[word.category].push(word.word)
+    })
+    return JSONObj
+  }
+
+  const json = makeJson(assignedWords)
 
   return (
     <Box sx={{ p:2 }}>

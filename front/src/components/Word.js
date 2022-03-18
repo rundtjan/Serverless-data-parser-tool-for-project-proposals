@@ -17,7 +17,6 @@ import { IconButton } from '@mui/material'
 import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
 import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
 import { readyToSend } from '../reducers/readyToSendReducer'
-import { updateJson } from '../reducers/jsonReducer'
 
 
 const Word = ({ word }) => {
@@ -28,7 +27,6 @@ const Word = ({ word }) => {
 
   const categories = useSelector(state => state.data.categories)
   const sendStatus = useSelector(state => state.sendStatus)
-  const assignedWords = useSelector(state => state.assignedWords)
 
   const dispatch = useDispatch()
 
@@ -37,7 +35,6 @@ const Word = ({ word }) => {
     if(checked) {
       dispatch(clearHighlightedWords(word.word))
       dispatch(unAssignWord(word.word))
-      dispatch(updateJson(assignedWords))
     } else {
       dispatch(addHighlightedWord(word.word))
     }
@@ -71,7 +68,6 @@ const Word = ({ word }) => {
     if(event.currentTarget.id) {
       dispatch(setAssignedWord(word.word, event.currentTarget.id))
       dispatch(readyToSend())
-      dispatch(updateJson(assignedWords))
       if(!checked) handleToggle()
     }
     setAnchorEl(null)
