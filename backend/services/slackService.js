@@ -3,6 +3,10 @@ const nodeCache = require('node-cache')
 const slackService = ({ slackClient }) => {
   const slackCache = new nodeCache({ stdTTL: 600 })
 
+  /**
+   * Get's all users from the workspace from Slack API and sets them to cache for quicker code.
+   * @returns List of Slack user objects in the form of {id, realname, username}
+   */
   const getUsers = async () => {
     const users = []
     let apiResult = undefined
@@ -27,26 +31,32 @@ const slackService = ({ slackClient }) => {
     return users
   }
 
+  /**
+   * Get's all users from the workspace from Slack API and sets them to cache for quicker code.
+   * @returns List of Slack channel objects in form {name, id}.
+   */
   const getChannels = async () => {
-    let result = {}
+    let channels = []
     try {
       const cacheResult = await slackCache.get('channels')
       if (!cacheResult) {
         const newApiResult = await slackClient.conversations.list({})
-        console.log('NEW CALL : ', newApiResult)
-        const setCacheSuccess = slackCache.set('channels', newApiResult)
-        if (!setCacheSuccess) throw new Error('set Cache error in getChannels')        
-        result = newApiResult
+        newApiResult.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push({name: elem.name, id: elem.id}))
+        const setCacheSuccess = slackCache.set('channels', channels)
+        if (!setCacheSuccess) throw new Error('set Cache error in getChannels')
       } else{
-        result = cacheResult
-        console.log('FOUND IN CACHE, ', result)
+        channels = cacheResult
       }
-      return result
+      return channels
     } catch (error) {
       throw new Error(`Error in getChannels: ${error}`)
     }
   }
 
+  /**
+   * Get's channel names from Slack API.
+   * @returns List of Slack channels names.
+   */
   const getChannelNames = async () => {
     const channels = []
     try {
@@ -58,6 +68,10 @@ const slackService = ({ slackClient }) => {
     return channels
   }
 
+  /**
+   * Get's channel Id from Slack API.
+   * @returns list of Slack channel id's.
+   */
   const getChannelIds = async () => {
     const channels = []
     const result = await slackClient.conversations.list({})
@@ -65,6 +79,11 @@ const slackService = ({ slackClient }) => {
     return channels
   }
 
+  /**
+   * Get's all messages from the channel.
+   * @param {String} channelId which channels messages are wanted.
+   * @returns List of message objects from Slack.
+   */
   const getChannelMessages = async (channelId) => {
     try {
       const apiResult = await slackClient.conversations.history({
@@ -90,6 +109,12 @@ const slackService = ({ slackClient }) => {
     }
   }
 
+  /**
+   * Gets all the messages/responses from a thread from the channel.
+   * @param {String} channelId Id of the channel where the thread is.
+   * @param {Object} ts_array array of timestamps.
+   * @returns List of Slack message objects.
+   */
   const getAllThreadsMessages = async (channelId, ts_array) => {
     let messages = []
     try {
@@ -106,12 +131,22 @@ const slackService = ({ slackClient }) => {
     return messages
   }
 
+  /**
+   * Not implemented.
+   * @param {String} channelId 
+   * @returns 
+   */
   const getChannelWithParameters = async (channelId) => {
     let messages = []
     console.log('Not implemented ', channelId)
     return messages
   }
 
+  /**
+   * Gets every message from a single user including thread responses.
+   * @param {String} id Id of the user whos messages are wanted.
+   * @returns List of Slack Message objects.
+   */
   const findAllByUser = async (id) => {
     let messages = []
 
@@ -139,6 +174,11 @@ const slackService = ({ slackClient }) => {
     return messages
   }
 
+  /**
+   * Sends a message with text to a Slack channel.
+   * @param {String} channelId to which channel the message will be sent.
+   * @param {String} text the content of the message.
+   */
   const sendMessage = async (channelId, text) => {
     const result = await slackClient.chat.postMessage({
       channel: channelId,

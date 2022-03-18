@@ -11,13 +11,18 @@ const {
 
 const categories = require('./categories.json')
 
+/**
+ * Processes slack messages according to the args.
+ * @param {Object} slack Slack Web Client.
+ * @param {Object} args JSON Object containing channel, oldest and user.
+ * @returns an object which contains all relevant data from messages.
+ */
 async function processSlackMessages(slack, args) {
-  // channel, oldest, user are contained in args
   const { channel } = args
   try {
     const channels = await slack.getChannels()
 
-    var channelId = channels.channels.filter((obj) => {
+    const channelId = channels.filter((obj) => {
       return obj.name == channel || obj.id == channel
     })[0].id
     const result = await slack.getChannelMessages(channelId)
@@ -35,6 +40,13 @@ async function processSlackMessages(slack, args) {
   }
 }
 
+/**
+ * Adds threads to messages. Threads must be fetched from different API with a timestamp. Threads are also
+ * added to the correct parent message.
+ * @param {Object} slack Slack Web Client.
+ * @param {Object} args Contains channel name, oldest message by hour, user which messages are wanted, messages from the channel, and channel id of the channel.
+ * @returns an object which contains messages as filtered.
+ */
 async function addThreadsToMessages(slack, args) {
   const { channelId, oldest, user, messages } = args
   const threads = GetThreads(messages)
@@ -63,6 +75,14 @@ async function addThreadsToMessages(slack, args) {
   }
 }
 
+/**
+ * Adds real names to Slack messages.
+ * @param {Object} slack Slack Web Client.
+ * @param {Object} messages List of Slack message objects which have threads.
+ * @param {Number} oldest Time by hour which is the oldest wanted message.
+ * @param {String} user Whos messages are wanted.
+ * @returns an object which contains filtered messages.
+ */
 async function addNamesToMessages(slack, messages, oldest, user) {
   var members = {}
 
@@ -79,6 +99,14 @@ async function addNamesToMessages(slack, messages, oldest, user) {
 }
 
 // TESTING FOR MESSAGE SHORTCUT, COPY FROM addNamesToMessages without message filtering.
+/**
+ * Pretty similar to the one above. Is needed for the message shortcut.
+ * @param {Object} slack Slack Web Client.
+ * @param {Object} messages List of Slack message objects.
+ * @param {Number} oldest Time by hour which is the oldest wanted message.
+ * @param {String} user Whos messages are wanted.
+ * @returns an object containing list of messages, list of words in messages and list of categories where the words belong.
+ */
 async function addNamesToThreadMessages(slack, messages, oldest, user) {
   var members = {}
 
@@ -91,6 +119,13 @@ async function addNamesToThreadMessages(slack, messages, oldest, user) {
   return result
 }
 
+/**
+ * Applies filter to messages.
+ * @param {Object} messages a list of Slack message objects where the filtering is applied to.
+ * @param {Number} oldest oldest message which we want e.g 24h or 72h.
+ * @param {String} user whos messages we want.
+ * @returns an object containing list of messages, list of words in messages and list of categories where the words belong.
+ */
 function applyFilters(messages, oldest, user) {
   if (oldest) messages = filterOutOldMessages(messages, oldest)
   if (user) messages = filterMessagesByUser(messages, user)
