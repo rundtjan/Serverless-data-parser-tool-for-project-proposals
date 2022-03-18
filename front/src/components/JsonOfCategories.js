@@ -3,6 +3,8 @@ import { useSelector /*useDispatch*/  } from 'react-redux'
 
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+
 // import { initializeJson } from '../reducers/jsonReducer'
 
 const JsonOfCategories = () => {
@@ -10,15 +12,21 @@ const JsonOfCategories = () => {
   console.log('json: ' + JSON.stringify(json))
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Box sx={{ display: 'flex', alignItems: 'left' }}>
-          <Box sx={{ position: 'relative' }}>
-          JSON of category fields { JSON.stringify(json) }
-          </Box>
-        </Box>
+    <Box sx={{ p:2 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant='h6' textAlign='left' component='div'>
+              JSON to Hubspot
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography key={json}>
+            { JSON.stringify(json) }
+          </Typography>
+        </Grid>
+
       </Grid>
-    </Grid>
+    </Box>
   )
 
 }
