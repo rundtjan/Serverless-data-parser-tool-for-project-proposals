@@ -5,6 +5,10 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+/**
+ * Component for Json of assigned words.
+ * @returns Grid containing Json that is equal to the one that can be sent to Hubspot.
+ */
 const JsonOfCategories = () => {
   const assignedWords = useSelector(state => state.assignedWords)
 
