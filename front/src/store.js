@@ -11,7 +11,6 @@ import assignReducer from './reducers/assignReducer'
 import parameterReducer from './reducers/parameterReducer'
 import sendReducer from './reducers/sendReducer'
 import readyToSendReducer from './reducers/readyToSendReducer'
-import jsonReducer from './reducers/jsonReducer'
 
 const reducer = combineReducers({
   data: dataReducer,
@@ -21,7 +20,6 @@ const reducer = combineReducers({
   parameters: parameterReducer,
   sendStatus: sendReducer,
   readyToSend: readyToSendReducer,
-  json: jsonReducer
 })
 
 const store = createStore(
