@@ -23,7 +23,6 @@ export const setChannel = (channel) => {
 export const initializeChannels = () => {
   return async dispatch => {
     const data = await channelService.getChannels()
-    console.log('data from init', data)
     dispatch({
       type: 'INIT_CHANNELS',
       data

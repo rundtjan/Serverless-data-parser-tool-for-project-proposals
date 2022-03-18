@@ -18,6 +18,10 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
+/**
+ * Fields to choose parameters to filter messages that are shown.
+ * @returns A grid with Channel, User and Hours fields and a button to make the query.
+ */
 const ParametersForm = () => {
   const [channel, setChannel] = useState('')
   const [user, setUser] = useState('')
