@@ -1,7 +1,6 @@
-import assignReducer, { unAssignWord } from '../reducers/assignReducer'
+import assignReducer, { unAssignWord, editAssignedWord, clearAssignedWords, setAssignedWord } from '../reducers/assignReducer'
 import deepFreeze from 'deep-freeze'
 import configureStore from 'redux-mock-store'
-import { editAssignedWord, clearAssignedWords, setAssignedWord } from '../reducers/assignReducer'
 
 const mockStore = configureStore([])
 

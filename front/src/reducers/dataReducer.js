@@ -15,6 +15,14 @@ const reducer = (state = [], action) => {
   }
 }
 
+/**
+ * Updates messages to match the given parameters
+ * Used in ParametersForm
+ * @see {@link messageService}
+ * @param {String} channel
+ * @param {String} user
+ * @param {String} hours
+ */
 export const getMessagesParameters = (channel='', user='', hours='') => {
   return async dispatch => {
     const data = await messageService.getWithParameters(channel, user, hours)
@@ -25,6 +33,10 @@ export const getMessagesParameters = (channel='', user='', hours='') => {
   }
 }
 
+/**
+ * Initializes messages to match given channel
+ * @param {String} channel
+ */
 export const initializeMessages = (channel='general') => {
   return async dispatch => {
     const data = await messageService.getAll(channel)
@@ -36,7 +48,7 @@ export const initializeMessages = (channel='general') => {
 }
 
 /**
- * Returns asyncronous dispatch which updates messages.
+ * Updates messages to match the given id. Used with slack interactions.
  * @see {@link paramMessageService}
  * @param {string} id - Id for the service
  */

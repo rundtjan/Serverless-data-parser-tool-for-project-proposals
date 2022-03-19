@@ -1,9 +1,9 @@
 
 const reducer = (state=[], action) => {
   switch(action.type) {
-  case 'SET_HIGHLIGHTED_WORDS':
+  case 'ADD_HIGHLIGHTED_WORD':
     return [...state, action.word]
-  case 'CLEAR_HIGHLIGHTED_WORDS':
+  case 'CLEAR_HIGHLIGHTED_WORD':
     return state.filter(w => w !== action.word)
   case 'CLEAR_ALL':
     return []
@@ -12,29 +12,38 @@ const reducer = (state=[], action) => {
   }
 }
 
+/**
+ * Adds word to the highlight list
+ * - Words in the list are highlighted in Messages
+ * - Used in Word.js
+ * @param {String} word
+ */
 export const addHighlightedWord = (word) => {
-  return async dispatch => {
-    dispatch({
-      type: 'SET_HIGHLIGHTED_WORDS',
-      word
-    })
+  return {
+    type: 'ADD_HIGHLIGHTED_WORD',
+    word
   }
 }
 
-export const clearHighlightedWords = (word) => {
-  return async dispatch => {
-    dispatch({
-      type: 'CLEAR_HIGHLIGHTED_WORDS',
-      word
-    })
+/**
+ * Removes word from the highlight list
+ * - Used in Word.js
+ * @param {*} word
+ */
+export const clearHighlightedWord = (word) => {
+  return {
+    type: 'CLEAR_HIGHLIGHTED_WORD',
+    word
   }
 }
 
+/**
+ * Removes all the words from the highlight list
+ * Used in Pages
+ */
 export const clearAllHighlights = () => {
-  return async dispatch => {
-    dispatch({
-      type: 'CLEAR_ALL'
-    })
+  return {
+    type: 'CLEAR_ALL'
   }
 }
 
