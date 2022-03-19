@@ -88,7 +88,7 @@ describe('Data parser tool ', function() {
     })
 
     /** Assigns the first word to customer and then again the same word to price. Checks that Json is updated  */
-    it('Json field is updated when word is assigned multiple times', function() {
+    it('Json field is updated when same word is assigned multiple times', function() {
         cy.get('#wordList').parent().find('button').eq(1).click()
         cy.get('#basic-menu').find('li').first().click()
         cy.get('#jsonField').find('#json').should('exist')
@@ -96,6 +96,15 @@ describe('Data parser tool ', function() {
         cy.get('#wordList').parent().find('button').eq(1).click()
         cy.get('#basic-menu').find('li').eq(1).click()
         cy.get('#jsonField').find('#json').contains('Price')
-
+        cy.get('#json').should('not.contain', 'Customer')
+    }) 
+    /** Assigns 1. word to Deadline and 2. word to  Contact. Checks that json field includes both. */
+    it('Json field is updated when 2 words are added to different categories', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').eq(2).click()
+        cy.get('#wordList').parent().find('button').eq(2).click()
+        cy.get('#basic-menu').find('li').eq(4).click()
+        cy.get('#json').contains('Deadline')
+        cy.get('#json').contains('Contact')
     })
 })
