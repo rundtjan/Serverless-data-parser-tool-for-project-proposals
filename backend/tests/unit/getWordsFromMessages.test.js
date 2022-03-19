@@ -114,7 +114,7 @@ test('Existing companies are identified', () => {
     {
       client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d9',
       type: 'message',
-      text: 'Please contact Villa backa ventures Oy',
+      text: 'Please contact Villa backa ventures Oy and Sirpan kotisiivous oy',
       user: 'U02UF7S2DN1',
       ts: '1642531226.000400',
       team: 'T02UNV7V4GZ',
@@ -123,6 +123,7 @@ test('Existing companies are identified', () => {
   ])
   console.log(response)
   expect(response[2]['word']).toEqual('villa backa ventures oy')
+  expect(response[3]['word']).toEqual('sirpan kotisiivous oy')
 })
 
 test('empty message returns []', () => {
