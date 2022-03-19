@@ -48,7 +48,7 @@ const CategoryItem = ({ word }) => {
       key={word + '-assignItem'}
       divider
       secondaryAction={
-        <IconButton edge='end' onClick={() => handleRemoveFromCategory(word)}>
+        <IconButton id='delete-button' edge='end' onClick={() => handleRemoveFromCategory(word)}>
           <DeleteIcon/>
         </IconButton>
       }
