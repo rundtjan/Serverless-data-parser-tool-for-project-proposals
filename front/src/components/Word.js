@@ -10,13 +10,13 @@ import Checkbox from '@mui/material/Checkbox'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
+import { IconButton } from '@mui/material'
 
 
 //Reducers
 import { addHighlightedWord, clearHighlightedWord } from '../reducers/highlightReducer'
 import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
 import { readyToSend } from '../reducers/readyToSendReducer'
-import { IconButton } from '@mui/material'
 
 
 const Word = ({ word }) => {
@@ -27,6 +27,7 @@ const Word = ({ word }) => {
 
   const categories = useSelector(state => state.data.categories)
   const sendStatus = useSelector(state => state.sendStatus)
+
   const dispatch = useDispatch()
 
 

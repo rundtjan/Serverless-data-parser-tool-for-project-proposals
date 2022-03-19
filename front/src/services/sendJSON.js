@@ -5,6 +5,7 @@ const baseUrl = `http://${window.location.hostname}:${port}/api/sendJSON/`
 
 const sendJSON = async(assignedWords) => {
   const JSON = JSONfromAssignedWords(assignedWords)
+  console.log('JSON ' + JSON.word)
   const res = await axios.post(`${baseUrl}`, JSON)
   return res.data
 }
@@ -15,6 +16,7 @@ const JSONfromAssignedWords = (assignedWords) => {
     if (!JSONObj[word.category]) JSONObj[word.category] = []
     JSONObj[word.category].push(word.word)
   })
+  console.log('jsonObj '+JSONObj)
   return JSONObj
 }
 

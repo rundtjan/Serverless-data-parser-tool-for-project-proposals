@@ -19,7 +19,7 @@ const reducer = combineReducers({
   assignedWords: assignReducer,
   parameters: parameterReducer,
   sendStatus: sendReducer,
-  readyToSend: readyToSendReducer
+  readyToSend: readyToSendReducer,
 })
 
 const store = createStore(
