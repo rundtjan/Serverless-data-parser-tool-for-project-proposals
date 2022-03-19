@@ -1,3 +1,4 @@
 ignore:
   - "front/src/components/"
   - "front/src/pages/"
+  - "front/src/styles/"
