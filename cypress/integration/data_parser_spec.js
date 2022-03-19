@@ -107,4 +107,10 @@ describe('Data parser tool ', function() {
         cy.get('#json').contains('Deadline')
         cy.get('#json').contains('Contact')
     })
+    it('Deleting word from catefory removes word from it', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#categoryGrid').find('li').should('exist')
+     
+    })
 })
