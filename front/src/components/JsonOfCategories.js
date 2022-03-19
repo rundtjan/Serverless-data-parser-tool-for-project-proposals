@@ -12,7 +12,11 @@ import Typography from '@mui/material/Typography'
 const JsonOfCategories = () => {
   const assignedWords = useSelector(state => state.assignedWords)
 
-
+  /**
+   * Makes a json of the assigned words.
+   * @param {List} assignedWords
+   * @returns JSON object of the assigned words.
+   */
   const makeJson = (assignedWords) => {
     const JSONObj = {}
     assignedWords.forEach(word => {
@@ -37,10 +41,8 @@ const JsonOfCategories = () => {
             { JSON.stringify(json) }
           </Typography>
         </Grid>
-
       </Grid>
     </Box>
   )
-
 }
 export default JsonOfCategories
