@@ -113,8 +113,11 @@ async function getParams(res) {
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
 async function getAllMessagesFromSingleThread(res, requestPayload) {
+  console.log(requestPayload)
   const payload = JSON.parse(requestPayload)
+  console.log(payload)
   const channelId = payload.channel.id
+  
   const threadTimestamp = payload.message.thread_ts
   const args = { channel: channelId, ts: threadTimestamp }
   try {

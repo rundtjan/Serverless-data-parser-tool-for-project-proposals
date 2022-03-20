@@ -6,7 +6,7 @@ const hs = hubspotService({ hubspotClient })
 
 jest.mock('@hubspot/api-client', () => {
   const mock_deals = jest.fn()
-  const allDeals = require('./hubspot_responses')
+  const allDeals = require('./hubspot_allDeals.json')
 
   mock_deals.mockReturnValue(allDeals)
 

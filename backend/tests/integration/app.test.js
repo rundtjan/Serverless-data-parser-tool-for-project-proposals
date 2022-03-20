@@ -1,7 +1,10 @@
 const request = require('supertest')
 const assert = require('assert')
-
+const axios = require('axios')
 const app = require('../../app')
+
+jest.mock('axios')
+axios.post.mockResolvedValue('ok')
 
 jest.mock('@slack/web-api', () => {
   const mock_users = jest.fn()
@@ -35,15 +38,19 @@ jest.mock('@slack/web-api', () => {
 })
 jest.mock('@hubspot/api-client', () => {
   const mock_deals = jest.fn()
-  const allDeals = require('../service/hubspot_responses')
+  const mock_create = jest.fn()
+  const allDeals = require('../service/hubspot_allDeals.json')
+  const create_response = require('../service/hubspot_create')
 
   mock_deals.mockReturnValue(allDeals)
+  mock_create.mockReturnValue(create_response)
 
   const mock_Hubspot = {
     crm: {
       deals: {
         basicApi: {
           getPage: mock_deals,
+          create: mock_create,
         },
       },
     },
@@ -91,9 +98,8 @@ describe('Test Slack Related Endpoints', () => {
       .post('/api/data')
       .send({ channel: 'test_general' })
       .expect(200)
-      //.expect('Content-Type', /json/)
+      .expect('Content-Type', /json/)
       .expect((res) => {
-        //console.log(res.body)
         expect(res.body.messages.length).toEqual(2)
         expect(res.body.words).toContainEqual({
           word: 'django',
@@ -170,7 +176,7 @@ describe('Test Slack Related Endpoints', () => {
         if (err) return done(err)
         return done()
       })
-      
+
     request(app)
       .post('/api/parse')
       .send({ channel_name: 'test_channel' })
@@ -214,6 +220,17 @@ describe('Test Slack Related Endpoints', () => {
         return done()
       })
   })
+  
+  test('POST /api/messageshortcut', (done) => {
+    request(app)
+      .post('/api/messageshortcut')
+      .send(JSON.stringify({ payload: { channel: { id: 'C02UNV80V7B' } , message: {thread_ts: '1645463475.350089'}, response_url:'testurl'}}))
+      .expect(res => res)
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+  })
 })
 
 describe('Test Hubspot Related Endpoints', () => {
@@ -231,6 +248,20 @@ describe('Test Hubspot Related Endpoints', () => {
             }),
           ])
         )
+      })
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+  })
+
+  test('POST /api/sendJSON', (done) => {
+    request(app)
+      .post('/api/sendJSON')
+      .send({ customer: 'Maansiirto Oy', price: '4000€' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.text).toEqual('success')
       })
       .end((err) => {
         if (err) return done(err)
