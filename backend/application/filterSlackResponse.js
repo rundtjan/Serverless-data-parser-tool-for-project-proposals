@@ -300,7 +300,7 @@ const mergeCompanyEntityType = (words) => {
           }
         }
         var max;
-        (i > 4)? max = 4 : max = i;
+        (i > 4)? max = 4 : max = i
         while (j <= max){
           if (companies_Set.has(word)){
             words[i] = word
@@ -317,13 +317,23 @@ const mergeCompanyEntityType = (words) => {
             break
           }
           if (j === max){
+            const re = /[$€.]/
             if (!twoCompWords){
               words[i] = `${words[i-1]} ${words[i]}`
-              words[i-1] = ''
+              if (i > 1 && !words[i-2].match(re)){
+                words[i-1] = `${words[i-2]} ${words[i]}`
+              } else {
+                words[i-1] = ''
+              }
             } else {
               words[i] = `${words[i-2]} ${words[i-1]} ${words[i]}`
-              words[i-1] = ''
-              words[i-2] = ''
+              if (i > 2 && !words[i-3].match(re)){
+                words[i-1] = `${words[i-3]} ${words[i]}`
+                words[i-2] = ''
+              } else {
+                words[i-1] = ''
+                words[i-2] = ''
+              }
             }
           }
           j++
