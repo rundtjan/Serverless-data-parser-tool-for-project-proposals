@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 //Reducers
 import { getMessagesParameters } from '../reducers/dataReducer'
 import { clearAssignedWords } from '../reducers/assignReducer'
-import { putParams } from '../reducers/parameterReducer'
+import { updateParameters } from '../reducers/parameterReducer'
 
 
 //Mui stuff
@@ -18,6 +18,10 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
+/**
+ * Fields to choose parameters to filter messages that are shown.
+ * @returns A grid with Channel, User and Hours fields and a button to make the query.
+ */
 const ParametersForm = () => {
   const [channel, setChannel] = useState('')
   const [user, setUser] = useState('')
@@ -29,7 +33,7 @@ const ParametersForm = () => {
   const putParameters = async(event) => {
     event.preventDefault()
     dispatch(getMessagesParameters(channel, user, hours))
-    dispatch(putParams(channel, user, hours))
+    dispatch(updateParameters(channel, user, hours))
     dispatch(clearAssignedWords())
   }
 

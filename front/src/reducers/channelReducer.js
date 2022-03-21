@@ -1,9 +1,8 @@
+
 import channelService from '../services/channels'
 
 const reducer = (state=[], action) => {
   switch(action.type) {
-  case 'SET_CHANNEL':
-    return action.channel
   case 'INIT_CHANNELS':
     return action.data
   default:
@@ -11,19 +10,14 @@ const reducer = (state=[], action) => {
   }
 }
 
-export const setChannel = (channel) => {
-  return async dispatch => {
-    dispatch({
-      type: 'SET_CHANNEL',
-      channel
-    })
-  }
-}
-
+/**
+ * Initializes channels for the ParametersForm
+ * Used in App.js
+ * @see {@link channelService}
+ */
 export const initializeChannels = () => {
   return async dispatch => {
     const data = await channelService.getChannels()
-    console.log('data from init', data)
     dispatch({
       type: 'INIT_CHANNELS',
       data

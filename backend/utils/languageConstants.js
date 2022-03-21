@@ -12,6 +12,40 @@ const companyIdentityTypes = [
   'kb',
   'co',
   'ltd',
+  'llp',
+  'lllp',
+  'co',
+  'pllc',
+  'l3c',
+  'corp',
+  'pbc',
+  'ilp',
+  'cic',
+  'cio',
+  'slp',
+  'lp',
+  'plc',
+  'inc',
+  'gbr',
+  'gmbh',
+  'ag',
+  'se',
+  'limited',
+  'sarl',
+  'sa',
+  'plc',
+  'scop',
+  'sem',
+  'sep',
+  'sppl',
+  'snc',
+  'scs',
+  'sca',
+  'sci',
+  'gie',
+  'fcp',
+  'sicaf',
+  'sicav'
 ]
 // following lists from https://www.kotus.fi/
 const particlesFin = [
@@ -620,7 +654,7 @@ const adverbsEng = [
   'unexpectedly',
   'wildly',
 ]
-const miscEng = ['be', 'the', 'to', 'is', 'which', 'fully', 'anyone', 'someone', 'some', 'mostly', 'their', 'his', 'her', 'he', 'she', 'we', 'you', 'can', 'could', 'will', 'that', 'this', 'will', 'every', 'any', 'i', 'done', 'has', 'a', 'an', 'need']
+const miscEng = ['be', 'it', 'oh', 'my', 'omg', 'the', 'to', 'is', 'which', 'fully', 'anyone', 'someone', 'some', 'mostly', 'their', 'his', 'her', 'he', 'she', 'we', 'you', 'can', 'could', 'will', 'that', 'this', 'will', 'every', 'any', 'i', 'done', 'has', 'a', 'an', 'need']
 
 const co_Set = new Set(companyIdentityTypes)
 const fillerWords = new Set(

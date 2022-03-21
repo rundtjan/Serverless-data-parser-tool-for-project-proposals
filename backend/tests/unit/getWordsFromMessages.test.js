@@ -90,7 +90,7 @@ test('Company suffix is added to previous word', () => {
   expect(response[0]['word']).toEqual('oy jrt ab')
   expect(response[1]['word']).toEqual('2.700€')
   expect(response[2]['word']).toEqual('osakeyhtiö oy')
-  expect(response[3]['word']).toEqual('yhtiö co')
+  expect(response[4]['word']).toEqual('yhtiö co')
 })
 
 test('short messages are returned correctly', () => {
@@ -107,6 +107,39 @@ test('short messages are returned correctly', () => {
   ])
   expect(response[0]['word']).toEqual('oy')
   expect(response[1]['word']).toEqual('ab')
+})
+
+test('Existing companies are identified', () => {
+  const response = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d9',
+      type: 'message',
+      text: 'Please contact Villa backa ventures Oy and Sirpan kotisiivous oy',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
+  console.log(response)
+  expect(response[2]['word']).toEqual('villa backa ventures oy')
+  expect(response[3]['word']).toEqual('sirpan kotisiivous oy')
+})
+
+test('If company is not recognized, the list contains also a combination of two words plus company entity', () => {
+  const response = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d8',
+      type: 'message',
+      text: 'Deal with Kauppisen maansiirto oy',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
+  expect(response[2]['word']).toEqual('kauppisen maansiirto oy')
+  expect(response[3]['word']).toEqual('maansiirto oy')
 })
 
 test('empty message returns []', () => {

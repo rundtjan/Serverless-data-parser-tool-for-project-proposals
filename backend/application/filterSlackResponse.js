@@ -1,6 +1,8 @@
 const { parseTimestampFromSlackTs } = require('../utils/parseSlackTimestamp')
 const { co_Set, fillerWords } = require('../utils/languageConstants')
 const { assignCategoryToWord } =  require('../utils/assignCategoryToWord')
+const { companies_Set } = require('../utils/companies_fin')
+const { companies_eu_Set } = require('../utils/companies_eu')
 
 /**
  * Filters messages if it is sent by a human user (has client_msg_id-feld).
@@ -257,17 +259,21 @@ const filterMessagesByUser = (messages, user) => {
 }
 
 /**
- * Adds the company entity type to a word. Currently works for cases where the company name is a single word.
+ * Adds the company entity type to a word.
  * e.g. string "Asiakas Oy" is parsed as "Asiakas" and "Oy", but "Oy" is recognized as a finnish company entity type so it is concatenated to the preceding word.
- * At some point this should be looked and refactored so that more company entity types are taken to noticed e.g. "Gmbh" and so on.
- * Also at some point should be refactored so that the company named would be recognized if it had multiple words e.g. "Kauppisen maan siirto firma Oy".
+ * Also, loops through max 4 words before oy (or e.g. gmbh, ab, ltd etc.) and checks the possible company names against a list of finnish companies (exhaustive) and european companies (still quite short).
  * @param {Object} words list of words which contain a company name and company entity types.
  * @returns words which have company entity typed merged into them.
  */
+
 const mergeCompanyEntityType = (words) => {
   if (words.length <= 1) return words
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words.length; i++){
     if (co_Set.has(words[i])) {
+      var word = words[i]
+      var euWord = ''
+      var j = 1
+      var twoCompWords = false
       if (words[i] === 'oy' && i + 2 < words.length && words[i + 2] === 'ab') {
         words[i] = words[i]
           .concat(` ${words[i + 1]}`)
@@ -276,9 +282,66 @@ const mergeCompanyEntityType = (words) => {
         words[i + 2] = ''
         continue
       }
-      if (i > 0 && !co_Set.has(words[i-1])) {
-        words[i - 1] = words[i - 1].concat(` ${words[i]}`)
-        words[i] = ''
+      if (i > 0){
+        if (!co_Set.has(words[i-j])){
+          word = `${words[i-j]} ${word}`
+          euWord = words[i-j]
+        } else {
+          word = `${words[i-j]} ${word}`
+          j++
+          if (i > 1){
+            if (!co_Set.has(words[i-j])){
+              word = `${words[i-j]} ${word}`
+              euWord = words[i-j]
+              twoCompWords = true
+            } else {
+              continue
+            }
+          }
+        }
+        var max;
+        (i > 4)? max = 4 : max = i
+        while (j <= max){
+          if (companies_Set.has(word)){
+            words[i] = word
+            for (let k = i-j; k < i; k++){
+              words[k] = ''
+            }
+            break
+          }
+          if (companies_eu_Set.has(euWord)){
+            words[i] = `${euWord} ${words[i]}`
+            for (let k = i-j; k < i; k++){
+              words[k] = ''
+            }
+            break
+          }
+          if (j === max){
+            const re = /[$€.]/
+            if (!twoCompWords){
+              words[i] = `${words[i-1]} ${words[i]}`
+              if (i > 1 && !words[i-2].match(re)){
+                words[i-1] = `${words[i-2]} ${words[i]}`
+              } else {
+                words[i-1] = ''
+              }
+            } else {
+              words[i] = `${words[i-2]} ${words[i-1]} ${words[i]}`
+              if (i > 2 && !words[i-3].match(re)){
+                words[i-1] = `${words[i-3]} ${words[i]}`
+                words[i-2] = ''
+              } else {
+                words[i-1] = ''
+                words[i-2] = ''
+              }
+            }
+          }
+          j++
+          if (!co_Set.has(words[i-j])){
+            word = `${words[i-j]} ${word}`
+            euWord = `${words[i-j]} ${euWord}`
+          }
+        }
       }
     }
   }
@@ -295,4 +358,5 @@ module.exports = {
   AddThreadToParent,
   filterOutOldMessages,
   filterMessagesByUser,
+  mergeCompanyEntityType
 }
