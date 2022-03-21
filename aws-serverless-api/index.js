@@ -1,18 +1,30 @@
 const slashCommand = require('./slashCommand')
 const parseResult = require('./parseResult')
-const parseReqBody = require('./parsaLogic/utils/parseReqBody')
+const getChannels = require('./getChannels')
+const sendToHubspot = require('./sendToHubspot')
 
 exports.handler = async (event) => {
+
+    var response
+
     if (event.queryStringParameters && event.queryStringParameters.route){
         switch(event.queryStringParameters.route) {
+            case 'getChannels':
+                response = await getChannels()
+                break
             case 'slashCommand':
-                const response = await slashCommand(event)
-                return response
+                response = await slashCommand(event)
+                break
             case 'parseResult':
-                const data = await parseResult(event)
-                return data
+                response = await parseResult(event)
+                break
+            case 'sendToHubspot':
+                response = await sendToHubspot(event)
+                break
             default:
-                return 'Fix your route.'
+                response = 'Check your route'
         }
     }
+
+    return response
 }

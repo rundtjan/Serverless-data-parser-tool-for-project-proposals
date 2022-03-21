@@ -33,7 +33,7 @@ const updateDeal = async (res, id, properties) => {
   }
 }
 
-const createDeal = async (res, obj) => {
+const createDeal = async (obj) => {
   // create new deal based on json sent from UI
   // only customer & price are used for testing new deal creation.
   // No custom properties space available atm.
@@ -45,7 +45,6 @@ const createDeal = async (res, obj) => {
   description = description.substring(0,description.length-2)
   try {
     const price = String(obj.Price || '').replace(/[^0-9,]+/g, '')
-    //console.log(price)
     const SimplePublicObjectInput = {
       properties: {
         dealname: `Deal ${obj.Customer || 'no client'}`,
@@ -53,7 +52,6 @@ const createDeal = async (res, obj) => {
         description: description,
       },
     }
-
     const result = await hubspot.createDeal(SimplePublicObjectInput)
     if (result.id) return 'success'
     else return 'error'
