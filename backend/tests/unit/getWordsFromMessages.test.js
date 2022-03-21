@@ -121,7 +121,6 @@ test('Existing companies are identified', () => {
       blocks: [[Object]],
     },
   ])
-  console.log(response)
   expect(response[2]['word']).toEqual('villa backa ventures oy')
   expect(response[3]['word']).toEqual('sirpan kotisiivous oy')
 })
