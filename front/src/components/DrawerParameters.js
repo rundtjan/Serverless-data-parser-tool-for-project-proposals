@@ -6,9 +6,13 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+/**
+ * Component that shows which parameters are in use.
+ * @returns Grid that shows which parameters are chosen.
+ */
 const DrawerParameters = () => {
   const parameters = useSelector(state => state.parameters)
-
+  /** If there are no parameters. A grid with only names is returned. */
   if (!parameters){
     return(
       <Box
@@ -47,6 +51,7 @@ const DrawerParameters = () => {
     )
   }
 
+  /** If there is parameters they are shown. */
   return(
     <Box
       bgcolor='#f9f9f9'
@@ -66,17 +71,17 @@ const DrawerParameters = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Channel: { parameters[0] }
+                Channel: { parameters.channel }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                User: { parameters[1] }
+                User: { parameters.user }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Hours: { parameters[2] }
+                Hours: { parameters.hours }
           </Typography>
         </Grid>
       </Grid>

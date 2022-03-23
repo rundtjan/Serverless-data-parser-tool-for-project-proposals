@@ -14,6 +14,7 @@ const JSONfromAssignedWords = (assignedWords) => {
     if (!JSONObj[word.category]) JSONObj[word.category] = []
     JSONObj[word.category].push(word.word)
   })
+  console.log('jsonObj '+JSONObj)
   return JSONObj
 }
 
