@@ -1,7 +1,6 @@
 # Parsa aka Serverless data parser tool for project proposals
 
 ![CI workflow](https://github.com/Ohtu-org/Serverless-data-parser-tool-for-project-proposals/actions/workflows/main.yml/badge.svg)
-
 ![codecov](https://codecov.io/gh/Ohtu-org/Serverless-data-parser-tool-for-project-proposals/branch/main/graph/badge.svg?token=S2MQ8HYQ94)
 
 ## Tuntikirjanpito  
