@@ -25,7 +25,7 @@ Note that the Lambda-function you are using will need to have two environment va
 SLACK_TOKEN and HUBSPOT_APIKEY
 ```
 
-The frontend is a React-application, and can be started locally. Change directory into the folder "front", run:
+The frontend is a React-application, and can be started locally. Change directory into the folder "front" and run:
 ```bash
 npm install
 ```
