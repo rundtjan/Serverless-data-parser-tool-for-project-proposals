@@ -1,18 +1,11 @@
-# Serverless api for AWS Lambda
+# Serverless API for AWS Lambda
 
-A version of the serverless api, available via the url:  
+In order to deploy, first install (production) dependencies:
+```bash
+npm install --production
 ```
-https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction
+And then zip all that is needed by AWS, e.g.:
+```bash
+zip -r lambda.zip index.js routes application controllers services utils node_modules 
 ```
-Parses Slack slash commands at:  
-```
-https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction?route=slashCommand
-```
-Serves data by parameters from:  
-```
-https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction?route=parseResult
-```
-Serves channels from:
-```
-https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/default/urlFunction?route=getChannels
-```
+Then login to AWS and upload the zip-file to the Lambda-function you are using.

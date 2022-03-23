@@ -1,10 +1,10 @@
-const slashCommand = require('./slashCommand')
-const parseResult = require('./parseResult')
-const getChannels = require('./getChannels')
-const sendToHubspot = require('./sendToHubspot')
+const slashCommand = require('./routes/slashCommand')
+const parseResult = require('./routes/parseResult')
+const getChannels = require('./routes/getChannels')
+const sendToHubspot = require('./routes/sendToHubspot')
 
 exports.handler = async (event) => {
-
+    console.log(event)
     var response
 
     if (event.queryStringParameters && event.queryStringParameters.route){
