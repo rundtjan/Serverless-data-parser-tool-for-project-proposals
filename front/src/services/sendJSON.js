@@ -1,12 +1,10 @@
 import axios from 'axios'
 
-const port = process.env.REACT_APP_BACKEND_PORT || 80 // eslint-disable-line
-const baseUrl = `http://${window.location.hostname}:${port}/api/sendJSON/`
+const baseUrl = `${process.env.REACT_APP_API_URL}?route=sendToHubspot`
 
 const sendJSON = async(assignedWords) => {
-  const JSON = JSONfromAssignedWords(assignedWords)
-  console.log('JSON ' + JSON.word)
-  const res = await axios.post(`${baseUrl}`, JSON)
+  const sendData = JSONfromAssignedWords(assignedWords)
+  const res = await axios.post(baseUrl, JSON.stringify(sendData))
   return res.data
 }
 
