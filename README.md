@@ -18,20 +18,19 @@
 - The product owner has accepted the user story as done
 
 ## Usage
-Clone the repository and cd in to the root folder. Add a .env-file to the backend folder with the environment variable:
+Clone the repository. In order to use the application with the serverless api, you will need the suitable AWS applications, e.g. a Lambda-function where you can upload the code from the folder "/api". See the readme in that folder for more information.
+
+Note that the Lambda-function you are using will need to have two environment variables set: 
 ```bash
-SLACK_TOKEN=[enter a slack token here to a bot with the scopes channels:history and users:read]
+SLACK_TOKEN and HUBSPOT_APIKEY
 ```
-Run using Docker with:
+
+The frontend is a React-application, and can be started locally. Change directory into the folder "front", run:
 ```bash
-docker build -t [name] .  
-docker run -it -p [your port]:8080 [name] (use 8080 as your port unless you want to change the backend port within the frontend code)
+npm install
 ```
-Or run with npm (as default the server will start on port 80):
+And run with the command:
 ```bash
-npm install  
-npm run build  
-npm start  
-```  
-When starting frontend and backend separately from their respective folder (e.g. while developing), you can use environment variables REACT_APP_BACKEND_PORT and PORT to 
-choose on which port the backend serves data (both variables should be used at the same time).
+REACT_APP_API_URL='[enter the url of your Lambda-function here]' npm start
+```
+Dockerfile and possibility to run the serverless api locally in a container is coming up, stay tuned.
