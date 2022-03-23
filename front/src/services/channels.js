@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const channelUrl = `http://${window.location.hostname}:80/api/channels/`
+const channelUrl = `${process.env.REACT_APP_API_URL}?route=getChannels`
 
 const getChannels = async() => {
   const res = await axios.get(channelUrl)
