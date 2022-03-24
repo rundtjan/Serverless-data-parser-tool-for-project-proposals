@@ -2,11 +2,11 @@ const hubspotService = require('../services/hubspotService')
 const hubspotClient = require('../services/hubspotClient')
 const hubspot = hubspotService(hubspotClient)
 
-const searchForADeal = async (res) => {
+const searchForADeal = async (res, reqBody) => {
   try {
-    const result = await hubspot.searchDeals('Deal kauppisen maansiirtofirma oy')
+    const result = await hubspot.searchDeals(reqBody.property, reqBody.operator, reqBody.value)
     if (result) res.send(result)
-    else res.status(500).send('No result : getAllDeals')
+    else res.status(500).send('No result : searchForADeal')
   } catch (error) {
     res.status(500).send(error.message)
   }

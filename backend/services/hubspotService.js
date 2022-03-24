@@ -23,13 +23,13 @@ const hubspotService = ({ hubspotClient }) => {
     return result
   }
 
-  const searchDeals = async (name) => {
-    console.log(name)
-    const filter = { propertyName: 'dealname', operator: 'EQ', value: 'Another test deal' }
+  const searchDeals = async (property, operator, value) => {
+    console.log(property, operator, value)
+    const filter = { propertyName: property, operator: operator, value: value }
     const filterGroup = { filters: [filter] }
     const sort = JSON.stringify({ propertyName: 'createdate', direction: 'DESCENDING' })
     const query = 'test'
-    const properties = ['dealname', 'amount']
+    const properties = ['dealname', 'amount', 'description']
     const limit = 100
     const after = 0
 
