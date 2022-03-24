@@ -88,6 +88,11 @@ app.get('/api/params', (req, res) => {
   slackController.getParams(res)
 })
 
+app.get('/api/searchDealByName', (req, res) => {
+  hubspotController.searchForADeal(res)
+})
+
+
 app.use('/:id', express.static('build'))
 
 module.exports = app

@@ -23,6 +23,30 @@ const hubspotService = ({ hubspotClient }) => {
     return result
   }
 
+  const searchDeals = async (name) => {
+    console.log(name)
+    const filter = { propertyName: 'dealname', operator: 'EQ', value: 'Another test deal' }
+    const filterGroup = { filters: [filter] }
+    const sort = JSON.stringify({ propertyName: 'createdate', direction: 'DESCENDING' })
+    const query = 'test'
+    const properties = ['dealname', 'amount']
+    const limit = 100
+    const after = 0
+
+    const publicObjectSearchRequest = {
+      filterGroups: [filterGroup],
+      sorts: [sort],
+      query,
+      properties,
+      limit,
+      after,
+    }
+
+    const result = await hubspotClient.crm.deals.searchApi.doSearch(publicObjectSearchRequest)
+    console.log(result)
+    return result
+  }
+
   const getAllContacts = async () => {
     try {
       const allContacts = await hubspotClient.crm.contacts.getAll()
@@ -57,6 +81,7 @@ const hubspotService = ({ hubspotClient }) => {
     getAllContacts,
     createDeal,
     updateDeal,
+    searchDeals,
   })
 }
 module.exports = hubspotService
