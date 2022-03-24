@@ -24,12 +24,12 @@ const hubspotService = ({ hubspotClient }) => {
   }
 
   const searchDeals = async (property, operator, value) => {
-    console.log(property, operator, value)
+    //console.log(property, operator, value)
     const filter = { propertyName: property, operator: operator, value: value }
     const filterGroup = { filters: [filter] }
     const sort = JSON.stringify({ propertyName: 'createdate', direction: 'DESCENDING' })
     const query = 'test'
-    const properties = ['dealname', 'amount', 'description']
+    //const properties = ['dealname', 'amount', 'description', 'hs_object_id', 'hs_lastmodifieddate', 'createdate']
     const limit = 100
     const after = 0
 
@@ -37,13 +37,13 @@ const hubspotService = ({ hubspotClient }) => {
       filterGroups: [filterGroup],
       sorts: [sort],
       query,
-      properties,
+      //properties,
       limit,
       after,
     }
 
     const result = await hubspotClient.crm.deals.searchApi.doSearch(publicObjectSearchRequest)
-    console.log(result)
+    //console.log(result)
     return result
   }
 
