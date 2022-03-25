@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = `${process.env.REACT_APP_API_URL}?route=parseResult` // eslint-disable-line no-eval
+const baseUrl = `${process.env.REACT_APP_API_URL}?route=parseResult` // eslint-disable-line
 
 /**
  * Gets data from backend that matches the parameters given in slack with the parse command.
