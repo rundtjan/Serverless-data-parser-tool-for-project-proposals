@@ -20,8 +20,10 @@ const getAll = async() => {
  * - /api/hubspot/eficode would return all deals associated with company named eficode
  */
 const getAllWith = async(name) => {
-  const res = await axios.get(`${baseUrl}/${name}`)
-  return res.data
+  //const res = await axios.get(`${baseUrl}/${name}`)
+  const res = [{ name: name, deadline: '11.5.2022' }, { name: name, deadline: '11.5.2023' }]
+  console.log(res)
+  return res
 }
 
 export default { getAll, getAllWith }
