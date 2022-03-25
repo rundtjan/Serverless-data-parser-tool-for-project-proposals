@@ -14,11 +14,12 @@ const getAllDeals = async (res) => {
 
 const searchDeals = async (res) => {
   try {
-    const result = await hubspot.getAllDeals()
-    if (result) res.send(result)
-    else res.status(500).send('No result : getAllDeals')
+    const result = await hubspot.searchDeals()
+    return result
+    // if (result) res.send(result)
+    // else res.status(500).send('No result : getAllDeals')
   } catch (error) {
-    res.status(500).send(error.message)
+    return {error: error.message}
   }
 }
 
@@ -87,4 +88,4 @@ const getOwners = async () => {
       : console.error(e)
   }
 }
-module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners }
+module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals }

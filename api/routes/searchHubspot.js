@@ -8,7 +8,7 @@ module.exports = async function (event) {
     console.log(reqObj)
 
     try {
-        const result = await hubspotController.searchDeals(reqObj)
+        const result = await hubspotController.searchDeals(reqObj.queryString)
         return result
     } catch (error) {
         console.log(error)

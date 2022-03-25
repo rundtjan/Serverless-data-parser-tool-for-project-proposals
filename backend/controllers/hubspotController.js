@@ -4,7 +4,7 @@ const hubspot = hubspotService(hubspotClient)
 
 const searchForADeal = async (res, reqBody) => {
   try {
-    const result = await hubspot.searchDeals(reqBody.property, reqBody.operator, reqBody.value)
+    const result = await hubspot.searchDeals(reqBody.queryString)
     if (result) res.send(result)
     else res.status(500).send('No result : searchForADeal')
   } catch (error) {
