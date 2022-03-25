@@ -33,4 +33,4 @@ And run with the command:
 ```bash
 REACT_APP_API_URL='[enter the url of your Lambda-function here]' npm start
 ```
-Dockerfile and possibility to run the serverless api locally in a container is coming up, stay tuned.
+Dockerfile and possibility to run the serverless api locally in a container is coming up - stay tuned.
