@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = `${process.env.REACT_APP_API_URL}?route=sendToHubspot`
+const baseUrl = `${process.env.REACT_APP_API_URL}?route=sendToHubspot` // eslint-disable-line no-eval
 
 const sendJSON = async(assignedWords) => {
   const sendData = JSONfromAssignedWords(assignedWords)
