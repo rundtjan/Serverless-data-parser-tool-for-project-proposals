@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-var baseUrl = `${process.env.REACT_APP_API_URL}?route=parseResult`
+var baseUrl = `${process.env.REACT_APP_API_URL}?route=parseResult` // eslint-disable-line no-eval
 
 const getAll = async(channel) => {
   const res = await axios.post(baseUrl, JSON.stringify({ channel }))
