@@ -8,14 +8,12 @@ module.exports = async function (event) {
     let buff = Buffer.from(data, 'base64');
     event.body = buff.toString('ascii');
     event = parseReqBody(event)
-    console.log('eventbody', event.body)
+
     if (event.body.type && event.body.type == 'thread'){
         try {
             const response = await slackController.getAllMessagesFromSingleThread(event.body)
-            console.log('respose in get thread', response)
             return response
         } catch (error) {
-            console.log('error in get thread', error)
             return error.error
         }
     } else {

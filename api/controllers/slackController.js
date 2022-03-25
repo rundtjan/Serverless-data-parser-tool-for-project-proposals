@@ -146,18 +146,11 @@ async function getParams(res) {
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
 async function getAllMessagesFromSingleThread(args) {
-  console.log('args in getAllFromSingle', args)
   try {
     const threadWithResponses = await slack.getThreadMessages(args)
     const resultObj = await processMessageShortcut(slack, threadWithResponses)
     return resultObj
-    //const id = Math.floor((1 + Math.random()) * 0x10000)
-    //  .toString(16)
-    //  .substring(1)
-    //savedQueries[id] = resultObj
-    //axios.post(payload.response_url, {'text': `You have parsed a thread starting with: "${resultObj.messages[0].text.substring(0,50)}..."`})
-    //setTimeout(axios.post(payload.response_url, {'text': `Please check it out here: ${baseUrl}/${id}`}, 2000))
-  } catch (error) {
+} catch (error) {
     res.send(error)
   }
 }
