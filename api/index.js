@@ -26,7 +26,7 @@ exports.handler = async (event) => {
             case 'messageShortcut':
                 response = await messageShortcut(event)
                 break
-            case 'searchHubspot':
+            case 'searchDeals':
                 response = await searchHubspot(event)
                 break
             default:
