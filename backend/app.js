@@ -88,6 +88,12 @@ app.get('/api/params', (req, res) => {
   slackController.getParams(res)
 })
 
+app.post('/api/hubspot/search', (req, res) => {
+  if (!req.body.property || !req.body.operator || !req.body.value)
+    res.status(400).send('property, operator or value missing from req.body. All required.')
+  hubspotController.searchForADeal(res, req.body)
+})
+
 app.use('/:id', express.static('build'))
 
 module.exports = app

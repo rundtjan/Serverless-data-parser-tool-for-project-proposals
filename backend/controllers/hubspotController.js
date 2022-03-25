@@ -2,6 +2,16 @@ const hubspotService = require('../services/hubspotService')
 const hubspotClient = require('../services/hubspotClient')
 const hubspot = hubspotService(hubspotClient)
 
+const searchForADeal = async (res, reqBody) => {
+  try {
+    const result = await hubspot.searchDeals(reqBody.property, reqBody.operator, reqBody.value)
+    if (result) res.send(result)
+    else res.status(500).send('No result : searchForADeal')
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
 const getAllDeals = async (res) => {
   try {
     const result = await hubspot.getAllDeals()
@@ -37,12 +47,12 @@ const createDeal = async (res, obj) => {
   // create new deal based on json sent from UI
   // only customer & price are used for testing new deal creation.
   // No custom properties space available atm.
-  // TODO: use existing custom properties to store our data? 
+  // TODO: use existing custom properties to store our data?
   var description = ''
   Object.keys(obj).forEach((key) => {
     if (key !== 'Customer' && key !== 'Price') description += `${key}: ${obj[key]}, `
   })
-  description = description.substring(0,description.length-2)
+  description = description.substring(0, description.length - 2)
   try {
     const price = String(obj.Price || '').replace(/[^0-9,]+/g, '')
     //console.log(price)
@@ -78,4 +88,4 @@ const getOwners = async () => {
       : console.error(e)
   }
 }
-module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners }
+module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchForADeal }
