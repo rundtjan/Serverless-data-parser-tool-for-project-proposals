@@ -12,9 +12,9 @@ const getAllDeals = async (res) => {
   }
 }
 
-const searchDeals = async (res) => {
+const searchDeals = async (queryString) => {
   try {
-    const result = await hubspot.searchDeals()
+    const result = await hubspot.searchDeals(queryString)
     return result
     // if (result) res.send(result)
     // else res.status(500).send('No result : getAllDeals')
