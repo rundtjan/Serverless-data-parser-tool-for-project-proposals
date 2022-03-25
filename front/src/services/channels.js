@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const channelUrl = `${process.env.REACT_APP_API_URL}?route=getChannels`
+const channelUrl = `${process.env.REACT_APP_API_URL}?route=getChannels` // eslint-disable-line no-eval
 
 const getChannels = async() => {
   const res = await axios.get(channelUrl)
