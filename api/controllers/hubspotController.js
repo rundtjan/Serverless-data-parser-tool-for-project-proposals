@@ -12,6 +12,16 @@ const getAllDeals = async (res) => {
   }
 }
 
+const searchDeals = async (res) => {
+  try {
+    const result = await hubspot.getAllDeals()
+    if (result) res.send(result)
+    else res.status(500).send('No result : getAllDeals')
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
 const getAllContacts = async (res) => {
   try {
     const result = await hubspot.getAllContacts()
