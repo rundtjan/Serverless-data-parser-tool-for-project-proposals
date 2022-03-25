@@ -80,7 +80,6 @@ async function returnQuery(res, id) {
 async function slackMessages(args) {
   try {
     const resultObj = await processSlackMessages(slack, args)
-    console.log('result in slackMessages', resultObj)
     return resultObj
   } catch (error) {
     console.log('error in slackMessages', error)
