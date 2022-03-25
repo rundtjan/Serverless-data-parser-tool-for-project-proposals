@@ -18,7 +18,7 @@
 - The product owner has accepted the user story as done
 
 ## Usage
-Clone the repository and cd to the root folder. Add a .env-file to the backend folder with the environment variable:
+Clone the repository and cd in to the root folder. Add a .env-file to the backend folder with the environment variable:
 ```bash
 SLACK_TOKEN=[enter a slack token here to a bot with the scopes channels:history and users:read]
 ```
