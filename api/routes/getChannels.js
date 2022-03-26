@@ -4,7 +4,6 @@ module.exports = async function () {
     console.log('Getting channels.');
 
     try {
-        console.log('getting channels')
         const response = await slackController.slackChannels()
         return response
     } catch (error) {

@@ -80,7 +80,6 @@ async function returnQuery(res, id) {
 async function slackMessages(args) {
   try {
     const resultObj = await processSlackMessages(slack, args)
-    console.log('result in slackMessages', resultObj)
     return resultObj
   } catch (error) {
     console.log('error in slackMessages', error)
@@ -145,21 +144,12 @@ async function getParams(res) {
  * Parses parameters and calls an api to get messages from a single thread.
  * @param {Object} payload Gives essential information when shortcut is used in workspace.
  */
-async function getAllMessagesFromSingleThread(res, requestPayload) {
-  const payload = JSON.parse(requestPayload)
-  const channelId = payload.channel.id
-  const threadTimestamp = payload.message.thread_ts
-  const args = { channel: channelId, ts: threadTimestamp }
+async function getAllMessagesFromSingleThread(args) {
   try {
     const threadWithResponses = await slack.getThreadMessages(args)
     const resultObj = await processMessageShortcut(slack, threadWithResponses)
-    const id = Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1)
-    savedQueries[id] = resultObj
-    axios.post(payload.response_url, {'text': `You have parsed a thread starting with: "${resultObj.messages[0].text.substring(0,50)}..."`})
-    setTimeout(axios.post(payload.response_url, {'text': `Please check it out here: ${baseUrl}/${id}`}, 2000))
-  } catch (error) {
+    return resultObj
+} catch (error) {
     res.send(error)
   }
 }

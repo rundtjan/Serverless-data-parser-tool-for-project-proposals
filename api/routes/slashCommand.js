@@ -3,7 +3,7 @@ const parseReqBody = require('../utils/parseReqBody')
 
 module.exports = async (event) => {
     let data = event.body
-    let buff = new Buffer(data, 'base64');
+    let buff = Buffer.from(data, 'base64');
     event.body = buff.toString('ascii');
     event = parseReqBody(event)
 
