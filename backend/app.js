@@ -88,6 +88,12 @@ app.get('/api/params', (req, res) => {
   slackController.getParams(res)
 })
 
+app.post('/api/hubspot/search', (req, res) => {
+  if (!req.body.queryString)
+    res.status(400).send('body.queryString required.')
+  hubspotController.searchForADeal(res, req.body)
+})
+
 app.use('/:id', express.static('build'))
 
 module.exports = app
