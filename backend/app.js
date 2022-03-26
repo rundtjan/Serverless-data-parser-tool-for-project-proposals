@@ -89,8 +89,8 @@ app.get('/api/params', (req, res) => {
 })
 
 app.post('/api/hubspot/search', (req, res) => {
-  if (!req.body.property || !req.body.operator || !req.body.value)
-    res.status(400).send('property, operator or value missing from req.body. All required.')
+  if (!req.body.queryString)
+    res.status(400).send('body.queryString required.')
   hubspotController.searchForADeal(res, req.body)
 })
 
