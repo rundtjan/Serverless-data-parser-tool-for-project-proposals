@@ -25,11 +25,6 @@ const DealSearchForm = () => {
     setDealName('')
   }
 
-  const handleGetAllDeals = () => {
-    console.log('Getting all deals')
-  }
-
-
   return(
     <Box
       bgcolor='#f9f9f9'
@@ -50,11 +45,6 @@ const DealSearchForm = () => {
             onClick={handleDealSearch}
           >
             Search
-          </Button>
-          <Button
-            onClick={handleGetAllDeals}
-          >
-            Find All
           </Button>
         </Grid>
       </Grid>
