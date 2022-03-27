@@ -34,8 +34,4 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: urlFunction
           zip_file: api/lambda.zip
-          memory_size: 128
-          timeout: 10
-          handler: index
-          role: ${{ secrets.AWS_ROLE }}
           runtime: nodejs12.x
