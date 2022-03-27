@@ -29,6 +29,9 @@ exports.handler = async (event) => {
             case 'searchDeals':
                 response = await searchHubspot(event)
                 break
+            case 'updateDeal':
+                response = await updateHubspot(event)
+                break    
             default:
                 response = 'Check your route'
         }
