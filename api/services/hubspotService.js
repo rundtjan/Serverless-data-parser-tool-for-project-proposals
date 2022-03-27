@@ -28,7 +28,7 @@ const hubspotService = ({ hubspotClient }) => {
     const filterGroup = { filters: [filter] }
     const sort = JSON.stringify({ propertyName: 'createdate', direction: 'DESCENDING' })
     const query = `*${queryString}*`
-    //const properties = ['dealname', 'amount', 'description', 'hs_object_id', 'hs_lastmodifieddate', 'createdate']
+    // const properties = ['dealname', 'amount', 'description', 'hs_object_id', 'hs_lastmodifieddate', 'createdate']
     const limit = 100
     const after = 0
 
@@ -36,7 +36,7 @@ const hubspotService = ({ hubspotClient }) => {
       filterGroups: [filterGroup],
       sorts: [sort],
       query,
-      //properties,
+      // properties,
       limit,
       after,
     }
@@ -64,14 +64,12 @@ const hubspotService = ({ hubspotClient }) => {
     }
   }
 
-  const updateDeal = async (id, properties) => {
-    // Placeholder, not done.
+  const updateDeal = async (dealObject) => {
     try {
-      const SimplePublicObjectInput = { properties }
-      const response = await hubspotClient.crm.deals.basicApi.update(id, SimplePublicObjectInput)
+      const response = await hubspotClient.crm.deals.basicApi.update(dealObject)
       return response
     } catch (e) {
-      throw new Error(`Error in createDeal: ${e.message}`)
+      throw new Error(`Error in updateDeal: ${e.message}`)
     }
   }
 

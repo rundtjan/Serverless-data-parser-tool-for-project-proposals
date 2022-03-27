@@ -1,29 +1,19 @@
 import axios from 'axios'
 
-const port = process.env.REACT_APP_BACKEND_PORT || 80 // eslint-disable-line
-const baseUrl = `http://${window.location.hostname}:${port}/api/hubspot`
+const baseUrl = process.env.REACT_APP_API_URL // eslint-disable-line
 
-/**
- * Get all HubSpot deals from backend
- * - Used if we want to handle deals in frontend
- * - Could be removed if we want to use only the parameterized get
- */
-const getAll = async() => {
-  const res = await axios.get(baseUrl)
+const searchDeals = async(queryString) => {
+  const sendData = { queryString: queryString }
+  const searchUrl = `${baseUrl}?route=searchDeals`
+  const res = await axios.post(searchUrl, JSON.stringify(sendData))
+  return res.data
+}
+const updateDeal = async(properties, id) => {
+  const sendData = { id: id, properties: properties }
+  const updateUrl = `${baseUrl}?route=updateDeal`
+  const res = await axios.post(updateUrl, JSON.stringify(sendData))
   return res.data
 }
 
-/**
- * Get all HubSpot deals from backend with a certain parameter
- * - e.g. All deals with certain name or customer
- * - Used if we want to handle deals mainly in backend
- * - /api/hubspot/eficode would return all deals associated with company named eficode
- */
-const getAllWith = async(name) => {
-  //const res = await axios.get(`${baseUrl}/${name}`)
-  const res = [{ name: name, deadline: '11.5.2022' }, { name: name, deadline: '11.5.2023' }]
-  console.log(res)
-  return res
-}
+export default { searchDeals, updateDeal }
 
-export default { getAll, getAllWith }

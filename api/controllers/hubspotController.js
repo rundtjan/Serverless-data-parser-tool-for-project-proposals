@@ -33,10 +33,16 @@ const getAllContacts = async (res) => {
   }
 }
 
+
 const updateDeal = async (res, id, properties) => {
-  // Placeholder for updateDeal, not working yet.
+  const dealObject = {
+    id: id,
+    properties: {
+      properties
+    }
+  }
   try {
-    const result = await hubspot.updateDeal(id, properties)
+    const result = await hubspot.updateDeal(dealObject)
     if (result) res.send(result)
     else res.status(500).send('No result : updateDeal')
   } catch (error) {
@@ -88,4 +94,4 @@ const getOwners = async () => {
       : console.error(e)
   }
 }
-module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals }
+module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals, updateDeal }
