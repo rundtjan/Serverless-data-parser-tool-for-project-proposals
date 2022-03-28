@@ -8,7 +8,7 @@ const updateHubspot = require('./routes/updateHubspot')
 
 exports.handler = async (event) => {
     console.log(event)
-    var response
+    //var response
 
     if (event.queryStringParameters && event.queryStringParameters.route){
         switch(event.queryStringParameters.route) {
