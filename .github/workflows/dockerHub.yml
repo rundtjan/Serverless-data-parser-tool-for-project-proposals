@@ -4,7 +4,7 @@ name: Push to Docker Hub
 on:
   # Triggers the workflow only on pushes or merges to the main branch
   push:
-    branches: [ main ]
+    branches: [ legacy-25-3-2022 ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
