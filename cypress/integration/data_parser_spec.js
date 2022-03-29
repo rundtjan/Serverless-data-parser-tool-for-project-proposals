@@ -77,9 +77,8 @@ describe('Data parser tool ', function() {
         !cy.contains('kissa')
     })
 
-    it('If clicking SendToHubSpot when no words are chosen, an error label is shown', function(){
-        cy.get('#sendToHubSpotButton').click()
-        cy.get('#HubSpotError').should('be.visible')
+    it('Before choosing words, the Send To Hubspot-button is disabled', function(){
+        cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
     it('After choosing words and clicking SendToHubSpot and waiting, a success or error label is shown', function() {
