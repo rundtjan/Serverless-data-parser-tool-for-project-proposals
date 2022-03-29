@@ -28,13 +28,76 @@ const ParametersForm = () => {
   const [hours, setHours] = useState('')
   const dispatch = useDispatch()
 
-  const channels = useSelector(state => state.channel)
+  const channels = useSelector(state => state.data.channels)
 
   const putParameters = async(event) => {
     event.preventDefault()
     dispatch(getMessagesParameters(channel, user, hours))
     dispatch(updateParameters(channel, user, hours))
     dispatch(clearAssignedWords())
+  }
+
+  if (!channels){
+    return(
+      <Box
+        bgcolor='#f9f9f9'
+        sx={{
+          p: 2
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FormControl
+              fullWidth
+            >
+              <InputLabel>Channel</InputLabel>
+              <Select
+                id='channel'
+                label='Channel'
+                defaultValue='general'
+                input={<OutlinedInput label='Channel'/>}
+                onChange={({ target }) => setChannel(target.value)}
+              >
+                <MenuItem
+                  key='waiting'
+                  value={null}
+                >
+                  Waiting for channels..-
+                </MenuItem>
+
+              </Select>
+              <TextField
+                id='user'
+                label='User'
+                variant='outlined'
+                sx={{
+                  mt:1
+                }}
+                onChange={({ target }) => setUser(target.value)}
+              />
+              <TextField
+                id='hours'
+                label='Hours'
+                variant='outlined'
+                sx={{
+                  mt:1
+                }}
+                onChange={({ target }) => setHours(target.value)}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <Button
+              variant='outlined'
+              id='submit'
+              onClick={putParameters}
+            >
+              Go
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    )
   }
 
   return(
