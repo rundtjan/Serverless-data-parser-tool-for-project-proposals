@@ -15,9 +15,10 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
+    timeout-minutes: 4
     env:
       REACT_APP_API_URL: ${{ secrets.API_URL }}
-      CYPRESS_BASE_URL: 'http://localhost:3000'
+      CYPRESS_BASE_URL: 'https://main.dtatk8xusyguu.amplifyapp.com/'
       SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
       HUBSPOT_APIKEY: ${{ secrets.HUBSPOT_APIKEY }}
     steps:
@@ -29,8 +30,8 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: npm run start-front
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 120
+          # wait-on: 'http://localhost:3000'
+          # wait-on-timeout: 120
         env:
           REACT_APP_API_URL: ${{ secrets.API_URL }}
 
