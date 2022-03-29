@@ -31,6 +31,6 @@ jobs:
           start: npm run start-front
           wait-on: 'http://localhost:3000'
         env:
-          REACT_APP_API_URL: ${{ secrets.API:URL }}
+          REACT_APP_API_URL: ${{ secrets.API_URL }}
 
       
