@@ -30,6 +30,7 @@ jobs:
         with:
           start: npm run start-front
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
         env:
           REACT_APP_API_URL: ${{ secrets.API_URL }}
 
