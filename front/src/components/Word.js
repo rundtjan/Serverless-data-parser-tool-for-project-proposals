@@ -10,12 +10,13 @@ import Checkbox from '@mui/material/Checkbox'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
+import { IconButton } from '@mui/material'
 
 
 //Reducers
-import { addHighlightedWord, clearHighlightedWords } from '../reducers/highlightReducer'
+import { addHighlightedWord, clearHighlightedWord } from '../reducers/highlightReducer'
 import { setAssignedWord, unAssignWord } from '../reducers/assignReducer'
-import { IconButton } from '@mui/material'
+import { readyToSend } from '../reducers/readyToSendReducer'
 
 
 const Word = ({ word }) => {
@@ -26,12 +27,13 @@ const Word = ({ word }) => {
 
   const categories = useSelector(state => state.data.categories)
   const sendStatus = useSelector(state => state.sendStatus)
+
   const dispatch = useDispatch()
 
 
   const handleToggle = () => {
     if(checked) {
-      dispatch(clearHighlightedWords(word.word))
+      dispatch(clearHighlightedWord(word.word))
       dispatch(unAssignWord(word.word))
     } else {
       dispatch(addHighlightedWord(word.word))
@@ -47,14 +49,14 @@ const Word = ({ word }) => {
 
   const handleClearHighlight = () => {
     if(!checked) {
-      dispatch(clearHighlightedWords(word.word))
+      dispatch(clearHighlightedWord(word.word))
     }
   }
 
   const unCheck = () => {
     if (checked) {
       setChecked(!checked)
-      dispatch(clearHighlightedWords(word.word))
+      dispatch(clearHighlightedWord(word.word))
     }
   }
 
@@ -65,6 +67,7 @@ const Word = ({ word }) => {
   const handleMenuClose = (event) => {
     if(event.currentTarget.id) {
       dispatch(setAssignedWord(word.word, event.currentTarget.id))
+      dispatch(readyToSend())
       if(!checked) handleToggle()
     }
     setAnchorEl(null)

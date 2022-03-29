@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Mui components
 import Drawer from '@mui/material/Drawer'
 import Box from '@mui/material/Box'
 import AppBar from '@mui/material/AppBar'
@@ -13,6 +14,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import DrawerParameters from './DrawerParameters'
 import ParametersForm from './ParametersForm'
 import SendToHubspot from './SendToHubspot'
+import JsonOfCategories from './JsonOfCategories'
+import DealSearchForm from './HubSpotDeals/DealSearchForm'
 
 const drawerWidth = 240
 
@@ -64,6 +67,10 @@ const Layout = ({ children }) => {
         <ParametersForm />
         <Divider />
         <SendToHubspot />
+        <Divider />
+        <JsonOfCategories />
+        <Divider />
+        <DealSearchForm />
       </Drawer>
       {/*Main area*/}
       <Box

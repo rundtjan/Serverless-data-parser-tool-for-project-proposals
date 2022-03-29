@@ -70,15 +70,17 @@ describe('Data parser tool ', function() {
         cy.contains('Show all')
     })
 
-    it('Category Technology shows right words', function() {
-        cy.get('#wordList').find('#filter-button').click()
-        cy.get('#filter-menu').find('li').first().click()
-        cy.contains('python')
-        !cy.contains('kissa')
+    it('If no words are shown, the SendToHubSpot-button is disabled', function(){
+        cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
     it('Before choosing words, the Send To Hubspot-button is disabled', function(){
         cy.get('#sendToHubSpotButton').should('be.disabled')
+
+    it('After choosing a word to a category, the SendToHubSpot-button is not disabled', function(){
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#sendToHubSpotButton').should('not.be.disabled')
     })
 
     it('After choosing words and clicking SendToHubSpot and waiting, a success or error label is shown', function() {
@@ -86,5 +88,35 @@ describe('Data parser tool ', function() {
         cy.get('#basic-menu').find('li').first().click()
         cy.get('#sendToHubSpotButton').click()
         cy.get('#HubSpotSuccess').should('be.visible') || cy.get('#HubSpotError').should('be.visible')
+    })
+
+    /** Assigns the first word to customer and then again the same word to price. Checks that Json is updated  */
+    it('Json field is updated when same word is assigned multiple times', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#jsonField').find('#json').should('exist')
+        cy.get('#jsonField').find('#json').contains('Customer')
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').eq(1).click()
+        cy.get('#jsonField').find('#json').contains('Price')
+        cy.get('#json').should('not.contain', 'Customer')
+    }) 
+    /** Assigns 1. word to Deadline and 2. word to  Contact. Checks that json field includes both. */
+    it('Json field is updated when 2 words are added to different categories', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').eq(2).click()
+        cy.get('#wordList').parent().find('button').eq(2).click()
+        cy.get('#basic-menu').find('li').eq(4).click()
+        cy.get('#json').contains('Deadline')
+        cy.get('#json').contains('Contact')
+    })
+
+
+    it('Clicking delete button in categoryfields removes word from it', function() {
+        cy.get('#wordList').parent().find('button').eq(1).click()
+        cy.get('#basic-menu').find('li').first().click()
+        cy.get('#categoryGrid').find('li').should('exist')
+        cy.get('#delete-button').click()
+        cy.get('#categoryGrid').find('li').should('not.exist')
     })
 })

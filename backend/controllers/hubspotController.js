@@ -2,6 +2,16 @@ const hubspotService = require('../services/hubspotService')
 const hubspotClient = require('../services/hubspotClient')
 const hubspot = hubspotService(hubspotClient)
 
+const searchForADeal = async (res, reqBody) => {
+  try {
+    const result = await hubspot.searchDeals(reqBody.queryString)
+    if (result) res.send(result)
+    else res.status(500).send('No result : searchForADeal')
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
 const getAllDeals = async (res) => {
   try {
     const result = await hubspot.getAllDeals()
@@ -22,13 +32,10 @@ const getAllContacts = async (res) => {
   }
 }
 
-const updateDeal = async (res, obj) => {
-  // NOT IMPLEMENTED YET
-  // TODO: CREATE NEEDED PROPERTIES FROM OBJ
-  // TODO: CREATE CUSTOM DEAL PROPERTIES IN HUBSPOT DEALS WEBSITE?
-  // TODO: ID REQUIRED ( How to find? )
+const updateDeal = async (res, id, properties) => {
+  // Placeholder for updateDeal, not working yet.
   try {
-    const result = await hubspot.updateDeal(obj)
+    const result = await hubspot.updateDeal(id, properties)
     if (result) res.send(result)
     else res.status(500).send('No result : updateDeal')
   } catch (error) {
@@ -37,11 +44,15 @@ const updateDeal = async (res, obj) => {
 }
 
 const createDeal = async (res, obj) => {
-  // Simple "placeholder". This works and deal is created to hubspot account but its mostly blank.
-  // TODO: Create custom properties for hubspot deals?
-  // TODO: Ask about possible hubspot test environment.
-  //const SimplePublicObjectInput = { dealname: 'NoNameForThisDeal', properties: obj }
-  //console.log('obj', obj)
+  // create new deal based on json sent from UI
+  // only customer & price are used for testing new deal creation.
+  // No custom properties space available atm.
+  // TODO: use existing custom properties to store our data?
+  var description = ''
+  Object.keys(obj).forEach((key) => {
+    if (key !== 'Customer' && key !== 'Price') description += `${key}: ${obj[key]}, `
+  })
+  description = description.substring(0, description.length - 2)
   try {
     const price = String(obj.Price || '').replace(/[^0-9,]+/g, '')
     //console.log(price)
@@ -49,9 +60,9 @@ const createDeal = async (res, obj) => {
       properties: {
         dealname: `Deal ${obj.Customer || 'no client'}`,
         amount: `${Number(price) || 0}`,
+        description: description,
       },
     }
-    //console.log(SimplePublicObjectInput)
 
     const result = await hubspot.createDeal(SimplePublicObjectInput)
     if (result.id) res.send('success')
@@ -77,4 +88,4 @@ const getOwners = async () => {
       : console.error(e)
   }
 }
-module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners }
+module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchForADeal }

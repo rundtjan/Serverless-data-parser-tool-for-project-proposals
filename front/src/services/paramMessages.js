@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const port = process.env.REACT_APP_BACKEND_PORT || 80 // eslint-disable-line
-const baseUrl =  'http://135.181.37.120:80/api/parse/'
+const baseUrl = `${process.env.REACT_APP_API_URL}?route=parseResult` // eslint-disable-line
 
 /**
  * Gets data from backend that matches the parameters given in slack with the parse command.
@@ -9,7 +8,7 @@ const baseUrl =  'http://135.181.37.120:80/api/parse/'
  * @returns Data containing messages
  */
 const getAll = async(id) => {
-  const res = await axios.get(`${baseUrl}${id}`)
+  const res = await axios.post(`${baseUrl}`, id)
   return res.data
 }
 
