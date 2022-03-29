@@ -16,22 +16,25 @@ jobs:
   cypress-run:
     runs-on: ubuntu-20.04
     env:
-      REACT_APP_API_URL: ${{ secrets.API_URL }}
+      # REACT_APP_API_URL: ${{ secrets.API_URL }}
       CYPRESS_BASE_URL: 'https://main.dtatk8xusyguu.amplifyapp.com/'
-      SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-      HUBSPOT_APIKEY: ${{ secrets.HUBSPOT_APIKEY }}
+      # SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+      # HUBSPOT_APIKEY: ${{ secrets.HUBSPOT_APIKEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - name: allow production front to build before testing it
+        run: sleep 240s
+        shell: bash
       - name: Cypress run 
         uses: cypress-io/github-action@v2
-        with:
-          start: npm run start-front
+        # with:
+          # start: npm run start-front
           # wait-on: 'http://localhost:3000'
           # wait-on-timeout: 120
-        env:
-          REACT_APP_API_URL: ${{ secrets.API_URL }}
+        # env:
+          # REACT_APP_API_URL: ${{ secrets.API_URL }}
 
       
