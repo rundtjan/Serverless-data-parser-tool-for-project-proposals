@@ -8,7 +8,7 @@ import Layout from '../Layout'
 import Messages from '../Messages'
 import Words from '../Words'
 import Categories from '../Categories'
-import HubSpotDeals from '../HubSpotDeals/HubSpotDeals'
+import HubSpotDealTable from '../HubSpotDeals/HubSpotDealTable'
 
 const PageLayout = () => {
 
@@ -26,7 +26,7 @@ const PageLayout = () => {
           <Categories />
         </Grid>
         <Grid item xs={12}>
-          <HubSpotDeals />
+          <HubSpotDealTable />
         </Grid>
       </Grid>
     </Layout>
