@@ -15,7 +15,6 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
-    timeout-minutes: 4
     env:
       REACT_APP_API_URL: ${{ secrets.API_URL }}
       CYPRESS_BASE_URL: 'https://main.dtatk8xusyguu.amplifyapp.com/'
