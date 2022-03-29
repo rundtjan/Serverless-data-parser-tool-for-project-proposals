@@ -28,8 +28,9 @@ jobs:
       - name: Cypress run 
         uses: cypress-io/github-action@v2
         with:
-          env:
-            REACT_APP_API_URL: ${{ secrets.API:URL }}
           start: npm run start-front
+          wait-on: 'http://localhost:3000'
+        env:
+          REACT_APP_API_URL: ${{ secrets.API:URL }}
 
       
