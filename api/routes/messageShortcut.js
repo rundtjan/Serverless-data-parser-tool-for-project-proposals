@@ -4,8 +4,6 @@ const parseShortcutPayload = require('../utils/parseShortcutPayload')
 module.exports = async function(event){
     console.log('message shortcut', event)
     event = parseShortcutPayload(event)
-    console.log(event)
-    await axios.post(event.response_url, {'text': `You have requested parsing for a thread starting with: ${event.text}...`})
-    await axios.post(event.response_url, {'text': `Please visit Parsa at: https://latest.d39h3tn7qml2m3.amplifyapp.com/type=thread&ts=${event.thread_ts}&channel=${event.channelId}`})
-    return
+    await axios.post(event.response_url, {'text': `You parsed a thread starting: "${event.text}". See the result at: https://main.dtatk8xusyguu.amplifyapp.com/type=thread&ts=${event.thread_ts}&channel=${event.channelId}`})
+    return {statusCode: 200}
 }
