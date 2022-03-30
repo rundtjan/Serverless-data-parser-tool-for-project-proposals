@@ -74,6 +74,9 @@ describe('Data parser tool ', function() {
         cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
+    it('Before choosing words, the Send To Hubspot-button is disabled', function(){
+        cy.get('#sendToHubSpotButton').should('be.disabled')
+
     it('After choosing a word to a category, the SendToHubSpot-button is not disabled', function(){
         cy.get('#wordList').parent().find('button').eq(1).click()
         cy.get('#basic-menu').find('li').first().click()
