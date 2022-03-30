@@ -54,19 +54,26 @@ const createDeal = async (res, obj) => {
   })
   description = description.substring(0, description.length - 2)
   try {
-    const price = String(obj.Price || '').replace(/[^0-9,]+/g, '')
-    //console.log(price)
+    const price = String(obj.Price || '0').replace(/[^0-9,]+/g, '')
+    const deadline = obj.Deadline ? new Date(obj.Deadline) : undefined
+    const technology = obj.Technology ? String(obj.Technology) : undefined
+    const contact = obj.Contact ?  String(obj.Contact) : undefined
+    const fte = obj.FTEs ? Number(obj.FTEs) : undefined
     const SimplePublicObjectInput = {
       properties: {
         dealname: `Deal ${obj.Customer || 'no client'}`,
-        amount: `${Number(price) || 0}`,
+        amount: Number(price),
         description: description,
+        parsa_deadline: deadline,
+        hs_next_step: contact,
+        parsa_technologies: technology,
+        mrr_jan_23: fte
       },
     }
 
     const result = await hubspot.createDeal(SimplePublicObjectInput)
-    if (result.id) res.send('success')
-    else res.send('error')
+    console.log('RESPONSE Result ID : ', result.id)
+    return result
   } catch (e) {
     console.log(e)
     res.send('error')
