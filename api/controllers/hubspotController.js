@@ -71,7 +71,7 @@ const createDeal = async (obj) => {
         mrr_jan_23: fte
       },
     }
-
+    console.log('HS CONTROLLER Simple obj be4 sending to hubspot create', SimplePublicObjectInput)
     const result = await hubspot.createDeal(SimplePublicObjectInput)
     console.log('RESPONSE Result ID : ', result.id)
     return result
