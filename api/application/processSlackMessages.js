@@ -20,8 +20,9 @@ const categories = require('./categories.json')
 async function processSlackMessages(slack, args) {
   const { channel } = args
   var channelId
+  var channels
   try {
-    const channels = await slack.getChannels()
+    channels = await slack.getChannels()
     channelId = channels.filter((obj) => {
       return obj.name == channel || obj.id == channel
     })[0].id
@@ -42,6 +43,7 @@ async function processSlackMessages(slack, args) {
 
   try {
     const resultObj = await addThreadsToMessages(slack, args)
+    resultObj.channels = channels.map(elem => elem.name)
     return resultObj
   } catch (error) {
     throw new Error(error.message)

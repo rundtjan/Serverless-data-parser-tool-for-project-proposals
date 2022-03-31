@@ -11,9 +11,17 @@ const { addNamesToThreadMessages } = require('../application/processSlackMessage
 async function processMessageShortcut(slack, threadWithResponses) {
   const oldest = undefined
   const user = undefined
+  var channels
+  try {
+    channels = await slack.getChannels()
+  } catch (error){
+    console.log('error in getting channels')
+    throw new Error(error)
+  }
   try {
     const humanMessagesFromThread = GetHumanMessagesFromSlack(threadWithResponses)
     const resultObj = await addNamesToThreadMessages(slack, humanMessagesFromThread, oldest, user)    
+    resultObj.channels = channels.map(elem => elem.name)
     return resultObj
   } catch (error) {
     throw new Error(error.message)
