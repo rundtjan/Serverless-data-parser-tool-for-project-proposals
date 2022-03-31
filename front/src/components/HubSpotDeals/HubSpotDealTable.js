@@ -49,6 +49,12 @@ const HubSpotDealTable = () => {
    * @param {*} date
    */
   const parseDate = (date) => {
+    if(!date) {
+      return(
+        'No date'
+      )
+    }
+
     const d = new Date(date)
     const year = d.getFullYear()
     const month = ('0' + (d.getMonth() + 1)).slice(-2)
