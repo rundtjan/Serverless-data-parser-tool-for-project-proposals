@@ -34,19 +34,17 @@ const getAllContacts = async (res) => {
 }
 
 
-const updateDeal = async (res, id, properties) => {
-  const dealObject = {
-    id: id,
-    properties: {
-      properties
-    }
-  }
+const updateDeal = async (properties, id) => {
+  const simplePublicObjectInput = { properties }
+  const dealId = JSON.stringify(id)
+  const idProperty = undefined
+  console.log('api controller dealobject ' + JSON.stringify(simplePublicObjectInput))
   try {
-    const result = await hubspot.updateDeal(dealObject)
-    if (result) res.send(result)
-    else res.status(500).send('No result : updateDeal')
+    const result = await hubspot.updateDeal(dealId, simplePublicObjectInput, idProperty)
+    return result
+    //else res.status(500).send('No result : updateDeal')
   } catch (error) {
-    res.status(500).send(`${error.message}`)
+    return {error: error.message}
   }
 }
 

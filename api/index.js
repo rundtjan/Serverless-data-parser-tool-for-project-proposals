@@ -4,6 +4,7 @@ const getChannels = require('./routes/getChannels')
 const sendToHubspot = require('./routes/sendToHubspot')
 const messageShortcut = require('./routes/messageShortcut')
 const searchHubspot = require('./routes/searchHubspot')
+const updateHubspot = require('./routes/updateHubspot')
 
 exports.handler = async (event) => {
     console.log(event)
