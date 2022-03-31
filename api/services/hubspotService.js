@@ -28,7 +28,18 @@ const hubspotService = ({ hubspotClient }) => {
     const filterGroup = { filters: [filter] }
     const sort = JSON.stringify({ propertyName: 'createdate', direction: 'DESCENDING' })
     const query = `*${queryString}*`
-    //const properties = ['dealname', 'amount', 'description', 'hs_object_id', 'hs_lastmodifieddate', 'createdate']
+    const properties = [
+      'dealname',
+      'amount',
+      'description',
+      'parsa_technologies',
+      'parsa_deadline',
+      'hs_object_id',
+      'hs_next_step',
+      'mrr_jan_23',
+      'hs_lastmodifieddate',
+      'createdate',
+    ]
     const limit = 100
     const after = 0
 
@@ -36,7 +47,7 @@ const hubspotService = ({ hubspotClient }) => {
       filterGroups: [filterGroup],
       sorts: [sort],
       query,
-      //properties,
+      properties,
       limit,
       after,
     }
@@ -58,8 +69,16 @@ const hubspotService = ({ hubspotClient }) => {
   const createDeal = async (dealObject) => {
     try {
       const response = await hubspotClient.crm.deals.basicApi.create(dealObject)
-      if (response.id){
-        const properties = ["amount", "deal_name", "description", "parsa_deadline", "parsa_technologies", "hs_next_step", "mrr_jan_23"]
+      if (response.id) {
+        const properties = [
+          'amount',
+          'deal_name',
+          'description',
+          'parsa_deadline',
+          'parsa_technologies',
+          'hs_next_step',
+          'mrr_jan_23',
+        ]
         const createdDeal = await hubspotClient.crm.deals.basicApi.getById(response.id, properties)
         console.log('RESULT OF GET BY ID : ', createdDeal)
       }
@@ -85,7 +104,7 @@ const hubspotService = ({ hubspotClient }) => {
     getAllContacts,
     createDeal,
     updateDeal,
-    searchDeals
+    searchDeals,
   })
 }
 module.exports = hubspotService
