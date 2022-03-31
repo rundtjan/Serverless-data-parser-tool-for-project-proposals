@@ -9,6 +9,9 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
 import Paper from '@mui/material/Paper'
+import IconButton from '@mui/material/Button'
+import EditIcon from '@mui/icons-material/Edit'
+
 
 const HubSpotDealTable = () => {
   const deals = useSelector(state => state.hubspotDeals)
@@ -84,7 +87,12 @@ const HubSpotDealTable = () => {
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }} // Copypasta from mui table tutorial
             >
-              <TableCell component='th' scope='row'>{row.properties.dealname}</TableCell>
+              <TableCell component='th' scope='row'>
+                <IconButton size='small'>
+                  <EditIcon fontSize='small'/>
+                </IconButton>
+                {row.properties.dealname}
+              </TableCell>
               <TableCell align='right'>{row.properties.dealstage}</TableCell>
               <TableCell align='right'>{parseDate(row.properties.closedate)}</TableCell>
               <TableCell align='right'>{row.properties.owner}</TableCell>
