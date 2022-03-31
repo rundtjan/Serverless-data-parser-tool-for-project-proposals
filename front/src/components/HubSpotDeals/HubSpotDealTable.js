@@ -41,6 +41,21 @@ const HubSpotDealTable = () => {
     </TableContainer>
   }
 
+  /**
+   * Parses the date to more readable format
+   * @param {*} date
+   */
+  const parseDate = (date) => {
+    const d = new Date(date)
+    const year = d.getFullYear()
+    const month = ('0' + (d.getMonth() + 1)).slice(-2)
+    const day = ('0' + d.getDate()).slice(-2)
+
+    return(
+      `${day}.${month}.${year}`
+    )
+  }
+
   return(
     <TableContainer component={Paper}>
       <Table>
@@ -71,7 +86,7 @@ const HubSpotDealTable = () => {
             >
               <TableCell component='th' scope='row'>{row.properties.dealname}</TableCell>
               <TableCell align='right'>{row.properties.dealstage}</TableCell>
-              <TableCell align='right'>{row.properties.closedate}</TableCell>
+              <TableCell align='right'>{parseDate(row.properties.closedate)}</TableCell>
               <TableCell align='right'>{row.properties.owner}</TableCell>
               <TableCell align='right'>{row.properties.amount}</TableCell>
             </TableRow>
@@ -83,13 +98,3 @@ const HubSpotDealTable = () => {
 }
 
 export default HubSpotDealTable
-
-/*
-
-              <TableCell component='th' scope='row'>{row.name}</TableCell>
-              <TableCell align='right'>{row.stage}</TableCell>
-              <TableCell align='right'>{row.closeDate}</TableCell>
-              <TableCell align='right'>{row.owner}</TableCell>
-              <TableCell align='right'>{row.amount}</TableCell>
-
-*/
