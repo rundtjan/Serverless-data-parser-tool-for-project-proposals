@@ -88,14 +88,21 @@ const hubspotService = ({ hubspotClient }) => {
     }
   }
 
-  const updateDeal = async (id, properties) => {
-    // Placeholder, not done.
+  /**
+   * Uses Hubspot client to update the deal with parameters got from the hubspotController. 
+   * Hubspot client requires parameteres to be named as dealId, simplePublicObjectInput and idProperty. 
+   * @param {*} dealId 
+   * @param {Object} simplePublicObjectInput 
+   * @param {*} idProperty 
+   * @returns Hubspot deal object if deal correctly updated. 
+   */
+  const updateDeal = async (dealId, simplePublicObjectInput, idProperty) => {
     try {
-      const SimplePublicObjectInput = { properties }
-      const response = await hubspotClient.crm.deals.basicApi.update(id, SimplePublicObjectInput)
+      const response = await hubspotClient.crm.deals.basicApi.update(dealId, simplePublicObjectInput, idProperty)
+      console.log('service response ' + JSON.stringify(response))
       return response
     } catch (e) {
-      throw new Error(`Error in createDeal: ${e.message}`)
+      throw new Error(`Error in updateDeal: ${e.message}`)
     }
   }
 

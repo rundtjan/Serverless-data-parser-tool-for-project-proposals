@@ -33,14 +33,23 @@ const getAllContacts = async (res) => {
   }
 }
 
-const updateDeal = async (res, id, properties) => {
-  // Placeholder for updateDeal, not working yet.
+/**
+ * Updates an existing deal in Hubspot.
+ * @param {Object} properties includes the fields that will be updated.
+ * @param {Number} id dealId number of the deal that will be updated.
+ * @returns Deal object.
+ */
+const updateDeal = async (properties, id) => {
+  const simplePublicObjectInput = { properties }
+  const dealId = JSON.stringify(id)
+  const idProperty = undefined
+  console.log('api controller dealobject ' + JSON.stringify(simplePublicObjectInput))
   try {
-    const result = await hubspot.updateDeal(id, properties)
-    if (result) res.send(result)
-    else res.status(500).send('No result : updateDeal')
+    const result = await hubspot.updateDeal(dealId, simplePublicObjectInput, idProperty)
+    console.log('hubController result ' + JSON.stringify(result))
+    return result
   } catch (error) {
-    res.status(500).send(`${error.message}`)
+    return {error: error.message}
   }
 }
 
@@ -96,4 +105,4 @@ const getOwners = async () => {
       : console.error(e)
   }
 }
-module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals }
+module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals, updateDeal }
