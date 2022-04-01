@@ -16,21 +16,14 @@ jobs:
   cypress-run:
     runs-on: ubuntu-20.04
     env:
-      PORT: 8080
-      REACT_APP_BACKEND_PORT: 8080
-      CYPRESS_BASE_URL: 'http://localhost:8080'
-      SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-      HUBSPOT_APIKEY: ${{ secrets.HUBSPOT_APIKEY }}
+      CYPRESS_BASE_URL: ${{ secrets.PRODUCTION_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
+      - name: allow production front to build before testing it
+        run: sleep 240s
+        shell: bash
+      - name: Cypress run 
         uses: cypress-io/github-action@v2
-        with:
-          env:
-          build: npm run build 
-          start: npm run start
 
       

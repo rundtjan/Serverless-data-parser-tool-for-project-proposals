@@ -70,7 +70,7 @@ describe('Data parser tool ', function() {
         cy.contains('Show all')
     })
 
-    it('If no words are shown, the SendToHubSpot-button is disabled', function(){
+    it('Before choosing words, the SendToHubSpot-button is disabled', function(){
         cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 

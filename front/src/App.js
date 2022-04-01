@@ -16,7 +16,6 @@ import HomePage from './pages/HomePage'
 import SlackPage from './pages/SlackPage'
 
 //Actions
-import { initializeChannels } from './reducers/channelReducer'
 import { initializeParameters } from './reducers/parameterReducer'
 
 const App = () => {
@@ -24,7 +23,6 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initializeChannels())
     dispatch(initializeParameters())
   }, [dispatch])
 

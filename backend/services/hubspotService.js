@@ -58,6 +58,19 @@ const hubspotService = ({ hubspotClient }) => {
   const createDeal = async (dealObject) => {
     try {
       const response = await hubspotClient.crm.deals.basicApi.create(dealObject)
+      if (response.id) {
+        const properties = [
+          'amount',
+          'deal_name',
+          'description',
+          'parsa_deadline',
+          'parsa_technologies',
+          'hs_next_step',
+          'mrr_jan_23',
+        ]
+        const createdDeal = await hubspotClient.crm.deals.basicApi.getById(response.id, properties)
+        console.log('RESULT OF GET BY ID : ', createdDeal)
+      }
       return response
     } catch (e) {
       throw new Error(`Error in createDeal: ${e.message}`)
