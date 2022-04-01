@@ -1,5 +1,9 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { clearAssignedWords } from '../../reducers/assignReducer'
+//import { descriptionParser } from '../../utils/hubspotHelper'
+
 
 //Mui components
 import Table from '@mui/material/Table'
@@ -15,6 +19,7 @@ import EditIcon from '@mui/icons-material/Edit'
 
 const HubSpotDealTable = () => {
   const deals = useSelector(state => state.hubspotDeals)
+  const dispatch = useDispatch()
 
   console.log(deals)
 
@@ -65,6 +70,13 @@ const HubSpotDealTable = () => {
     )
   }
 
+  const handleEditClick = (id) => {
+    dispatch(clearAssignedWords())
+    const deal = deals.find(d => d.id === id)
+    console.log(id)
+    console.log(deal)
+  }
+
   return(
     <TableContainer component={Paper}>
       <Table>
@@ -94,7 +106,7 @@ const HubSpotDealTable = () => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }} // Copypasta from mui table tutorial
             >
               <TableCell component='th' scope='row'>
-                <IconButton size='small'>
+                <IconButton size='small' onClick={() => handleEditClick(row.id)}>
                   <EditIcon fontSize='small'/>
                 </IconButton>
                 {row.properties.dealname}
