@@ -23,7 +23,7 @@ module.exports = async (event) => {
         const parsedParams = await parseParameters(params, event.body.channel_name)
         return parseResponse(parsedParams, frontUrl)
    } catch (error) {
-        console.log(error)
-        return 'There was a problem with your parsing.'
+        console.log('error ', error)
+        return error.message
     }
 }
