@@ -51,7 +51,6 @@ const parseParameters = async (parameters, source_channel) => {
     const args = { channel: false, user: null, oldest: null, hours: null}
     var maybeChannel = false
     parameters.forEach(elem => {
-      //why does /test-servuton general @jan.rundt cause a problem? -- if channel if first!
       var checkChannel = true
       if (parameterIsHours(elem) || parameterIsUsername(elem)) checkChannel = false
       if (checkChannel) maybeChannel = true
@@ -82,7 +81,6 @@ const parseParameters = async (parameters, source_channel) => {
         else throw new Error(`You seem to have entered two hour-parameters, while only one is allowed. Please try again or type /parsa help for instructions`)
       }
       else if (args.channel == element) return
-      //why does /test-servuton general @jan.rundt cause a problem?
       else throw new Error(`There is a problem with the parameter: '${element}'. Please try again or type /parsa help for instructions.`)
     })
     if (!args.channel) args.channel = source_channel
