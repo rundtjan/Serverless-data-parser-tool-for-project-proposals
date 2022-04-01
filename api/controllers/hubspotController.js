@@ -42,7 +42,6 @@ const updateDeal = async (properties, id) => {
   try {
     const result = await hubspot.updateDeal(dealId, simplePublicObjectInput, idProperty)
     return result
-    //else res.status(500).send('No result : updateDeal')
   } catch (error) {
     return {error: error.message}
   }

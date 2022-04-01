@@ -9,19 +9,15 @@ const searchDeals = async(queryString) => {
 
   return res.data.results
 }
-const updateDeal = async(/*properties, id*/) => {
+const updateDeal = async(properties, id) => {
   console.log('in updateDeal')
-  const property = { amount: 5, dealname: 'Deal kauppisen muutettu maansiirtofirma oy ' }
-  const id = 8319711901
-  const sendData = { dealId: id, properties: property }
-  console.log('sendData ' + JSON.stringify(sendData))
+  const sendData = { dealId: id, properties: properties }
   const updateUrl = `${baseUrl}?route=updateDeal`
   const res = await axios.post(updateUrl, JSON.stringify(sendData))
   console.log('res ' + JSON.stringify(res))
   return res.data
 }
 
-updateDeal()
 
 export default { searchDeals, updateDeal }
 
