@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { clearAssignedWords } from '../../reducers/assignReducer'
-//import { descriptionParser } from '../../utils/hubspotHelper'
+import { clearAssignedWords, setAssignedWord } from '../../reducers/assignReducer'
+import { parseHubspotDealProperties } from '../../utils/hubspotDealHelper'
 
 
 //Mui components
@@ -73,8 +73,14 @@ const HubSpotDealTable = () => {
   const handleEditClick = (id) => {
     dispatch(clearAssignedWords())
     const deal = deals.find(d => d.id === id)
-    console.log(id)
-    console.log(deal)
+    const obj = parseHubspotDealProperties(deal.properties)
+
+    for(const category in obj) {
+      const arr = obj[category]
+      for(const word of arr) {
+        dispatch(setAssignedWord(word, category))
+      }
+    }
   }
 
   return(
