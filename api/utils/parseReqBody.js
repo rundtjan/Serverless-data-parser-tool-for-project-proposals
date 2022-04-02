@@ -1,3 +1,10 @@
+/**
+ * A function which parses the request/event from a lambda. It checks for the requestbody
+ * either being a stringified JSON or the raw payload sent by a slashcommand in Slack. 
+ * @param {*} req the request-object that the lamdba received 
+ * @returns the request-object with a parsed req.body
+ */
+
 module.exports = (req) => {
     const body = {}
     const bodyArr = req.body.split('&')
