@@ -1,3 +1,7 @@
+/**
+ * This file contains the full object that can be sent as a response to a /parsa help request from Slack.
+ */
+
 const helpText = {
   statusCode: 200,
   headers: {'content-type': 'application/json'},
