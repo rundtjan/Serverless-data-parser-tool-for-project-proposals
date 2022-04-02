@@ -1,3 +1,9 @@
+/**
+ * A function which parses the info from the request sent by a Slack messageshortcut.
+ * @param {*} event the event that was received as a parameter to the lambda 
+ * @returns a parsed object containing the needed info from the message shortcut request
+ */
+
 module.exports = (event) => {
     let data = event.body
     let buff = Buffer.from(data, 'base64');
