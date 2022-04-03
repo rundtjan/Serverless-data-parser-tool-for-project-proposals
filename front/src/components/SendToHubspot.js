@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 //Reducers
-import { sendPending, sendAssignedJSON, sendReset, clearAssignedWords } from '../reducers/sendReducer'
+import { sendPending, sendAssignedJSON, sendReset, clearAssignedWords, updateHubspotDeal } from '../reducers/sendReducer'
 
 
 //Mui stuff
@@ -25,7 +25,9 @@ const SendToHubspot = () => {
     event.preventDefault()
     dispatch(sendPending())
     //dispatch(clearAssignedWords())
-    dispatch(sendAssignedJSON())
+    const id = useSelector(state => state.id)
+    if(id==='') dispatch(sendAssignedJSON())
+    else dispatch(updateHubspotDeal(id))
   }
 
   const delayedReset = () => {

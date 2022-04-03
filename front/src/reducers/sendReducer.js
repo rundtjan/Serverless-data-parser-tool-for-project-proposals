@@ -1,4 +1,4 @@
-import sendJSONService from  '../services/sendJSON'
+import { sendJSON as sendJSONService, updateDeal } from  '../services/sendJSON'
 
 const reducer = (state = '', action) => {
   switch(action.type) {
@@ -53,6 +53,33 @@ export const createSendAssignedJSON = (sendJSONService) => {
 
 export const sendAssignedJSON = createSendAssignedJSON(sendJSONService.sendJSON)
 
+
+export const updateHubspotDeal = (id) => {
+  return () => {
+    return async (dispatch, getState) => {
+      const assignedWords = getState().assignedWords
+      if (assignedWords.length === 0) {
+        dispatch({
+          type: 'SEND_ERROR'
+        })
+        return
+      }
+      const data = await updateDeal(id, assignedWords)
+      if (data === 'success') {
+        dispatch(clearAssignedWords())
+        dispatch({
+          type: 'SEND_SUCCESS'
+        })
+      } else {
+        dispatch({
+          type: 'SEND_ERROR'
+        })
+      }
+    }
+  }
+}
+
+
 export const clearAssignedWords = () => {
   return {
     type: 'CLEAR_ASSIGNED'
@@ -67,4 +94,3 @@ export const sendReset = () => {
 
 
 export default reducer
-

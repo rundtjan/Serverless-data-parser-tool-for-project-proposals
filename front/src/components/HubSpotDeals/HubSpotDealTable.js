@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { clearAssignedWords, setAssignedWord } from '../../reducers/assignReducer'
 import { parseHubspotDealProperties } from '../../utils/hubspotDealHelper'
+import { setDealId } from '../../reducers/dealIdReducer'
 
 
 //Mui components
@@ -74,6 +75,7 @@ const HubSpotDealTable = () => {
     dispatch(clearAssignedWords())
     const deal = deals.find(d => d.id === id)
     const obj = parseHubspotDealProperties(deal.properties)
+    dispatch(setDealId(id))
 
     for(const category in obj) {
       const arr = obj[category]

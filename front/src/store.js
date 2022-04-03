@@ -11,6 +11,7 @@ import parameterReducer from './reducers/parameterReducer'
 import sendReducer from './reducers/sendReducer'
 import readyToSendReducer from './reducers/readyToSendReducer'
 import hubspotReducer from './reducers/hubspotReducer'
+import dealIdReducer from './reducers/dealIdReducer'
 
 const reducer = combineReducers({
   data: dataReducer,
@@ -19,7 +20,8 @@ const reducer = combineReducers({
   parameters: parameterReducer,
   sendStatus: sendReducer,
   readyToSend: readyToSendReducer,
-  hubspotDeals: hubspotReducer
+  hubspotDeals: hubspotReducer,
+  id: dealIdReducer
 })
 
 const store = createStore(
