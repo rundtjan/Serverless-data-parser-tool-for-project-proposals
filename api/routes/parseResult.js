@@ -30,6 +30,11 @@ module.exports = async function (event) {
     
         try {
             const response = await slackController.slackMessages(args)
+            response.query = {
+                channel: event.body.channel ? event.body.channel : undefined,
+                user: event.body.user ? event.body.user : undefined,
+                oldest: event.body.oldest ? event.body.oldest : undefined,
+            }
             return response
         } catch (error) {
             return error.error
