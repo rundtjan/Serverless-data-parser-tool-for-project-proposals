@@ -81,6 +81,15 @@ const HubSpotDealTable = () => {
         dispatch(setAssignedWord(word, category))
       }
     }
+
+    if(deal.properties.amount) {
+      dispatch(setAssignedWord(deal.properties.amount, 'Price'))
+    }
+
+    if(deal.properties.dealname) {
+      const name = deal.properties.dealname.substring(5)
+      dispatch(setAssignedWord(name, 'Customer'))
+    }
   }
 
   return(
