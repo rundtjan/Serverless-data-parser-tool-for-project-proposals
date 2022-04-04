@@ -11,10 +11,10 @@ const { parseTimestamp } = require('../utils/parseSlackTimestamp')
  * @returns either a response object or an error-message
  */
 module.exports = async function (event) {
-  console.log('Receiving post from Parsa front for parsing.');
+  console.log('Receiving post from Parsa front for parsing.')
   let data = event.body
-  let buff = Buffer.from(data, 'base64');
-  event.body = buff.toString('ascii');
+  let buff = Buffer.from(data, 'base64')
+  event.body = buff.toString('ascii')
   event = parseReqBody(event)
 
   if (event.body.type && event.body.type == 'thread'){

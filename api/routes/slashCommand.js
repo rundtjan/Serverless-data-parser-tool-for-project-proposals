@@ -15,12 +15,12 @@ const parseResponse = require('../utils/parseResponse')
  */
 module.exports = async (event) => {
   let data = event.body
-  let buff = Buffer.from(data, 'base64');
-  event.body = buff.toString('ascii');
+  let buff = Buffer.from(data, 'base64')
+  event.body = buff.toString('ascii')
   event = parseReqBody(event)
 
   if(!event.body.channel_name) { 
-    return {status: 200, body: "Info missing in your request."}
+    return {status: 200, body: 'Info missing in your request.'}
   }
 
   const params = event.body.text.split('+').filter(Boolean)
