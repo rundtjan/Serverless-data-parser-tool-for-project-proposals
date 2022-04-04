@@ -2,6 +2,8 @@ const reducer = (state = '', action) => {
   switch(action.type) {
   case 'SET_ID':
     return action.id
+  case 'CLEAR_ID':
+    return state = ''
   default:
     return state
   }
@@ -18,5 +20,11 @@ export const setDealId = (id) => {
     id
   }
 }
+export const clearId = () => {
+  return {
+    type: 'CLEAR_ID'
+  }
+}
+
 
 export default reducer

@@ -14,6 +14,7 @@ import { yellow, green, red } from '@mui/material/colors'
 import CheckIcon from '@mui/icons-material/Check'
 import ErrorIcon from '@mui/icons-material/Error'
 import Fade from '@mui/material/Fade'
+import { clearId } from '../reducers/dealIdReducer'
 
 const SendToHubspot = () => {
   const dispatch = useDispatch()
@@ -32,6 +33,7 @@ const SendToHubspot = () => {
 
   const delayedReset = () => {
     if (sendStatus === 'success') dispatch(clearAssignedWords())
+    dispatch(clearId())
     setTimeout(() => dispatch(sendReset()), 5000)
   }
 
