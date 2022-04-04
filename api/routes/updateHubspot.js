@@ -13,7 +13,7 @@ module.exports = async function (event) {
     const sendJson = JSON.parse(buff.toString('utf8'))
     try {
         const result = await hubspotController.updateDeal(sendJson.properties, sendJson.dealId)
-        if (result.id) return result
+        if (result.id) return 'success'
         return 'error'
     } catch (error) {
         console.log(error)
