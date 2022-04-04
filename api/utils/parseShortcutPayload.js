@@ -6,8 +6,8 @@
 
 module.exports = (event) => {
   let data = event.body
-  let buff = Buffer.from(data, 'base64');
-  event.body = buff.toString();
+  let buff = Buffer.from(data, 'base64')
+  event.body = buff.toString()
   let decoded = decodeURIComponent(event.body)
   let json = JSON.parse(decoded.split('=')[1])
   const channelId = json.channel.id 
