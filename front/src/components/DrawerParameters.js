@@ -11,9 +11,9 @@ import Typography from '@mui/material/Typography'
  * @returns Grid that shows which parameters are chosen.
  */
 const DrawerParameters = () => {
-  const parameters = useSelector(state => state.parameters)
+  const data = useSelector(state => state.data)
   /** If there are no parameters. A grid with only names is returned. */
-  if (!parameters){
+  if (!data.query){
     return(
       <Box
         bgcolor='#f9f9f9'
@@ -71,17 +71,17 @@ const DrawerParameters = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Channel: { parameters.channel }
+                Channel: { data.query.channel }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                User: { parameters.user }
+                User: { data.query.user }
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography>
-                Hours: { parameters.hours }
+                Hours: { data.query.hours }
           </Typography>
         </Grid>
       </Grid>

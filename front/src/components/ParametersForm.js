@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 //Reducers
 import { getMessagesParameters } from '../reducers/dataReducer'
 import { clearAssignedWords } from '../reducers/assignReducer'
-import { updateParameters } from '../reducers/parameterReducer'
-
 
 //Mui stuff
 import Grid from '@mui/material/Grid'
@@ -33,7 +31,6 @@ const ParametersForm = () => {
   const putParameters = async(event) => {
     event.preventDefault()
     dispatch(getMessagesParameters(channel, user, hours))
-    dispatch(updateParameters(channel, user, hours))
     dispatch(clearAssignedWords())
   }
 
