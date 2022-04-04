@@ -3,7 +3,6 @@ const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
 const { processMessageShortcut } = require('../application/processMessageShortcut')
-const savedQueries = {}
 
 let paramUser = ''
 let paramChannel = 'general'
@@ -96,9 +95,6 @@ module.exports = {
   slackChannels,
   slackUsers,
   slackGetAllByUser,
-  saveQuery,
-  returnQuery,
   getAllMessagesFromSingleThread,
-  slackResponse,
   getParams,
 }
