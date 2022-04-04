@@ -102,7 +102,9 @@ const hubspotService = ({ hubspotClient }) => {
    */
   const updateDeal = async (dealId, simplePublicObjectInput, idProperty) => {
     try {
+      console.log('in api service ')
       const response = await hubspotClient.crm.deals.basicApi.update(dealId, simplePublicObjectInput, idProperty)
+      console.log('api hubspot service result ' , response)
       return response
     } catch (e) {
       throw new Error(`Error in updateDeal: ${e.message}`)

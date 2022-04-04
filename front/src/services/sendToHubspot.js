@@ -14,16 +14,9 @@ const updateDeal = async(id, assignedWords) => {
   console.log(JSON.stringify(sendData))
   const updateUrl = `${baseUrl}?route=updateDeal`
   const res = await axios.post(updateUrl, JSON.stringify(sendData))
-  console.log('res ' + JSON.stringify(res))
+  console.log(res, res.data)
   return res.data
 }
-/*const propertiesOfAssignedWords = (assignedWords) => {
-  const obj = {}
-  assignedWords.forEach(word => {
-    obj.push(`${word.category}:${word.word}`)
-  })
-  return obj
-} */
 
 const JSONfromAssignedWords = (assignedWords) => {
   const JSONObj = {}

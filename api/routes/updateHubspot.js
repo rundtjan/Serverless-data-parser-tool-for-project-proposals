@@ -7,14 +7,16 @@ const hubspotController = require('../controllers/hubspotController')
  * @returns the response from Hubspot or an error.
  */
 module.exports = async function (event) {
-    console.log('in api routes updateHubspot')
     let data = event.body
     let buff = Buffer.from(data, 'base64')
     const sendJson = JSON.parse(buff.toString('utf8'))
+    console.log('in api routes updateHubspot sendJSon ' + JSON.stringify(sendJson))
     try {
         const result = await hubspotController.updateDeal(sendJson.properties, sendJson.dealId)
-        if (result.id) return 'success'
-        return 'error'
+        if (result.id) {
+            console.log('api routes result ' , result.id)
+            return 'success'
+        } else return 'error'
     } catch (error) {
         console.log(error)
         return 'error'

@@ -1,4 +1,5 @@
 import sendJSONService from  '../services/sendToHubspot'
+import { clearId } from './dealIdReducer'
 
 const reducer = (state = '', action) => {
   switch(action.type) {
@@ -68,6 +69,7 @@ export const updateHubspotDeal = (id) => {
     const data = await sendJSONService.updateDeal(id, assignedWords)
     if (data === 'success') {
       dispatch(clearAssignedWords())
+      dispatch(clearId())
       dispatch({
         type: 'SEND_SUCCESS'
       })

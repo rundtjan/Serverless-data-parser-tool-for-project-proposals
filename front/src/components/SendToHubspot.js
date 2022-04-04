@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -28,6 +29,7 @@ const SendToHubspot = () => {
     dispatch(sendPending())
     console.log('id in sendJson ' + id)
     if(id==='')  {
+      console.log('create new ')
       dispatch(sendAssignedJSON())
     } else {
       console.log('sending to hubspot deal id ' + id)
@@ -36,9 +38,9 @@ const SendToHubspot = () => {
   }
 
   const delayedReset = () => {
-    if (sendStatus === 'success') dispatch(clearAssignedWords())
-    //dispatch(clearId())
-    setTimeout(() => dispatch(sendReset()), 5000)
+    if (sendStatus === 'success') {
+      setTimeout(() => dispatch(sendReset()), 5000)
+    }
   }
 
   return(

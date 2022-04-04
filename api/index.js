@@ -31,9 +31,11 @@ exports.handler = async (event) => {
                 response = await searchHubspot(event)
                 break
             case 'updateDeal':
+                console.log(JSON.stringify(event))
                 response = await updateHubspot(event)
                 break    
             default:
+                console.log(JSON.stringify(event))
                 response = 'Check your route'
         }
     }
