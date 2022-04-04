@@ -55,26 +55,26 @@ export const sendAssignedJSON = createSendAssignedJSON(sendJSONService.sendJSON)
 
 
 export const updateHubspotDeal = (id) => {
-  return () => {
-    return async (dispatch, getState) => {
-      const assignedWords = getState().assignedWords
-      if (assignedWords.length === 0) {
-        dispatch({
-          type: 'SEND_ERROR'
-        })
-        return
-      }
-      const data = await sendJSONService.updateDeal(id, assignedWords)
-      if (data === 'success') {
-        dispatch(clearAssignedWords())
-        dispatch({
-          type: 'SEND_SUCCESS'
-        })
-      } else {
-        dispatch({
-          type: 'SEND_ERROR'
-        })
-      }
+  console.log('sendReducer in updateHubspotDeal id ' + id)
+  return async (dispatch, getState) => {
+    const assignedWords = getState().assignedWords
+    if (assignedWords.length === 0) {
+      dispatch({
+        type: 'SEND_ERROR'
+      })
+      return
+    }
+    console.log('sending data assignedwords length ' + assignedWords.length)
+    const data = await sendJSONService.updateDeal(id, assignedWords)
+    if (data === 'success') {
+      dispatch(clearAssignedWords())
+      dispatch({
+        type: 'SEND_SUCCESS'
+      })
+    } else {
+      dispatch({
+        type: 'SEND_ERROR'
+      })
     }
   }
 }
