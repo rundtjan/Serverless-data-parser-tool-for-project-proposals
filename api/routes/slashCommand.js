@@ -14,24 +14,24 @@ const parseResponse = require('../utils/parseResponse')
  * an error.
  */
 module.exports = async (event) => {
-    let data = event.body
-    let buff = Buffer.from(data, 'base64');
-    event.body = buff.toString('ascii');
-    event = parseReqBody(event)
+  let data = event.body
+  let buff = Buffer.from(data, 'base64');
+  event.body = buff.toString('ascii');
+  event = parseReqBody(event)
 
-    if(!event.body.channel_name) { 
-        return {status: 200, body: "Info missing in your request."}
-    }
+  if(!event.body.channel_name) { 
+    return {status: 200, body: "Info missing in your request."}
+  }
 
-    const params = event.body.text.split('+').filter(Boolean)
+  const params = event.body.text.split('+').filter(Boolean)
 
-    if (params.includes('help')) return helpResponse
+  if (params.includes('help')) return helpResponse
 
-    try {
-        const parsedParams = await parseParameters(params, event.body.channel_name)
-        return parseResponse(parsedParams, frontUrl)
-   } catch (error) {
-        console.log('error ', error)
-        return error.message
-    }
+  try {
+    const parsedParams = await parseParameters(params, event.body.channel_name)
+    return parseResponse(parsedParams, frontUrl)
+  } catch (error) {
+    console.log('error ', error)
+    return error.message
+  }
 }
