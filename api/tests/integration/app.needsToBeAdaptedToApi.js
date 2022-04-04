@@ -1,4 +1,4 @@
-const request = require('supertest')
+/*const request = require('supertest')
 const assert = require('assert')
 
 const app = require('../../app')
@@ -258,4 +258,4 @@ describe('Test Hubspot Related Endpoints', () => {
         return done()
       })
   })
-})
+})*/
