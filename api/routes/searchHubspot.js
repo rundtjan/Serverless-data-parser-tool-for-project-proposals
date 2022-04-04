@@ -8,18 +8,18 @@ const hubspotController = require('../controllers/hubspotController')
  * @returns the response from Hubspot or an error.
  */
 module.exports = async function (event) {
-    console.log(event)
-    console.log(event.body)
-    let data = event.body
-    let buff = Buffer.from(data.toString('ascii'), 'base64')
-    const reqObj = JSON.parse(buff)
-    console.log(reqObj)
+  console.log(event)
+  console.log(event.body)
+  let data = event.body
+  let buff = Buffer.from(data.toString('ascii'), 'base64')
+  const reqObj = JSON.parse(buff)
+  console.log(reqObj)
 
-    try {
-        const result = await hubspotController.searchDeals(reqObj.queryString)
-        return result
-    } catch (error) {
-        console.log(error)
-        return {error: error.message}
-    }
+  try {
+    const result = await hubspotController.searchDeals(reqObj.queryString)
+    return result
+  } catch (error) {
+    console.log(error)
+    return {error: error.message}
+  }
 }
