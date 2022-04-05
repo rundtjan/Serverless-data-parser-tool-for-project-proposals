@@ -65,11 +65,11 @@ const hubspotService = ({ hubspotClient }) => {
       throw new Error(`Error in createAllContacts: ${e.message}`)
     }
   }
-/**
- * Uses Hubspot client to create a new deal with parameters got from the hubspotController.
- * @param {Object} dealObject includes all the parameters needed to 
- * @returns created deal if succes or error if deal could not be created. 
- */
+  /**
+  * Uses Hubspot client to create a new deal with parameters got from the hubspotController.
+  * @param {Object} dealObject includes all the parameters needed to 
+  * @returns created deal if succes or error if deal could not be created. 
+  */
   const createDeal = async (dealObject) => {
     try {
       const response = await hubspotClient.crm.deals.basicApi.create(dealObject)

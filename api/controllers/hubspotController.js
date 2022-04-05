@@ -71,8 +71,8 @@ const updateDeal = async (properties, id) => {
     console.log('hubController result ' + JSON.stringify(result))
     return result
   } catch (error) {
-      console.log(error)
-      return 'error' 
+    console.log(error)
+    return 'error' 
   }
 }
 
