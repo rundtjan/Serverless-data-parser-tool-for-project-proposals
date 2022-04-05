@@ -15,12 +15,11 @@ import { yellow, green, red } from '@mui/material/colors'
 import CheckIcon from '@mui/icons-material/Check'
 import ErrorIcon from '@mui/icons-material/Error'
 import Fade from '@mui/material/Fade'
-//import { clearId } from '../reducers/dealIdReducer'
 
 const SendToHubspot = () => {
   const dispatch = useDispatch()
   const sendStatus = useSelector(state => state.sendStatus)
-  const readyToSend = true // useSelector(state => state.readyToSend)
+  const readyToSend = useSelector(state => state.readyToSend)
   const id = useSelector(state => state.id)
 
   const sendJson = async(event) => {

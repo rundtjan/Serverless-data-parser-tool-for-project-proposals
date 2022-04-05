@@ -16,6 +16,7 @@ import TableBody from '@mui/material/TableBody'
 import Paper from '@mui/material/Paper'
 import IconButton from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
+import { readyToSend } from '../../reducers/readyToSendReducer'
 
 
 const HubSpotDealTable = () => {
@@ -83,8 +84,9 @@ const HubSpotDealTable = () => {
       Contact: deal.properties.hs_next_step && deal.properties.hs_next_step.split(','),
       FTEs: deal.properties.mrr_jan_23 && [deal.properties.mrr_jan_23],
       Technology: deal.properties.parsa_technologies && deal.properties.parsa_technologies.split(','),
-    }// 'Customer', 'Price', 'Deadline', 'FTEs', 'Contact', 'Technology' }
+    }
     dispatch(setDealId(id))
+    dispatch(readyToSend())
 
     for(const category in obj) {
       const arr = obj[category]
