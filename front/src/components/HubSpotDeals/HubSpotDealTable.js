@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { clearAssignedWords, setAssignedWord } from '../../reducers/assignReducer'
-import { parseHubspotDealProperties } from '../../utils/hubspotDealHelper'
+//import { parseHubspotDealProperties } from '../../utils/hubspotDealHelper'
+import { setDealId } from '../../reducers/dealIdReducer'
 
 
 //Mui components
@@ -15,6 +16,7 @@ import TableBody from '@mui/material/TableBody'
 import Paper from '@mui/material/Paper'
 import IconButton from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
+import { readyToSend } from '../../reducers/readyToSendReducer'
 
 
 const HubSpotDealTable = () => {
@@ -73,22 +75,26 @@ const HubSpotDealTable = () => {
   const handleEditClick = (id) => {
     dispatch(clearAssignedWords())
     const deal = deals.find(d => d.id === id)
-    const obj = parseHubspotDealProperties(deal.properties)
+    //const obj = parseHubspotDealProperties(deal.properties)
+    console.log(deal)
+    const obj = {
+      Price: deal.properties.amount && [deal.properties.amount],
+      Customer: deal.properties.dealname && [deal.properties.dealname.substring(5)],
+      Deadline: deal.properties.parsa_deadline && [deal.properties.parsa_deadline],
+      Contact: deal.properties.hs_next_step && deal.properties.hs_next_step.split(','),
+      FTEs: deal.properties.mrr_jan_23 && [deal.properties.mrr_jan_23],
+      Technology: deal.properties.parsa_technologies && deal.properties.parsa_technologies.split(','),
+    }
+    dispatch(setDealId(id))
+    dispatch(readyToSend())
 
     for(const category in obj) {
       const arr = obj[category]
-      for(const word of arr) {
-        dispatch(setAssignedWord(word, category))
+      if(arr) {
+        for(const word of arr) {
+          dispatch(setAssignedWord(word, category))
+        }
       }
-    }
-
-    if(deal.properties.amount) {
-      dispatch(setAssignedWord(deal.properties.amount, 'Price'))
-    }
-
-    if(deal.properties.dealname) {
-      const name = deal.properties.dealname.substring(5)
-      dispatch(setAssignedWord(name, 'Customer'))
     }
   }
 

@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 //Reducers
-import { sendPending, sendAssignedJSON, sendReset, clearAssignedWords } from '../reducers/sendReducer'
+import { sendPending, sendAssignedJSON, sendReset, clearAssignedWords, updateHubspotDeal } from '../reducers/sendReducer'
 
 
 //Mui stuff
@@ -19,18 +20,26 @@ const SendToHubspot = () => {
   const dispatch = useDispatch()
   const sendStatus = useSelector(state => state.sendStatus)
   const readyToSend = useSelector(state => state.readyToSend)
+  const id = useSelector(state => state.id)
 
   const sendJson = async(event) => {
     //console.log(assignedWords)
     event.preventDefault()
     dispatch(sendPending())
-    //dispatch(clearAssignedWords())
-    dispatch(sendAssignedJSON())
+    console.log('id in sendJson ' + id)
+    if(id==='')  {
+      console.log('create new ')
+      dispatch(sendAssignedJSON())
+    } else {
+      console.log('sending to hubspot deal id ' + id)
+      dispatch(updateHubspotDeal(id))
+    }
   }
 
   const delayedReset = () => {
-    if (sendStatus === 'success') dispatch(clearAssignedWords())
-    setTimeout(() => dispatch(sendReset()), 5000)
+    if (sendStatus === 'success')
+      setTimeout(() => dispatch(sendReset()), 5000)
+
   }
 
   return(
