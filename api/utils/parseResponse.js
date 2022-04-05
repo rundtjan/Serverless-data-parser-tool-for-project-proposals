@@ -5,8 +5,8 @@
  * @param {*} frontUrl the front url where Parsa can be found
  * @returns the complete response-object
  */
-const response = (parsedParams, frontUrl) => {
-  var queryParams = ''
+const response = (parsedParams, frontUrl, responseUrl) => {
+  var queryParams = 'responseUrl=' + responseUrl + "&"
   Object.keys(parsedParams).forEach(key => queryParams += `${key}=${parsedParams[key]}&`)
   const resObj = {
     statusCode: 200,

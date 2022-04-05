@@ -1,4 +1,5 @@
 const hubspotController = require('../controllers/hubspotController')
+const axios = require('axios')
 
 /**
  * A function that takes care of requests of type 'POST route=sendToHubspot' that contains
@@ -11,11 +12,18 @@ module.exports = async function (event) {
   console.log(event.body)
   let data = event.body
   let buff = Buffer.from(data, 'base64')
-  const sendJson = JSON.parse(buff.toString('ascii'))
+  const sendJson = JSON.parse(buff.toString('utf-8'))
+  const baseUrlSlashCommand = 'https://hooks.slack.com/commands/'
+  const hubspotUrl = 'https://app.hubspot.com/contacts/8059424/deal/'
 
   try {
-    const result = await hubspotController.createDeal(sendJson)
-    if (result.id) return 'success'
+    const result = await hubspotController.createDeal(sendJson.deal)
+    if (result.id) {
+      if (sendJson.responseUrl) {
+        await axios.post(baseUrlSlashCommand+sendJson.responseUrl, {'text': `You have created a new deal in Hubspot at ${hubspotUrl}${result.id}`})
+      }
+      return 'success'
+    }
     return 'error'
   } catch (error) {
     console.log(error)

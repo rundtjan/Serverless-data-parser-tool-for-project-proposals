@@ -14,6 +14,7 @@ import Layout from '../components/Layout'
 //Reducers
 import { getParamMessages } from '../reducers/dataReducer'
 import { clearAllHighlights } from '../reducers/highlightReducer'
+import { setUrl } from '../reducers/responseUrlReducer'
 
 
 const SlackPage = () => {
@@ -21,6 +22,7 @@ const SlackPage = () => {
   const dispatch = useDispatch()
 
   dispatch(getParamMessages(id))
+  dispatch(setUrl(id))
   dispatch(clearAllHighlights())
 
   return(
