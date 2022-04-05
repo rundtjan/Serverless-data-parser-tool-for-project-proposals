@@ -15,7 +15,7 @@ const baseUrl = 'https://main.dtatk8xusyguu.amplifyapp.com/'
 test('Parsing without parameters from demochannel returns url with demochannel', async () => {
   const eventObj = {queryStringParameters : {route: 'slashCommand'}, body: parseDemochannel}
   const response = await slashCommand(eventObj)
-  expect(response.body.includes(baseUrl+'channel=demo_channel&user=null&oldest=null&hours=null')).toBe(true)
+  expect(response.body.includes('channel=demo_channel&user=null&oldest=null&hours=null')).toBe(true)
 })
 
 test('Parsing with hour-parameter returns url with hour-limitation', async () => {
@@ -28,14 +28,14 @@ test('Parsing with hour-parameter returns url with hour-limitation', async () =>
 test('Parsing with user-parameter returns url with user-limitation', async () => {
   const eventObj = {queryStringParameters : {route: 'slashCommand'}, body: parseUser}
   const response = await slashCommand(eventObj)
-  expect(response.body.includes(baseUrl + 'channel=demo_channel&user=@jan.rundt&oldest=null&hours=null')).toBe(true)
+  expect(response.body.includes('channel=demo_channel&user=@jan.rundt&oldest=null&hours=null')).toBe(true)
   expect(response.body.includes('Channel = demo_channel, user = @jan.rundt and timelimit (hrs) = not chosen.')).toBe(true)
 })
 
 test('Parsing with user- and hour-parameter returns url with user- and hour-limitation', async () => {
   const eventObj = {queryStringParameters : {route: 'slashCommand'}, body: parseUser24}
   const response = await slashCommand(eventObj)
-  expect(response.body.includes(baseUrl + 'channel=demo_channel&user=@jan.rundt')).toBe(true)
+  expect(response.body.includes('channel=demo_channel&user=@jan.rundt')).toBe(true)
   expect(response.body.includes('&hours=24')).toBe(true)
   expect(response.body.includes('Channel = demo_channel, user = @jan.rundt and timelimit (hrs) = 24.')).toBe(true)
 })
