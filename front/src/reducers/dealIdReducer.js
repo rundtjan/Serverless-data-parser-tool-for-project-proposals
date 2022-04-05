@@ -3,7 +3,7 @@ const reducer = (state = '', action) => {
   case 'SET_ID':
     return action.id
   case 'CLEAR_ID':
-    return state = ''
+    return ''
   default:
     return state
   }

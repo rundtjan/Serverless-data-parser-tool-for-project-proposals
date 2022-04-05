@@ -37,9 +37,9 @@ const SendToHubspot = () => {
   }
 
   const delayedReset = () => {
-    if (sendStatus === 'success') {
+    if (sendStatus === 'success')
       setTimeout(() => dispatch(sendReset()), 5000)
-    }
+
   }
 
   return(
