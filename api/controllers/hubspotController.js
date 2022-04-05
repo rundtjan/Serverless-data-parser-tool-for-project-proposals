@@ -128,4 +128,4 @@ const getOwners = async () => {
       : console.error(e)
   }
 }
-module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals, updateDeal }
+module.exports = { getAllDeals, updateDeal, createDeal, getAllContacts, getOwners, searchDeals }

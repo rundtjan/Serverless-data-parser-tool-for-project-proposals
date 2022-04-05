@@ -78,7 +78,7 @@ const parseParameters = async (parameters, source_channel) => {
       }
       else if (parameterIsHours(element)){
         if (!args.oldest) { args.oldest = parseTimestamp(Date.now() * 1000, element), args.hours = element; return }
-        else throw new Error(`You seem to have entered two hour-parameters, while only one is allowed. Please try again or type /parsa help for instructions`)
+        else throw new Error('You seem to have entered two hour-parameters, while only one is allowed. Please try again or type /parsa help for instructions')
       }
       else if (args.channel == element) return
       else throw new Error(`There is a problem with the parameter: '${element}'. Please try again or type /parsa help for instructions.`)
