@@ -10,6 +10,7 @@ module.exports = (event) => {
   event.body = buff.toString()
   let decoded = decodeURIComponent(event.body)
   let json = JSON.parse(decoded.split('=')[1])
+  console.log('entire json from shortcut ', json)
   const channelId = json.channel.id 
   const thread_ts = json.message.thread_ts
   const response_url = json.response_url

@@ -16,7 +16,7 @@ const parseResponse = require('../utils/parseResponse')
 module.exports = async (event) => {
   let data = event.body
   let buff = Buffer.from(data, 'base64')
-  event.body = buff.toString('ascii')
+  event.body = buff.toString('utf-8')
   event = parseReqBody(event)
 
   if(!event.body.channel_name) { 
@@ -28,8 +28,10 @@ module.exports = async (event) => {
   if (params.includes('help')) return helpResponse
 
   try {
+    let rgx = /\//ig
+    const responseUrl = decodeURIComponent(event.body.response_url).split('commands/')[1].replace(rgx, '$')
     const parsedParams = await parseParameters(params, event.body.channel_name)
-    return parseResponse(parsedParams, frontUrl)
+    return parseResponse(parsedParams, frontUrl, responseUrl)
   } catch (error) {
     console.log('error ', error)
     return error.message

@@ -2,9 +2,10 @@ import axios from 'axios'
 
 const baseUrl = process.env.REACT_APP_API_URL // eslint-disable-line
 
-const sendJSON = async(assignedWords) => {
+const sendJSON = async(assignedWords, responseUrl) => {
   const sendUrl = `${baseUrl}?route=sendToHubspot`
-  const sendData = JSONfromAssignedWords(assignedWords)
+  const sendData = JSONfromAssignedWords(assignedWords, responseUrl)
+  console.log(JSON.stringify(sendData))
   const res = await axios.post(sendUrl, JSON.stringify(sendData))
   return res.data
 }
@@ -18,13 +19,13 @@ const updateDeal = async(id, assignedWords) => {
   return res.data
 }
 
-const JSONfromAssignedWords = (assignedWords) => {
-  const JSONObj = {}
+const JSONfromAssignedWords = (assignedWords, responseUrl) => {
+  const JSONObj = { deal: {} }
   assignedWords.forEach(word => {
-    if (!JSONObj[word.category]) JSONObj[word.category] = []
-    JSONObj[word.category].push(word.word)
+    if (!JSONObj.deal[word.category]) JSONObj.deal[word.category] = []
+    JSONObj.deal[word.category].push(word.word)
   })
-  console.log('jsonObj '+JSONObj)
+  if (responseUrl) JSONObj.responseUrl = responseUrl
   return JSONObj
 }
 
