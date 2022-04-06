@@ -39,7 +39,7 @@ export const createSendAssignedJSON = (sendJSONService) => {
         return
       }
       const data = await sendJSONService(assignedWords, responseUrl)
-      if (data === 'success') {
+      if (data.status && data.status === 'success') {
         dispatch(clearAssignedWords())
         dispatch({
           type: 'SEND_SUCCESS'
@@ -68,7 +68,7 @@ export const updateHubspotDeal = (id) => {
     }
     console.log('sending data assignedwords length ' + assignedWords.length)
     const data = await sendJSONService.updateDeal(id, assignedWords)
-    if (data === 'success') {
+    if (data.status && data.status === 'success') {
       dispatch(clearAssignedWords())
       dispatch(clearId())
       dispatch({

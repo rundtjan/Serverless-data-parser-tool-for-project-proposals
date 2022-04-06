@@ -20,9 +20,11 @@ module.exports = async function (event) {
     const result = await hubspotController.createDeal(sendJson.deal)
     if (result.id) {
       if (sendJson.responseUrl) {
-        await axios.post(baseUrlSlashCommand+sendJson.responseUrl, {'text': `You have created a new deal in Hubspot at ${hubspotUrl}${result.id}`})
+        await axios.post(baseUrlSlashCommand + sendJson.responseUrl, {
+          text: `You have created a new deal in Hubspot at ${hubspotUrl}${result.id}`,
+        })
       }
-      return 'success'
+      return { status: 'success', id: result.id, message: `New Deal created : ${result.id}` }
     }
     return 'error'
   } catch (error) {

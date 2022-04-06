@@ -14,11 +14,11 @@ module.exports = async function (event) {
   try {
     const result = await hubspotController.updateDeal(sendJson.properties, sendJson.dealId)
     if (result.id) {
-      console.log('api routes result ' , result.id)
-      return 'success'
-    } else return 'error'
+      console.log('api routes result ' , result)
+      return { status: 'success', id: result.id, message: `Deal updated : ${result.id}` }
+    } else return { status: 'error', id: undefined, message: `Deal Update Failed : ${result}` }
   } catch (error) {
     console.log(error)
-    return 'error'
+    return { status: 'error', id: undefined, message: `Deal Update Failed : ${error.message}` }
   }
 }
