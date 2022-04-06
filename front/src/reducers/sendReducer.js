@@ -1,5 +1,6 @@
 import sendJSONService from  '../services/sendToHubspot'
 import { clearId } from './dealIdReducer'
+import { setUserMessage } from './userMessageReducer'
 
 const reducer = (state = '', action) => {
   switch(action.type) {
@@ -41,6 +42,9 @@ export const createSendAssignedJSON = (sendJSONService) => {
       const data = await sendJSONService(assignedWords, responseUrl)
       if (data.status && data.status === 'success') {
         dispatch(clearAssignedWords())
+        if (data.message){
+          dispatch(setUserMessage(data.message))
+        }
         dispatch({
           type: 'SEND_SUCCESS'
         })
@@ -71,6 +75,9 @@ export const updateHubspotDeal = (id) => {
     if (data.status && data.status === 'success') {
       dispatch(clearAssignedWords())
       dispatch(clearId())
+      if (data.message){
+        dispatch(setUserMessage(data.message))
+      }
       dispatch({
         type: 'SEND_SUCCESS'
       })

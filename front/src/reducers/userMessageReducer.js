@@ -1,7 +1,7 @@
-const reducer = (state = [], action) => {
+const reducer = (state = '', action) => {
   switch (action.type) {
   case 'SET_MESSAGE':
-    return action.data
+    return action.userMessage
   case 'CLEAR_MESSAGE':
     return ''
   default:
@@ -14,11 +14,11 @@ const reducer = (state = [], action) => {
  * Used in App.js
  * @see {@link channelService}
  */
-export const setUserMessage = (msg) => {
+export const setUserMessage = (userMessage) => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_MESSAGE',
-      msg,
+      userMessage,
     })
   }
 }
