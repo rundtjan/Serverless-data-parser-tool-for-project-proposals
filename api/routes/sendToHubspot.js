@@ -14,7 +14,6 @@ module.exports = async function (event) {
   let buff = Buffer.from(data, 'base64')
   const sendJson = JSON.parse(buff.toString('utf-8'))
   const baseUrlSlashCommand = 'https://hooks.slack.com/commands/'
-  const hubspotUrl = 'https://app.hubspot.com/contacts/8059424/deal/'
 
   try {
     const result = await hubspotController.createDeal(sendJson.deal)
