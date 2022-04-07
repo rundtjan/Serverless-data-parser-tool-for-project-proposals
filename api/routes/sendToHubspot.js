@@ -1,6 +1,6 @@
 const hubspotController = require('../controllers/hubspotController')
 const axios = require('axios')
-
+const hubspotId = process.env.HUBSPOT_ID
 /**
  * A function that takes care of requests of type 'POST route=sendToHubspot' that contains
  * info on a deal that should be created in Hubspot.
@@ -24,11 +24,11 @@ module.exports = async function (event) {
           text: `You have created a new deal in Hubspot at ${hubspotUrl}${result.id}`,
         })
       }
-      return { status: 'success', id: result.id, message: `New Deal created : ${result.id}` }
+      return { status: 'success', id: result.id,  message: {text: `Deal Created with ID: ${result.id}`, link:`https://app.hubspot.com/contacts/8059424/deal/${result.id}/`}}
     }
-    return 'error'
+    return { status: 'error', id: undefined, message: `Deal Update Failed : ${result}` }
   } catch (error) {
     console.log(error)
-    return 'error'
+    return { status: 'error', id: undefined, message: `Deal Update Failed : ${error.message}` }
   }
 }

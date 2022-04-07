@@ -4,7 +4,7 @@ import { clearUserMessage } from '../reducers/userMessageReducer'
 //Mui components
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { IconButton } from '@mui/material'
+import { IconButton, Link } from '@mui/material'
 import CloseIcon from '@material-ui/icons/Close'
 
 const MessageBox = () => {
@@ -13,7 +13,6 @@ const MessageBox = () => {
 
   const clearMessage = () => {
     dispatch(clearUserMessage())
-    console.log('click')
   }
 
   if(!message) return null
@@ -21,7 +20,7 @@ const MessageBox = () => {
   return (
     <Box sx={{ width: '100%', bgcolor: 'white' }}>
       <Typography variant='h6' textAlign='center' color='black'>
-        {message}   <IconButton onClick={clearMessage}><CloseIcon /></IconButton>
+        {message.text} <Link href={message.link}>{message.link}</Link> <IconButton onClick={clearMessage}><CloseIcon color='error' /></IconButton>
       </Typography>
     </Box>
   )
