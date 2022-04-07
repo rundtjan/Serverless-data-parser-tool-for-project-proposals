@@ -1,5 +1,5 @@
 const hubspotController = require('../controllers/hubspotController')
-const hubspotId = process.env.HUBSPOT_ID
+const hubspotUrl = process.env.HUBSPOT_URL
 /**
   * A function that takes care of requests of type 'POST route=updateDeals' containing the
   * parameters to use as simplePublicObjectInput and dealId.
@@ -16,7 +16,7 @@ module.exports = async function (event) {
     const result = await hubspotController.updateDeal(sendJson.properties, sendJson.dealId)
     if (result.id) {
       console.log('api routes result ' , result)
-      return { status: 'success', id: result.id, message: {text: `Deal Successfully Updated`, link:`https://app.hubspot.com/contacts/8059424/deal/${result.id}/`}}
+      return { status: 'success', id: result.id, message: {text: `Deal Successfully Updated`, link:`${hubspotUrl}${result.id}/`}}
     } else return { status: 'error', id: undefined, message: `Deal Update Failed : ${result}` }
   } catch (error) {
     console.log(error)
