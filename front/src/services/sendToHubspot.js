@@ -7,6 +7,7 @@ const sendJSON = async(assignedWords, responseUrl) => {
   const sendData = JSONfromAssignedWords(assignedWords, responseUrl)
   console.log(JSON.stringify(sendData))
   const res = await axios.post(sendUrl, JSON.stringify(sendData))
+  console.log(res, res.data)
   return res.data
 }
 const updateDeal = async(id, assignedWords) => {
