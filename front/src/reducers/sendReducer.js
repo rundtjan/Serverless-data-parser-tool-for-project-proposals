@@ -64,6 +64,7 @@ export const updateHubspotDeal = (id) => {
   console.log('sendReducer in updateHubspotDeal id ' + id)
   return async (dispatch, getState) => {
     const assignedWords = getState().assignedWords
+    const responseTarget = getState().responseTarget
     if (assignedWords.length === 0) {
       dispatch({
         type: 'SEND_ERROR'
@@ -71,7 +72,7 @@ export const updateHubspotDeal = (id) => {
       return
     }
     console.log('sending data assignedwords length ' + assignedWords.length)
-    const data = await sendJSONService.updateDeal(id, assignedWords)
+    const data = await sendJSONService.updateDeal(id, assignedWords, responseTarget)
     if (data.status && data.status === 'success') {
       dispatch(clearAssignedWords())
       dispatch(clearId())

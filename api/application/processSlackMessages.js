@@ -76,6 +76,7 @@ async function addThreadsToMessages(slack, args) {
     const threadResponses = await Promise.all(promises)
     // Then process threads.
     for (let i = 0; i < threadResponses.length; i++) {
+      threadResponses[i] = GetHumanMessagesFromSlack(threadResponses[i])
       parentIndex = AddThreadToParent(threadResponses[i], messages, parentIndex)
     }
     const resultObj = await addNamesToMessages(slack, messages, oldest, user)

@@ -28,11 +28,8 @@ module.exports = async (event) => {
   if (params.includes('help')) return helpResponse
 
   try {
-    console.log(event)
-    let rgx = /\//ig
-    const responseUrl = decodeURIComponent(event.body.response_url).split('commands/')[1].replace(rgx, '$')
     const parsedParams = await parseParameters(params, event.body.channel_name)
-    return parseResponse(parsedParams, frontUrl, responseUrl, event.body.channel_id)
+    return parseResponse(parsedParams, frontUrl, event.body.channel_id)
   } catch (error) {
     console.log('error ', error)
     return error.message

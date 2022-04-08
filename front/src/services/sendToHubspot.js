@@ -10,8 +10,8 @@ const sendJSON = async(assignedWords, responseTarget) => {
   console.log(res, res.data)
   return res.data
 }
-const updateDeal = async(id, assignedWords) => {
-  const properties = JSONfromAssignedWords(assignedWords) //propertiesOfAssignedWords(assignedWords)
+const updateDeal = async(id, assignedWords, responseTarget) => {
+  const properties = JSONfromAssignedWords(assignedWords, responseTarget) //propertiesOfAssignedWords(assignedWords)
   const sendData = { dealId: id, properties: properties }
   console.log(JSON.stringify(sendData))
   const updateUrl = `${baseUrl}?route=updateDeal`

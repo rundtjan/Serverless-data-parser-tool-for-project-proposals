@@ -49,9 +49,19 @@ async function slackUsers(res) {
   }
 }
 
+async function replyToChannel(id, text) {
+  try {
+    const result = await slack.sendMessageBlocks(id, text)
+    return result
+  } catch(error) {
+    console.log('error in sending to channel ', error)
+    return error
+  }
+}
+
 async function replyToThread(id, ts, text) {
   try {
-    const result = await slack.replyMessage(id, ts, text)
+    const result = await slack.replyMessageBlocks(id, ts, text)
     return result
   } catch (error){
     console.log('error in sending reply ', error)
@@ -107,5 +117,6 @@ module.exports = {
   slackGetAllByUser,
   getAllMessagesFromSingleThread,
   getParams,
-  replyToThread
+  replyToThread,
+  replyToChannel
 }
