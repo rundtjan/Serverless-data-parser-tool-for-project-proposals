@@ -108,7 +108,7 @@ const GetWordsFromMessages = (messages) => {
     result.push(temp_word_obj[key])
   })
 
-  result.sort((a, b) => b.count - a.count)
+  result.sort((a, b) => b.count - a.count && a.word - b.word || a.word.localeCompare(b.word))
   return result
 }
 
