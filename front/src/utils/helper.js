@@ -57,3 +57,18 @@ export const splitTextByHighlights = (text, highlights) => {
   const splittedText = text.split(new RegExp(`(${pattern})`, 'gi'))
   return splittedText
 }
+
+
+export const findMessageWords = (message, words) => {
+  const id = message.client_msg_id
+  let wordList = []
+  for(const word of words) {
+    if(word.message_ids.includes(id)) {
+      if(!wordList.includes(word.word)) {
+        wordList = wordList.concat(word.word)
+      }
+    }
+  }
+
+  return wordList
+}

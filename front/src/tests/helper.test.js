@@ -1,4 +1,4 @@
-import { escapeRegExp, tokenWord, patternHighlights, splitTextByHighlights } from '../utils/helper'
+import { escapeRegExp, tokenWord, patternHighlights, splitTextByHighlights, findMessageWords } from '../utils/helper'
 
 describe('escapeRegExp', () => {
   test('escapes correctly c++', () => {
@@ -125,5 +125,26 @@ describe('splitTextByHighlights', () => {
     const ans = ['Deadline ', '11.02.2004', '. Price ', '100 €', ' per hour']
 
     expect(result).toEqual(ans)
+  })
+})
+
+
+describe('findMessageWords', () => {
+  test('finds all the words 1', () => {
+    const message = { client_msg_id: 'befbf4f3j3' }
+    const words = [{ word: 'Javascript', message_ids: ['befbf4f3j3', 'qwerty'] },{ word: 'Javascript', message_ids: ['asdfg'] }, { word: 'Java', message_ids: ['befbf4f3j3'] }]
+
+    const wordList = findMessageWords(message, words)
+
+    expect(wordList.length).toBe(2)
+  })
+
+  test('finds all the words 2', () => {
+    const message = { client_msg_id: 'qwerty' }
+    const words = [{ word: 'Javascript', message_ids: ['befbf4f3j3', 'qwerty'] },{ word: 'Javascript', message_ids: ['asdfg'] }, { word: 'Java', message_ids: ['befbf4f3j3'] }]
+
+    const wordList = findMessageWords(message, words)
+
+    expect(wordList.length).toBe(1)
   })
 })
