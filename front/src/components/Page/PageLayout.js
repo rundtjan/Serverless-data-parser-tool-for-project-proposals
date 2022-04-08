@@ -9,6 +9,7 @@ import Messages from '../Messages'
 import Words from '../Words'
 import Categories from '../Categories'
 import HubSpotDealTable from '../HubSpotDeals/HubSpotDealTable'
+import MessageBox from '../MessageBox'
 
 const PageLayout = () => {
 
@@ -16,6 +17,9 @@ const PageLayout = () => {
   return(
     <Layout>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <MessageBox />
+        </Grid>
         <Grid item xs={8}>
           <Messages />
         </Grid>
