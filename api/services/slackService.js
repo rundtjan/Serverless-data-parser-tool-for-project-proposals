@@ -194,6 +194,7 @@ const slackService = ({ slackClient }) => {
       channel: channelId,
       blocks: blocks,
     })
+    console.log(result)
   }
 
   const replyMessage = async (id, ts, text) => {
