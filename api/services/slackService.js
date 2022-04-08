@@ -189,6 +189,25 @@ const slackService = ({ slackClient }) => {
     console.log('Result : ', result)
   }
 
+  const replyMessage = async (id, ts, text) => {
+    try {
+      // Call the chat.postMessage method using the built-in WebClient
+      const result = await slackClient.chat.postMessage({
+        // The token you used to initialize your app
+        channel: id,
+        thread_ts: ts,
+        text: text
+        // You could also use a blocks[] array to send richer content
+      });
+  
+      // Print result
+      console.log(result);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
   return Object.freeze({
     getUsers,
     getChannels,
@@ -200,6 +219,7 @@ const slackService = ({ slackClient }) => {
     findAllByUser,
     sendMessage,
     getAllThreadsMessages,
+    replyMessage
   })
 }
 

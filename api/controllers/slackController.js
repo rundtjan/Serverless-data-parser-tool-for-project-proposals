@@ -49,6 +49,16 @@ async function slackUsers(res) {
   }
 }
 
+async function replyToThread(id, ts, text) {
+  try {
+    const result = await slack.replyMessage(id, ts, text)
+    return result
+  } catch (error){
+    console.log('error in sending reply ', error)
+    return error
+  }
+}
+
 /**
  * Get every message from a Slack user by user's id.
  * @param {Object} res HTTP Response.
@@ -97,4 +107,5 @@ module.exports = {
   slackGetAllByUser,
   getAllMessagesFromSingleThread,
   getParams,
+  replyToThread
 }
