@@ -5,7 +5,7 @@ import { clearUserMessage } from '../reducers/userMessageReducer'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { IconButton, Link } from '@mui/material'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 
 const MessageBox = () => {
   const message = useSelector(state => state.userMessage)
