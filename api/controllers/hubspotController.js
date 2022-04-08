@@ -35,18 +35,14 @@ const getAllContacts = async (res) => {
 
 /**
  * Updates an existing deal in Hubspot.
- * @param {Object} properties includes the fields that will be updated.
+ * @param {Object} properties.deal includes the fields that will be updated.
  * @param {Number} id dealId number of the deal that will be updated.
  * @returns Json object of the deal.
  */
 const updateDeal = async (properties, id) => {
   const dealId = id
-  console.log('id type ' , typeof(id))
-  console.log('id: ', id)
   const idProperty = undefined
   var description = ''
-  console.log('properties ', properties)
-  console.log('properties deal customer ', properties.deal.Customer)
   Object.keys(properties.deal).forEach((key) => {
     if (key !== 'Customer' && key !== 'Price') description += `${key}: ${properties.deal[key]}, `
   })
@@ -68,10 +64,7 @@ const updateDeal = async (properties, id) => {
         mrr_jan_23: fte
       },
     }
-    console.log('api controller dealId ', dealId)
-    console.log('api controller dealobject ', simplePublicObjectInput)
     const result = await hubspot.updateDeal(dealId, simplePublicObjectInput, idProperty)
-    console.log('hubController result ', result)
     return result
   } catch (error) {
     console.log(error)
