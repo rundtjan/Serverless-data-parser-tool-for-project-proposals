@@ -189,6 +189,42 @@ const slackService = ({ slackClient }) => {
     console.log('Result : ', result)
   }
 
+  const sendMessageBlocks = async (channelId, blocks) => {
+    const result = await slackClient.chat.postMessage({
+      channel: channelId,
+      blocks: blocks,
+    })
+    console.log(result)
+  }
+
+  const replyMessage = async (id, ts, text) => {
+    try {
+      const result = await slackClient.chat.postMessage({
+        channel: id,
+        thread_ts: ts,
+        text: text
+      })
+      console.log(result)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
+  const replyMessageBlocks = async (id, ts, blocks) => {
+    try {
+      const result = await slackClient.chat.postMessage({
+        channel: id,
+        thread_ts: ts,
+        blocks: blocks
+      })
+      console.log(result)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
   return Object.freeze({
     getUsers,
     getChannels,
@@ -200,6 +236,9 @@ const slackService = ({ slackClient }) => {
     findAllByUser,
     sendMessage,
     getAllThreadsMessages,
+    replyMessage,
+    sendMessageBlocks,
+    replyMessageBlocks
   })
 }
 
