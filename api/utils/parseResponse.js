@@ -5,9 +5,10 @@
  * @param {*} frontUrl the front url where Parsa can be found
  * @returns the complete response-object
  */
-const response = (parsedParams, frontUrl, responseUrl) => {
+const response = (parsedParams, frontUrl, responseUrl, channel_id) => {
   var queryParams = 'responseUrl=' + responseUrl + '&'
   Object.keys(parsedParams).forEach(key => queryParams += `${key}=${parsedParams[key]}&`)
+  queryParams += `channel_id=${channel_id}`
   const resObj = {
     statusCode: 200,
     headers: {'content-type': 'application/json'},
@@ -24,7 +25,7 @@ const response = (parsedParams, frontUrl, responseUrl) => {
           'type': 'section',
           'text': {
             'type': 'mrkdwn',
-            'text': `${frontUrl}${queryParams.substring(0,queryParams.length-1)}`
+            'text': `${frontUrl}${queryParams}`
           }
         },
         {

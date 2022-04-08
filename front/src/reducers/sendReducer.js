@@ -32,14 +32,14 @@ export const createSendAssignedJSON = (sendJSONService) => {
   return () => {
     return async (dispatch, getState) => {
       const assignedWords = getState().assignedWords
-      const responseUrl = getState().responseUrl
+      const responseTarget = getState().responseTarget
       if (assignedWords.length === 0) {
         dispatch({
           type: 'SEND_ERROR'
         })
         return
       }
-      const data = await sendJSONService(assignedWords, responseUrl)
+      const data = await sendJSONService(assignedWords, responseTarget)
       if (data.status && data.status === 'success') {
         dispatch(clearAssignedWords())
         if (data.message){
