@@ -105,6 +105,7 @@ const GetWordsFromMessages = (messages) => {
   })
 
   Object.keys(temp_word_obj).forEach((key) => {
+    temp_word_obj[key]['message_ids'] = [...new Set(temp_word_obj[key]['message_ids'])]
     result.push(temp_word_obj[key])
   })
 
