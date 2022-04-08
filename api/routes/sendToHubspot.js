@@ -22,13 +22,11 @@ module.exports = async function (event) {
     if (result.id) {
       if (sendJson.responseTarget){
         if (sendJson.responseTarget.ts){
-          ({ channel_id, ts } = sendJson.responseTarget)
-          await replyToThread(channel_id, ts, parseSlackNotification(customer, 'created', 'thread', `${hubspotUrl}${result.id}`))
-          //await replyToThread(channel_id, ts, `A deal with the name: 'Deal ${customer}' has been created in Hubspot using parsed data from this thread. Link: ${hubspotUrl}${result.id}.`)
+          ({ channel_id, ts } = sendJson.responseTarget) // eslint-disable-line
+          await replyToThread(channel_id, ts, parseSlackNotification(customer, 'created', 'thread', `${hubspotUrl}${result.id}`)) // eslint-disable-line
         } else {
-          ({ channel_id } = sendJson.responseTarget)
-          await replyToChannel(channel_id, parseSlackNotification(customer, 'created', 'channel', `${hubspotUrl}${result.id}`))
-          //await replyToChannel(channel_id, `A deal with the name: 'Deal ${customer}' has been created in Hubspot using parsed data from this channel. Link: ${hubspotUrl}${result.id}.`)
+          ({ channel_id } = sendJson.responseTarget) // eslint-disable-line
+          await replyToChannel(channel_id, parseSlackNotification(customer, 'created', 'channel', `${hubspotUrl}${result.id}`)) // eslint-disable-line
         }
       }
       return { status: 'success', id: result.id,  message: {text: `Deal Created with ID: ${result.id}`, link:`${hubspotUrl}${result.id}/`}}

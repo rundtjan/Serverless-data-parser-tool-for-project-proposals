@@ -194,9 +194,6 @@ const slackService = ({ slackClient }) => {
       channel: channelId,
       blocks: blocks,
     })
-
-    console.log('sendMessage : ', channelId, text)
-    console.log('Result : ', result)
   }
 
   const replyMessage = async (id, ts, text) => {
@@ -205,11 +202,11 @@ const slackService = ({ slackClient }) => {
         channel: id,
         thread_ts: ts,
         text: text
-      });
-      console.log(result);
+      })
+      console.log(result)
     }
     catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
@@ -219,11 +216,11 @@ const slackService = ({ slackClient }) => {
         channel: id,
         thread_ts: ts,
         blocks: blocks
-      });
-      console.log(result);
+      })
+      console.log(result)
     }
     catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 

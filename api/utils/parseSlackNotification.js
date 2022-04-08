@@ -9,28 +9,28 @@
  */
 const response = (customer, action, type, link) => {
   const blocks = [
-        {
-          'type': 'section',
-          'text': {
-            'type': 'mrkdwn',
-            'text': `A deal with customer ${customer} has been ${action} in Hubspot using parsed data from this ${type}.`
-          }
-        },
-        {
-          'type': 'section',
-          'text': {
-            'type': 'mrkdwn',
-            'text': `The deal is called: 'Deal ${customer}'`
-          }
-        },
-        {
-          'type': 'section',
-          'text': {
-            'type': 'mrkdwn',
-            'text': `View it in Hubspot at: ${link}`
-          }
-        }
-      ]
+    {
+      'type': 'section',
+      'text': {
+        'type': 'mrkdwn',
+        'text': `A deal with customer ${customer} has been ${action} in Hubspot using parsed data from this ${type}.`
+      }
+    },
+    {
+      'type': 'section',
+      'text': {
+        'type': 'mrkdwn',
+        'text': `The deal is called: 'Deal ${customer}'`
+      }
+    },
+    {
+      'type': 'section',
+      'text': {
+        'type': 'mrkdwn',
+        'text': `View it in Hubspot at: ${link}`
+      }
+    }
+  ]
 
   return blocks
 
