@@ -7,7 +7,7 @@ const { singleMessage, messages, englishFillerWords, finnishFillerWords, emojis,
 test('Words are returned correctly from test data', () => {
   const result = wordsFromMessages(messages)
   expect(result.length).toBeGreaterThan(7)
-  expect(result[result.length-1].word).toBe('daba')
+  expect(result[result.length-1].word).toBe('suosituin')
 })
 
 test('Emojis are not counted as words', () => {
@@ -24,7 +24,7 @@ test('No messages return an empty list of words', () => {
 test('Words from threads are added', () => {
   const response = wordsFromMessages(testJson)
   expect(response.length).toBeGreaterThan(22)
-  expect(response[21]).toMatchObject({ word: 'ihana' })
+  expect(response[3]).toMatchObject({ word: 'threadvastaus' })
 })
 
 test('Word count uses all messages including threads', () => {
@@ -69,10 +69,10 @@ test('amounts are correct', () => {
   ]
   const response = wordsFromMessages(msg)
   expect(response[0].word).toBe('5.000€')
-  expect(response[0].count).toBe(2)
-  expect(response[1].word).toBe('5000€')
+  expect(response[1].word).toBe('€5.000')
   expect(response[2].word).toBe('5.000,00€')
-  expect(response[3].word).toBe('€5.000')
+  expect(response[3].word).toBe('5000€')
+  expect(response[0].count).toBe(2)
 })
 
 test('Company suffix is added to previous word', () => {
@@ -87,9 +87,9 @@ test('Company suffix is added to previous word', () => {
       blocks: [[Object]],
     },
   ])
-  expect(response[0]['word']).toEqual('oy jrt ab')
-  expect(response[1]['word']).toEqual('2.700€')
-  expect(response[2]['word']).toEqual('osakeyhtiö oy')
+  expect(response[2]['word']).toEqual('oy jrt ab')
+  expect(response[0]['word']).toEqual('2.700€')
+  expect(response[1]['word']).toEqual('osakeyhtiö oy')
   expect(response[4]['word']).toEqual('yhtiö co')
 })
 
@@ -105,8 +105,8 @@ test('short messages are returned correctly', () => {
       blocks: [[Object]],
     },
   ])
-  expect(response[0]['word']).toEqual('oy')
-  expect(response[1]['word']).toEqual('ab')
+  expect(response[1]['word']).toEqual('oy')
+  expect(response[0]['word']).toEqual('ab')
 })
 
 test('Existing companies are identified', () => {
@@ -122,8 +122,8 @@ test('Existing companies are identified', () => {
     },
   ])
   console.log(response)
-  expect(response[2]['word']).toEqual('villa backa ventures oy')
-  expect(response[3]['word']).toEqual('sirpan kotisiivous oy')
+  expect(response[3]['word']).toEqual('villa backa ventures oy')
+  expect(response[2]['word']).toEqual('sirpan kotisiivous oy')
 })
 
 test('If company is not recognized, the list contains also a combination of two words plus company entity', () => {
@@ -165,4 +165,32 @@ test('English filler words are filtered out', () => {
 test('Finnish filler words are filtered out', () => {
   const res = wordsFromMessages(finnishFillerWords)
   expect(res).toHaveLength(2)
+})
+test('Words are sorted first by word count and second by alphabet', () => {
+  const res = wordsFromMessages([
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d11',
+      type: 'message',
+      text: 'This message includes many times the word word, and also an other fun word sun.',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+    {
+      client_msg_id: 'e680e4bf-59b2-4f1c-b0fc-43a183b350d8',
+      type: 'message',
+      text: 'The sun shines in and people are happy in the spring. The sun shines also in the summer.',
+      user: 'U02UF7S2DN1',
+      ts: '1642531226.000400',
+      team: 'T02UNV7V4GZ',
+      blocks: [[Object]],
+    },
+  ])
+  expect(res[0]).toMatchObject({ word: 'sun' })
+  expect(res[1]).toMatchObject({ word: 'word'})
+  expect(res[0].count).toBe(3)
+  expect(res[1].count).toBe(3)
+  expect(res[2]).toMatchObject({ word: 'shines'})
+  expect(res[2].count).toBe(2)
 })
