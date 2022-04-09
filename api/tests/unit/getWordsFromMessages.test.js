@@ -87,9 +87,9 @@ test('Company suffix is added to previous word', () => {
       blocks: [[Object]],
     },
   ])
-  expect(response[2]['word']).toEqual('oy jrt ab')
   expect(response[0]['word']).toEqual('2.700€')
   expect(response[1]['word']).toEqual('osakeyhtiö oy')
+  expect(response[2]['word']).toEqual('oy jrt ab')
   expect(response[4]['word']).toEqual('yhtiö co')
 })
 
