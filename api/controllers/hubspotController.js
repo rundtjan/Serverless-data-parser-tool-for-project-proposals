@@ -99,9 +99,7 @@ const createDeal = async (obj) => {
         mrr_jan_23: fte
       },
     }
-    console.log('HS CONTROLLER Simple obj be4 sending to hubspot create', SimplePublicObjectInput)
     const result = await hubspot.createDeal(SimplePublicObjectInput)
-    console.log('RESPONSE Result ID : ', result.id)
     return result
   } catch (e) {
     console.log(e)
@@ -117,7 +115,7 @@ const getOwners = async () => {
 
   try {
     const apiResponse = await hubspot.crm.owners.ownersApi.getPage(email, after, limit, archived)
-    console.log(JSON.stringify(apiResponse.body, null, 2))
+    console.log(apiResponse)
   } catch (e) {
     e.message === 'HTTP request failed'
       ? console.error(JSON.stringify(e.response, null, 2))
