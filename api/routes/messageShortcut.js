@@ -1,6 +1,5 @@
 const axios = require('axios')
 const parseShortcutPayload = require('../utils/parseShortcutPayload')
-const { replyToThread } = require('../controllers/slackController')
 
 /**
  * A function that takes care of requests to 'POST route=messageShortcut' containing

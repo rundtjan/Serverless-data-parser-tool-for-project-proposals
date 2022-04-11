@@ -1,4 +1,3 @@
-const { CollectionResponseWithTotalSimplePublicObjectForwardPaging } = require('@hubspot/api-client/lib/codegen/crm/companies')
 const hubspotController = require('../controllers/hubspotController')
 const hubspotUrl = process.env.HUBSPOT_URL
 const { replyToChannel, replyToThread } = require('../controllers/slackController')

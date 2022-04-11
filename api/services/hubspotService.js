@@ -84,6 +84,7 @@ const hubspotService = ({ hubspotClient }) => {
           'mrr_jan_23',
         ]
         const createdDeal = await hubspotClient.crm.deals.basicApi.getById(response.id, properties)
+        console.log(createdDeal)
       }
       return response
     } catch (e) {
