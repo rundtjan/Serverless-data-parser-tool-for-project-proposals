@@ -4,12 +4,12 @@ const hubspotUrl = process.env.HUBSPOT_URL
 const { replyToChannel, replyToThread } = require('../controllers/slackController')
 const parseSlackNotification = require('../utils/parseSlackNotification')
 /**
-  * A function that takes care of requests of type 'POST route=updateDeals' containing the
-  * parameters to use as simplePublicObjectInput and dealId.
-  * @param {*} event an object passed as parameters to the lambda, contains
-  * dealId and properties to be updated.
-  * @returns the response from Hubspot or an error.
-*/
+ * A function that takes care of requests of type 'POST route=updateDeals' containing the
+ * parameters to use as simplePublicObjectInput and dealId.
+ * @param {*} event an object passed as parameters to the lambda, contains
+ * dealId and properties to be updated.
+ * @returns the response from Hubspot or an error.
+ */
 module.exports = async function (event) {
   let data = event.body
   let buff = Buffer.from(data, 'base64')
