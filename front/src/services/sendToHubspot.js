@@ -12,7 +12,7 @@ const sendJSON = async(assignedWords, responseTarget) => {
 }
 const updateDeal = async(id, assignedWords, responseTarget) => {
   const properties = JSONfromAssignedWords(assignedWords, responseTarget) //propertiesOfAssignedWords(assignedWords)
-  const sendData = { dealId: id, properties: properties }
+  const sendData = { dealId: id, properties: properties.deal, responseTarget: properties.responseTarget }
   console.log(JSON.stringify(sendData))
   const updateUrl = `${baseUrl}?route=updateDeal`
   const res = await axios.post(updateUrl, JSON.stringify(sendData))

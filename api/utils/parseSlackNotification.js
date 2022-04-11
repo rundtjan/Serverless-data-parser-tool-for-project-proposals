@@ -7,7 +7,9 @@
  * @param {*} link a string, the url to the deal in hubspot
  * @returns the complete response-object
  */
-const response = (customer, action, type, link) => {
+const response = (customer, action, type, link, dealname) => {
+  let dealName
+  dealname ? dealName = dealname : dealName = `Deal ${customer}`
   const blocks = [
     {
       'type': 'section',
@@ -20,7 +22,7 @@ const response = (customer, action, type, link) => {
       'type': 'section',
       'text': {
         'type': 'mrkdwn',
-        'text': `The deal is called: 'Deal ${customer}'`
+        'text': `The deal is called: '${dealName}'`
       }
     },
     {
@@ -35,8 +37,5 @@ const response = (customer, action, type, link) => {
   return blocks
 
 }
-
-
-
 
 module.exports = response

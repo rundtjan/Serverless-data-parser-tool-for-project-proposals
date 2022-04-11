@@ -6,7 +6,7 @@ const searchDeals = async(queryString) => {
   const searchUrl = `${baseUrl}?route=searchDeals`
   const sendData = { queryString: queryString }
   const res = await axios.post(searchUrl, JSON.stringify(sendData))
-
+  console.log(res)
   return res.data.results
 }
 
