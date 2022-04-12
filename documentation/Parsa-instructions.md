@@ -9,4 +9,4 @@ Serverless data parser tool aka Parsa is an application used for parsing Slack c
 - FOR SERVELRESS VERSION you need also an AWS account
 - FOR NON-SERVERLESS aka LEGACY-BACKEND version you do not need anything extra
 
-### Getting started with Parsa:  
+### Getting started with Parsa: 
