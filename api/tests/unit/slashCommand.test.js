@@ -1,4 +1,4 @@
-const slashCommand = require('./../../routes/slashCommand')
+const { slashCommand } = require('./../../routes/slashCommand')
 
 /**
  * The constants listed below are the raw eventbodies retrieved from the logs after sending a slashcommand from Slack.
