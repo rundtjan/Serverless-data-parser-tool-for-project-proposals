@@ -35,7 +35,7 @@ const getAllContacts = async (res) => {
 
 /**
  * Updates an existing deal in Hubspot.
- * @param {Object} properties.deal includes the fields that will be updated.
+ * @param {Object} properties includes the fields that will be updated.
  * @param {Number} id dealId number of the deal that will be updated.
  * @returns Json object of the deal.
  */
@@ -43,19 +43,19 @@ const updateDeal = async (properties, id) => {
   const dealId = id
   const idProperty = undefined
   var description = ''
-  Object.keys(properties.deal).forEach((key) => {
-    if (key !== 'Customer' && key !== 'Price') description += `${key}: ${properties.deal[key]}, `
+  Object.keys(properties).forEach((key) => {
+    if (key !== 'Customer' && key !== 'Price') description += `${key}: ${properties[key]}, `
   })
   description = description.substring(0,description.length-2)
   try {
-    const price = String(properties.deal.Price || '0').replace(/[^0-9,]+/g, '')
-    const deadline = properties.deal.Deadline ? new Date(properties.deal.Deadline) : undefined
-    const technology = properties.deal.Technology ? String(properties.deal.Technology) : undefined
-    const contact = properties.deal.Contact ?  String(properties.deal.Contact) : undefined
-    const fte = properties.deal.FTEs ? Number(properties.deal.FTEs) : undefined
+    const price = String(properties.Price || '0').replace(/[^0-9,]+/g, '')
+    const deadline = properties.Deadline ? new Date(properties.Deadline) : undefined
+    const technology = properties.Technology ? String(properties.Technology) : undefined
+    const contact = properties.Contact ?  String(properties.Contact) : undefined
+    const fte = properties.FTEs ? Number(properties.FTEs) : undefined
     const simplePublicObjectInput = {
       properties: {
-        dealname: `Deal ${properties.deal.Customer || 'no client'}`,
+        dealname: `Deal ${properties.Customer || 'no client'}`,
         amount: Number(price),
         description: description,
         parsa_deadline: deadline,
