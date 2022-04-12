@@ -75,6 +75,11 @@ const Message = ({ message, words }) => {
                 my: 0,
                 backgroundColor: '#eeeeee'
               }}
+              secondaryAction={
+                <IconButton edge='end' onClick={() => handlePopulateClick(thread)}>
+                  <AddBoxIcon />
+                </IconButton>
+              }
             >
               {parseText(thread)}
             </ListItem>
@@ -127,9 +132,9 @@ const Message = ({ message, words }) => {
     )
   }
 
-  const handlePopulateClick = () => {
+  const handlePopulateClick = (msg) => {
     console.log('PingPong')
-    const wordList = findMessageWords(message, words)
+    const wordList = findMessageWords(msg, words)
     for(const word of wordList) {
       dispatch(setAssignedWord(word.word, word.category))
     }
@@ -139,7 +144,7 @@ const Message = ({ message, words }) => {
     <Box>
       <ListItemButton onClick={handleExpandClick} divider sx={{ py:0, my:0 }}>
         <ListItemText primary={parseText(message)} sx={{ py:0, my:0 }}/>
-        <IconButton onClick={handlePopulateClick}>
+        <IconButton onClick={() => handlePopulateClick(message)}>
           <AddBoxIcon />
         </IconButton>
         {showExpandIcon()}
