@@ -40,12 +40,14 @@ const slackService = ({ slackClient }) => {
     try {
       const cacheResult = await slackCache.get('channels')
       if (!cacheResult) {
-        const newApiResult = await slackClient.conversations.list({})
+        const newApiResult = await slackClient.conversations.list({types: 'public_channel,private_channel'})
+        console.log('newApiResult: ', newApiResult)
         newApiResult.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push({name: elem.name, id: elem.id}))
         const setCacheSuccess = slackCache.set('channels', channels)
         if (!setCacheSuccess) throw new Error('set Cache error in getChannels')
       } else{
         channels = cacheResult
+        console.log('cache result: ', channels)
       }
       return channels
     } catch (error) {
@@ -60,7 +62,8 @@ const slackService = ({ slackClient }) => {
   const getChannelNames = async () => {
     const channels = []
     try {
-      const result = await slackClient.conversations.list({})
+      const result = await slackClient.conversations.list({types: 'public_channel,private_channel'})
+      console.log(result)
       result.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push(elem.name))
     } catch (error) {
       throw new Error(`Error in getChannels: ${error}`)
@@ -74,7 +77,7 @@ const slackService = ({ slackClient }) => {
    */
   const getChannelIds = async () => {
     const channels = []
-    const result = await slackClient.conversations.list({})
+    const result = await slackClient.conversations.list({types: 'public_channel,private_channel'})
     result.channels.filter((elem) => elem.is_channel).forEach((elem) => channels.push(elem.id))
     return channels
   }
