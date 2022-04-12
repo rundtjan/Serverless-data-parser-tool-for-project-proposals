@@ -44,7 +44,7 @@ const slashHandler = async (event, parseReqBody, frontUrl, helpResponse, parseRe
  * @param {*} event 
  * @returns the result of the handler
  */
- const slashCommand = async (event) => {
+const slashCommand = async (event) => {
   return await slashHandler(event, parseReqBody, frontUrl, helpResponse, parseResponse)
 }
 
