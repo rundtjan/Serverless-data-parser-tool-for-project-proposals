@@ -2,14 +2,30 @@ const hubspotController = require('../controllers/hubspotController')
 const hubspotUrl = process.env.HUBSPOT_URL
 const { replyToChannel, replyToThread } = require('../controllers/slackController')
 const parseSlackNotification = require('../utils/parseSlackNotification')
+
+/**
+ * This function is inserted between the actual handlerfunction and the 
+ * calling index-function, to enable testing with injected dependencies (mock functions).
+ * @param {*} event 
+ * @returns see below
+ */
+const updateHubspot = async (event) => {
+  return await updateHubspotHandler(event, hubspotController, hubspotUrl, replyToChannel, replyToThread, parseSlackNotification)
+}
+
 /**
  * A function that takes care of requests of type 'POST route=updateDeals' containing the
  * parameters to use as simplePublicObjectInput and dealId.
  * @param {*} event an object passed as parameters to the lambda, contains
  * dealId and properties to be updated.
+ * @param {*} hubspotController injected dependency
+ * @param {*} hubspotUrl injected dependency
+ * @param {*} replyToChannel injected dependency
+ * @param {*} replyToThread injected dependency
+ * @param {*} parseSlackNotification injected dependency
  * @returns the response from Hubspot or an error.
  */
-module.exports = async function (event) {
+const updateHubspotHandler = async (event, hubspotController, hubspotUrl, replyToChannel, replyToThread, parseSlackNotification) => {
   let data = event.body
   let buff = Buffer.from(data, 'base64')
   const sendJson = JSON.parse(buff.toString('utf8'))
@@ -33,3 +49,5 @@ module.exports = async function (event) {
     return { status: 'error', id: undefined, message: `Deal Update Failed : ${error.message}` }
   }
 }
+
+module.exports = { updateHubspot, updateHubspotHandler }

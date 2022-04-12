@@ -2,7 +2,7 @@ const { slashCommand } = require('./routes/slashCommand')
 const { parseResult } = require('./routes/parseResult')
 const getChannels = require('./routes/getChannels')
 const { sendToHubspot } = require('./routes/sendToHubspot')
-const messageShortcut = require('./routes/messageShortcut')
+const { messageShortcut } = require('./routes/messageShortcut')
 const { searchHubspot } = require('./routes/searchHubspot')
 const { updateHubspot } = require('./routes/updateHubspot')
 
