@@ -24,8 +24,8 @@ const CategoryWords = ({ category }) => {
         </Typography>
         <List dense >
           {assignedWords.map(word => (
-            <ListItem key={word.word +'-assignItem'}>
-              <ListItemText key={word.word + '-assignText'}>
+            <ListItem key={Math.random().toString(36).slice(2)}>
+              <ListItemText key={Math.random().toString(36).slice(2)}>
                 {word.word}
               </ListItemText>
             </ListItem>
