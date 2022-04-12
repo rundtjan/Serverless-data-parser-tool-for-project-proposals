@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 //Mui components
 import List from '@mui/material/List'
@@ -11,14 +11,21 @@ import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
+import IconButton from '@mui/material/IconButton'
+import AddBoxIcon from '@mui/icons-material/AddBox'
 
 //Helper
-import { splitTextByHighlights } from '../utils/helper'
+import { splitTextByHighlights, findMessageWords } from '../utils/helper'
+
+//Reducers
+import { setAssignedWord } from '../reducers/assignReducer'
 
 
-const Message = ({ message }) => {
+const Message = ({ message, words }) => {
   const [expanded, setExpanded] = useState(false)
   const highlightWords = useSelector(state => state.highlightWord)
+
+  const dispatch = useDispatch()
 
   const threads = message.thread_array || []
 
@@ -120,10 +127,21 @@ const Message = ({ message }) => {
     )
   }
 
+  const handlePopulateClick = () => {
+    console.log('PingPong')
+    const wordList = findMessageWords(message, words)
+    for(const word of wordList) {
+      dispatch(setAssignedWord(word.word, word.category))
+    }
+  }
+
   return(
     <Box>
       <ListItemButton onClick={handleExpandClick} divider sx={{ py:0, my:0 }}>
         <ListItemText primary={parseText(message)} sx={{ py:0, my:0 }}/>
+        <IconButton onClick={handlePopulateClick}>
+          <AddBoxIcon />
+        </IconButton>
         {showExpandIcon()}
       </ListItemButton>
       {showThreads()}
