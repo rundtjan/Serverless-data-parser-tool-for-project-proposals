@@ -1,10 +1,10 @@
-const slashCommand = require('./routes/slashCommand')
-const parseResult = require('./routes/parseResult')
+const { slashCommand } = require('./routes/slashCommand')
+const { parseResult } = require('./routes/parseResult')
 const getChannels = require('./routes/getChannels')
-const sendToHubspot = require('./routes/sendToHubspot')
+const { sendToHubspot } = require('./routes/sendToHubspot')
 const messageShortcut = require('./routes/messageShortcut')
-const searchHubspot = require('./routes/searchHubspot')
-const updateHubspot = require('./routes/updateHubspot')
+const { searchHubspot } = require('./routes/searchHubspot')
+const { updateHubspot } = require('./routes/updateHubspot')
 
 exports.handler = async (event) => {
   console.log(event)

@@ -5,15 +5,17 @@ const frontUrl = 'https://main.dtatk8xusyguu.amplifyapp.com/'
 const helpResponse = require('../utils/helpResponse')
 const parseResponse = require('../utils/parseResponse')
 
+
 /**
- * A function which takes care of requests of type 'POST route=slashCommand' containing the
- * request from a slashcommand from Slack, with parameters that the user wishes to use for parsing.
- * @param {*} event an object passed as parameter to the lambda, that contains info on
- * the parameters that should be entered into the url
- * @returns a response object with the answer to Slack, containing an url with the parameters. Or 
- * an error.
+ * The handler for the request of type 'POST route=slashCommand' from Slack.
+ * @param {*} event the request eventbody.
+ * @param {*} parseReqBody dependency injected for parsing the request body
+ * @param {*} frontUrl the frontUrl to return in the answer to Slack
+ * @param {*} helpResponse dependency injected, parses a help-response
+ * @param {*} parseResponse dependency injected, parses a regular response
+ * @returns an response object with a response to Slack.
  */
-module.exports = async (event) => {
+const slashHandler = async (event, parseReqBody, frontUrl, helpResponse, parseResponse) => {
   let data = event.body
   let buff = Buffer.from(data, 'base64')
   event.body = buff.toString('utf-8')
@@ -35,3 +37,15 @@ module.exports = async (event) => {
     return error.message
   }
 }
+
+/**
+ * A simple caller function, that calls the slash command handler. 
+ * This solution is implemented in order to enable dependency injection for more efficient testing.
+ * @param {*} event 
+ * @returns the result of the handler
+ */
+ const slashCommand = async (event) => {
+  return await slashHandler(event, parseReqBody, frontUrl, helpResponse, parseResponse)
+}
+
+module.exports = { slashCommand, slashHandler }
