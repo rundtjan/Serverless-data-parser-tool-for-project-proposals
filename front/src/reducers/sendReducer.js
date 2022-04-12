@@ -1,5 +1,6 @@
 import sendJSONService from  '../services/sendToHubspot'
 import { clearId } from './dealIdReducer'
+import { setUserMessage } from './userMessageReducer'
 
 const reducer = (state = '', action) => {
   switch(action.type) {
@@ -31,16 +32,19 @@ export const createSendAssignedJSON = (sendJSONService) => {
   return () => {
     return async (dispatch, getState) => {
       const assignedWords = getState().assignedWords
-      const responseUrl = getState().responseUrl
+      const responseTarget = getState().responseTarget
       if (assignedWords.length === 0) {
         dispatch({
           type: 'SEND_ERROR'
         })
         return
       }
-      const data = await sendJSONService(assignedWords, responseUrl)
-      if (data === 'success') {
+      const data = await sendJSONService(assignedWords, responseTarget)
+      if (data.status && data.status === 'success') {
         dispatch(clearAssignedWords())
+        if (data.message){
+          dispatch(setUserMessage(data.message))
+        }
         dispatch({
           type: 'SEND_SUCCESS'
         })
@@ -60,6 +64,7 @@ export const updateHubspotDeal = (id) => {
   console.log('sendReducer in updateHubspotDeal id ' + id)
   return async (dispatch, getState) => {
     const assignedWords = getState().assignedWords
+    const responseTarget = getState().responseTarget
     if (assignedWords.length === 0) {
       dispatch({
         type: 'SEND_ERROR'
@@ -67,10 +72,13 @@ export const updateHubspotDeal = (id) => {
       return
     }
     console.log('sending data assignedwords length ' + assignedWords.length)
-    const data = await sendJSONService.updateDeal(id, assignedWords)
-    if (data === 'success') {
+    const data = await sendJSONService.updateDeal(id, assignedWords, responseTarget)
+    if (data.status && data.status === 'success') {
       dispatch(clearAssignedWords())
       dispatch(clearId())
+      if (data.message){
+        dispatch(setUserMessage(data.message))
+      }
       dispatch({
         type: 'SEND_SUCCESS'
       })

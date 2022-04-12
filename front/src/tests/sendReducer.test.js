@@ -15,7 +15,7 @@ const mockCalls = jest.fn()
 const mockGet = async (args) => {
   mockCalls(args)
   let myPromise = new Promise(function(resolve) {
-    resolve('success')
+    resolve({ status: 'success' })
   })
   return myPromise
 }
