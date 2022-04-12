@@ -58,15 +58,19 @@ export const splitTextByHighlights = (text, highlights) => {
   return splittedText
 }
 
-
+/**
+ * Finds all words associated with the given message
+ * @param {obj} message
+ * @param {obj} words
+ * @returns Array containing word objects
+ */
 export const findMessageWords = (message, words) => {
   const id = message.client_msg_id
   let wordList = []
   for(const word of words) {
+    //Check if word is in message
     if(word.message_ids.includes(id)) {
-      if(!wordList.includes(word.word)) {
-        wordList = wordList.concat(word.word)
-      }
+      wordList = wordList.concat(word)
     }
   }
 
