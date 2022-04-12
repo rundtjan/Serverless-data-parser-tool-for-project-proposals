@@ -17,10 +17,9 @@ import Word from './Word'
 const Words = () => {
   const words = useSelector(state => state.data.words)
   const [ category, setCategory ] = useState('Show all')
-  const filterCategories = ['Technology', 'Number', 'Date', 'Show all']
+  const filterCategories = ['Company', 'Technology', 'Number', 'Date', 'Show all']
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-
 
   const handleClose = (event, category) => {
     if(event.currentTarget.id) {
@@ -34,7 +33,11 @@ const Words = () => {
   }
 
 
+
+
   const getWordsList = () => {
+    words.sort((a, b) => b.count - a.count || a.word.localeCompare(b.word))
+    console.log('words ', words)
     if(category === 'Show all') {
       return(
         <List sx={{ py: 0, my:0 }}>
