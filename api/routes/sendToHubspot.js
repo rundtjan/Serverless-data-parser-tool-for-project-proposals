@@ -2,14 +2,30 @@ const hubspotController = require('../controllers/hubspotController')
 const { replyToChannel, replyToThread } = require('../controllers/slackController')
 const parseSlackNotification = require('../utils/parseSlackNotification')
 const hubspotUrl = process.env.HUBSPOT_URL
+
+/**
+ * This function is inserted between the actual handlerfunction and the 
+ * calling index-function, to enable testing with injected dependencies (mock functions).
+ * @param {*} event 
+ * @returns see below
+ */
+const sendToHubspot = async (event) => {
+  return await sendToHubspotHandler(event, hubspotController, replyToChannel, replyToThread, parseSlackNotification, hubspotUrl)
+}
+
 /**
  * A function that takes care of requests of type 'POST route=sendToHubspot' that contains
  * info on a deal that should be created in Hubspot.
  * @param {*} event the object passed as a parameter to the lambda, contains a json
  * to send to Hubspot
- * @returns a string - either 'success' or 'error'
+ * @param {*} hubspotController 
+ * @param {*} replyToChannel 
+ * @param {*} replyToThread 
+ * @param {*} parseSlackNotification 
+ * @param {*} hubspotUrl 
+ * @returns an object for showing the result in the Parsa-frontend
  */
-module.exports = async function (event) {
+const sendToHubspotHandler = async (event, hubspotController, replyToChannel, replyToThread, parseSlackNotification, hubspotUrl) => {
   console.log(event.body)
   let data = event.body
   let buff = Buffer.from(data, 'base64')
@@ -37,3 +53,5 @@ module.exports = async function (event) {
     return { status: 'error', id: undefined, message: `Deal Update Failed : ${error.message}` }
   }
 }
+
+module.exports = { sendToHubspot, sendToHubspotHandler }
