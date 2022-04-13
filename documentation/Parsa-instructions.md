@@ -7,7 +7,7 @@ Serverless data parser tool aka Parsa is an application used for parsing Slack c
 - A Slack workspace
 - A Slack app
 - Slack Bot User OAuth token
-- FOR SERVELRESS VERSION aka the MVP aka the Main-branch implementation you need also an AWS account (tbd more precisely)  
+- FOR SERVERLESS VERSION aka the MVP aka the Main-branch implementation you need also an AWS account (tbd more precisely)  
 
 If you want to send data to HubSpot CRM you will also need:
 - An HubSpot environment and/or account
