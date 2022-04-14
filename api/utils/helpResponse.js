@@ -25,14 +25,14 @@ const helpText = {
         'type': 'section',
         'text': {
           'type': 'mrkdwn',
-          'text': 'You can also add parameters. They are all optional: [user] [hours to include] [channel]'
+          'text': 'You can also add parameters. They are both optional: [user] [hours to include]'
         }
       },
       {
         'type': 'section',
         'text': {
           'type': 'mrkdwn',
-          'text': 'For example: \'/parse @Jane.Doe 24\' will parse all messages by Jane Doe during the last 24 hrs. /parse 100 will parse all messages during the last 100 hrs. \'/parse aw-chat\' would parse a hypothetical \'aw-chat\'-channel.'
+          'text': 'For example: \'/parse @Jane.Doe 24\' will parse all messages by Jane Doe during the last 24 hrs. /parse 100 will parse all messages during the last 100 hrs.'
         }
       },
       {

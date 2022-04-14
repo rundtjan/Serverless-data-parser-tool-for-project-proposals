@@ -17,6 +17,7 @@ import Message from './Message'
  */
 const Messages = () => {
   const messages = useSelector(state => state.data.messages)
+  const words = useSelector(state => state.data.words)
 
   if(!messages) {
     return(
@@ -58,7 +59,7 @@ const Messages = () => {
       <Box sx={{ overflow: 'scroll', minHeigth: 0 }}>
         <List sx={{ py: 0, my:0 }}>
           {messages.map(message => (
-            <Message key={message.client_msg_id} message={message}/>
+            <Message key={message.client_msg_id} message={message} words={words}/>
           ))}
         </List>
       </Box>

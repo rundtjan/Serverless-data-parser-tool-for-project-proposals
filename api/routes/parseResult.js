@@ -4,13 +4,26 @@ const { parseTimestamp } = require('../utils/parseSlackTimestamp')
 
 
 /**
+ * This function is inserted between the actual handlerfunction and the 
+ * calling index-function, to enable testing with injected dependencies (mock functions).
+ * @param {*} event 
+ * @returns see below
+ */
+const parseResult = async (event) => {
+  return await parseResultHandler(event, slackController, parseReqBody, parseTimestamp)
+}
+
+/**
  * A function that takes care of requests of type 'POST routes=parseResult' containing a
  * request to parse data with certain parameters.
  * @param {*} event an object passed as a parameter to the lambda-function, containing
  * info on the data to be parsed and sent as response
+ * @param {*} slackController injected dependency
+ * @param {*} parseReqBody injected dependency
+ * @param {*} parseTimestamp injected dependency
  * @returns either a response object or an error-message
  */
-module.exports = async function (event) {
+const parseResultHandler = async (event, slackController, parseReqBody, parseTimestamp) => {
   console.log('Receiving post from Parsa front for parsing.')
   let data = event.body
   let buff = Buffer.from(data, 'base64')
@@ -41,3 +54,5 @@ module.exports = async function (event) {
     }
   }
 }
+
+module.exports = { parseResult, parseResultHandler }
