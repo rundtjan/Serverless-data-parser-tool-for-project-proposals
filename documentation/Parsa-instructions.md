@@ -23,11 +23,12 @@ The created app/bot must be invited to the channel where you want to parse the m
 
 #### Configuring your .env file
 Your .env file should look like this to work:
-    SLACK_TOKEN=[YOUR-BOT-USER-OAUTH-TOKEN-HERE]
-    HUBSPOT_APIKEY=[YOUR-HUBSPOT-API-KEY-HERE]
+
+>SLACK_TOKEN=[YOUR-BOT-USER-OAUTH-TOKEN-HERE]
+>HUBSPOT_APIKEY=[YOUR-HUBSPOT-API-KEY-HERE]
 
 #### Bot Token Scopes:
-When you have created your bot and can access to the Slack app control panel here is a list of configurations which we had during our project:  
+When you have created your bot and can access to the Slack app control panel here is a list of scopes which we had:  
 
 | OAuth Scope        | Description                                                                            |
 |--------------------|----------------------------------------------------------------------------------------|
@@ -43,7 +44,7 @@ When you have created your bot and can access to the Slack app control panel her
 | users:read         | View people in a workspace                                                             |  
 
 #### Slash commands
-When using Parsa from Slack, the "/parse" is called a Slash command in Slack term. In Slack app control panel you can create a Slash command to your workspace from "Features" &rarr; "Slash Commands" view and clicking the "Create New Command". Read more from Slash commands [here](https://api.slack.com/interactivity/slash-commands).  
+When using Parsa from Slack, the "/parse" is called a Slash command in Slack term. You need to create a Slash command for your workspace in order to use the "/parse" command from Slack. In Slack app control panel you can create a Slash command to your workspace from "Features" &rarr; "Slash Commands" view and clicking the "Create New Command". Read more from Slash commands [here](https://api.slack.com/interactivity/slash-commands).  
 
 We have the following configuration in Slash Commands view:  
 |                                                    |                                                                                             |
@@ -57,7 +58,7 @@ We have the following configuration in Slash Commands view:
 These can be changed according to your choice and needs.
 
 #### Message shortcut
-With Parsa you can also parse and send just threads to the Parsa UI. This is implemented with Slack Message shortcuts. You can create a message shortcut from "Features" &rarr; "Interactivity & Shortcuts" view by clicking the "Create New Shortcut". You can read more about Slack's Message Shortcuts from [here](https://api.slack.com/interactivity/shortcuts/using). Our Message shortcut had the following configuration:  
+With Parsa you can also parse and send just threads to the Parsa UI. This is implemented with Slack Message shortcuts. You need to have a message shortcut in your workspace in order to use this feature. You can create a message shortcut in Slack app control panel from "Features" &rarr; "Interactivity & Shortcuts" view by clicking the "Create New Shortcut". You can read more about Slack's Message Shortcuts from [here](https://api.slack.com/interactivity/shortcuts/using). Our Message shortcut had the following configuration:  
 
 | Name          | Location | Callback ID     |
 |---------------|----------|-----------------|
