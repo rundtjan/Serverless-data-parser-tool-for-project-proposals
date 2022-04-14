@@ -4,6 +4,7 @@ const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
 const { processMessageShortcut } = require('../application/processMessageShortcut')
 
+// Default values for parameters
 let paramUser = ''
 let paramChannel = 'general'
 let paramHours = ''
