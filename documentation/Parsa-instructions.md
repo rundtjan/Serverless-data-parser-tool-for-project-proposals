@@ -24,7 +24,7 @@ The created app/bot must be invited to the channel where you want to parse the m
 #### Configuring your .env file
 Your .env file should look like this to work:
 
->SLACK_TOKEN=[YOUR-BOT-USER-OAUTH-TOKEN-HERE]
+>SLACK_TOKEN=[YOUR-BOT-USER-OAUTH-TOKEN-HERE]  
 >HUBSPOT_APIKEY=[YOUR-HUBSPOT-API-KEY-HERE]
 
 #### Bot Token Scopes:
