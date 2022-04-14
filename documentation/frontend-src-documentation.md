@@ -1,4 +1,4 @@
-| /src        | Description of the frontend/src file structure.                                                       |
+| /src        | Description of the frontend/src file structure.                                                   |
 |-------------|---------------------------------------------------------------------------------------------------|
 | /components | Contains React components from which the UI is built from. Styled with Material UI Design System. |
 | /pages      | pages (?)                                                                                         |
