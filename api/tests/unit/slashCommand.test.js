@@ -1,4 +1,4 @@
-const slashCommand = require('./../../routes/slashCommand')
+const { slashCommand } = require('./../../routes/slashCommand')
 
 /**
  * The constants listed below are the raw eventbodies retrieved from the logs after sending a slashcommand from Slack.
@@ -20,14 +20,14 @@ test('Parsing with hour-parameter returns url with hour-limitation', async () =>
   const eventObj = {queryStringParameters : {route: 'slashCommand'}, body: parse24}
   const response = await slashCommand(eventObj)
   expect(response.body.includes('&hours=24')).toBe(true)
-  expect(response.body.includes('Channel = demo_channel, user = not chosen and timelimit (hrs) = 24.')).toBe(true)
+  expect(response.body.includes('User = all users and timelimit (hrs) = 24.')).toBe(true)
 })
 
 test('Parsing with user-parameter returns url with user-limitation', async () => {
   const eventObj = {queryStringParameters : {route: 'slashCommand'}, body: parseUser}
   const response = await slashCommand(eventObj)
   expect(response.body.includes('channel=demo_channel&user=@jan.rundt&oldest=null&hours=null')).toBe(true)
-  expect(response.body.includes('Channel = demo_channel, user = @jan.rundt and timelimit (hrs) = not chosen.')).toBe(true)
+  expect(response.body.includes('User = @jan.rundt and timelimit (hrs) = no timelimit.')).toBe(true)
 })
 
 test('Parsing with user- and hour-parameter returns url with user- and hour-limitation', async () => {
@@ -35,7 +35,7 @@ test('Parsing with user- and hour-parameter returns url with user- and hour-limi
   const response = await slashCommand(eventObj)
   expect(response.body.includes('channel=demo_channel&user=@jan.rundt')).toBe(true)
   expect(response.body.includes('&hours=24')).toBe(true)
-  expect(response.body.includes('Channel = demo_channel, user = @jan.rundt and timelimit (hrs) = 24.')).toBe(true)
+  expect(response.body.includes('User = @jan.rundt and timelimit (hrs) = 24.')).toBe(true)
 })
 
 test('Parsing with help command will return the manual for Parsa', async () => {

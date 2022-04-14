@@ -17,10 +17,9 @@ import Word from './Word'
 const Words = () => {
   const words = useSelector(state => state.data.words)
   const [ category, setCategory ] = useState('Show all')
-  const filterCategories = ['Technology', 'Number', 'Date', 'Show all']
+  const filterCategories = ['Company', 'Date', 'Number', 'Technology', 'Show all']
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-
 
   const handleClose = (event, category) => {
     if(event.currentTarget.id) {
@@ -32,7 +31,6 @@ const Words = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
-
 
   const getWordsList = () => {
     if(category === 'Show all') {

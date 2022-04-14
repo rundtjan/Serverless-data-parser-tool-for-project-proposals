@@ -105,10 +105,12 @@ const GetWordsFromMessages = (messages) => {
   })
 
   Object.keys(temp_word_obj).forEach((key) => {
+    temp_word_obj[key]['message_ids'] = [...new Set(temp_word_obj[key]['message_ids'])]
     result.push(temp_word_obj[key])
   })
 
-  result.sort((a, b) => b.count - a.count)
+  // sorts first by word.count and secondly by alphabet.
+  result.sort((a, b) => b.count - a.count || a.word.localeCompare(b.word))
   return result
 }
 
