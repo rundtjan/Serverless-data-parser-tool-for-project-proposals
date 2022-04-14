@@ -2,7 +2,7 @@ const slashCommand = require('./routes/slashCommand')
 const parseResult = require('./routes/parseResult')
 const getChannels = require('./routes/getChannels')
 const sendToHubspot = require('./routes/sendToHubspot')
-const messageShortcut = require('./routes/messageShortcut')
+const threadShortcut = require('./routes/threadShortcut')
 const searchHubspot = require('./routes/searchHubspot')
 const updateHubspot = require('./routes/updateHubspot')
 
@@ -25,7 +25,8 @@ exports.handler = async (event) => {
       response = await sendToHubspot(event)
       break
     case 'messageShortcut':
-      response = await messageShortcut(event)
+      console.log('event *** ', event)
+      response = await threadShortcut(event)
       break
     case 'searchDeals':
       response = await searchHubspot(event) 

@@ -8,7 +8,7 @@ const { addNamesToThreadMessages } = require('../application/processSlackMessage
  * @param {Object} threadWithResponses Object which contains the threaded message with all responses and other useful data.
  * @returns object which can be shown in the UI.
  */
-async function processMessageShortcut(slack, threadWithResponses) {
+async function processThreadShortcut(slack, threadWithResponses) {
   const oldest = undefined
   const user = undefined
   var channels
@@ -28,4 +28,4 @@ async function processMessageShortcut(slack, threadWithResponses) {
   }
 }
 
-module.exports = { processMessageShortcut }
+module.exports = { processMessageShortcut: processThreadShortcut }
