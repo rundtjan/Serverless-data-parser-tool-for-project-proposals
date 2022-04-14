@@ -9,8 +9,8 @@ function assignCategoryToWord(word) {
   let date = false
   let number = false
   let specialCharacter = false
-  let specials = false
   let company = false
+  let price = false
 
   // Goes through list with technology words.
   const technology = technologies.has(word)
@@ -22,7 +22,7 @@ function assignCategoryToWord(word) {
     company = true
   }
   if(letters.find(l => l === '€' || l === '$')) {
-    specials = true
+    price = true
   }
   if(letters.find(l => !isNaN(l) && l !== ' ' && l !== 0)) {
     number = true
@@ -30,17 +30,19 @@ function assignCategoryToWord(word) {
   if(letters.find(l => l === '.' || l === '-' || l === '/')) {
     specialCharacter = true
   }
-  // If a word has date separator, is a number, but doesn't include euro or dollar signs, the word is asigned as date. 
-  if(specialCharacter && number && !specials) {
+  // If a word has date separator, is a number, but doesn't include euro or dollar signs, the word is asigned as deadline. 
+  if(specialCharacter && number && !price) {
     date = true
   } 
   
   if (technology) {
     return 'Technology'
   } else if (company) {
-    return 'Company' 
+    return 'Customer' 
   } else if (date) {
-    return 'Date'
+    return 'Deadline'
+  } else if (price && number) {
+    return 'Price'
   } else if (number) {
     return 'Number'
   } else {

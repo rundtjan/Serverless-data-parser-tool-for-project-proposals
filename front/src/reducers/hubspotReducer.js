@@ -1,7 +1,6 @@
 import hubspotService from '../services/hubspot'
 
 const reducer = (state = [], action) => {
-  console.log('got em deals', action.data)
   switch(action.type) {
   case 'SET_DEALS':
     return action.data
