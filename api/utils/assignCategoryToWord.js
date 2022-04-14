@@ -38,11 +38,11 @@ function assignCategoryToWord(word) {
   if (technology) {
     return 'Technology'
   } else if (company) {
-    return 'Company' 
+    return 'Customer' 
   } else if (date) {
-    return 'Date'
+    return 'Deadline'
   } else if (number) {
-    return 'Number'
+    return 'Price'
   } else {
     return ''
   }
