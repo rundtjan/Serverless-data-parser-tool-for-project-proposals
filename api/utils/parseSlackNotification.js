@@ -15,7 +15,7 @@ const response = (customer, action, type, link, dealname) => {
       'type': 'section',
       'text': {
         'type': 'mrkdwn',
-        'text': `A deal with customer ${customer} has been ${action} in Hubspot based on a parse-action in this ${type}.`
+        'text': `A deal with customer ${customer} has been ${action} in Hubspot based on data from this ${type}.`
       }
     },
     {

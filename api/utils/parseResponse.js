@@ -39,7 +39,7 @@ const response = (parsedParams, frontUrl, channel_id) => {
           'type': 'section',
           'text': {
             'type': 'mrkdwn',
-            'text': `Channel = ${parsedParams.channel}, user = ${parsedParams.user || 'not chosen'} and timelimit (hrs) = ${parsedParams.hours || 'not chosen'}.`
+            'text': `User = ${parsedParams.user || 'all users'} and timelimit (hrs) = ${parsedParams.hours || 'no timelimit'}.`
           }
         }
       ]
