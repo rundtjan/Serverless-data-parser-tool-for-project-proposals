@@ -1,6 +1,3 @@
-const { slackService } = require('../services/slackService')
-const { slackClient } = require('../services/slackClient')
-const slack = slackService({ slackClient })
 const { parseTimestamp } = require('./parseSlackTimestamp.js')
 
 /**
@@ -34,7 +31,7 @@ const parameterIsHours = (param) => {
  * Function which takes the Slash command parameters sent from the Slack workspace.
  * Checks the amount and type of parameters e.g "24" as a number, @user.name as a user and so on.
  * All parameters are optional: {"channel": CHANNEL_NAME, "user": USER_NAME, "hours": HOW_MANY_HOURS_BACK}
- * @param {An object of parameters, expected 0, 1 or 3} parameters 
+ * @param {An object of parameters, expected 0, 1 or 2} parameters 
  * @param {Channel where the command is sent e.g "general" or "random"} source_channel 
  * @returns arguments depending on the parameters which are passed then forward.
  */
@@ -45,32 +42,10 @@ const parseParameters = async (parameters, source_channel) => {
     const oldest = parseTimestamp(Date.now() * 1000, null)
     const args = { channel, user, oldest, hours: null}
     return args
-  } else if (parameters.length > 3) {
-    throw new Error('You seem to have entered too many parameters. Please try again. Allowed parameters (all optional): [user][hours][channel]')
+  } else if (parameters.length > 2) {
+    throw new Error('You seem to have entered too many parameters. Please try again. Allowed parameters (both optional): [user][hours]')
   } else {
-    const args = { channel: false, user: null, oldest: null, hours: null}
-    var maybeChannel = false
-    parameters.forEach(elem => {
-      var checkChannel = true
-      if (parameterIsHours(elem) || parameterIsUsername(elem)) checkChannel = false
-      if (checkChannel) maybeChannel = true
-    })
-    //only getting channels from Slack (which is a bit slow), if channel-parameter possible present
-    if (maybeChannel){
-      let channels
-      try {
-        channels = await slack.getChannels()
-        channels = channels.map(elem => elem.name)
-      } catch(error){
-        console.log('error in getting channels', error)
-      }
-      parameters.forEach(element =>{
-        if (channels.includes(element)){
-          if (!args.channel) { args.channel = element; return }
-          else throw new Error('You seem to have entered two channel-parameters, while only one is allowed. Please try again or type /parsa help for instructions.')
-        }
-      })
-    }
+    const args = { channel: source_channel, user: null, oldest: null, hours: null}
     parameters.forEach(element => {
       if (parameterIsUsername(element)){
         if (!args.user) { args.user = element.replace('%40', '@'); return }
@@ -80,10 +55,8 @@ const parseParameters = async (parameters, source_channel) => {
         if (!args.oldest) { args.oldest = parseTimestamp(Date.now() * 1000, element), args.hours = element; return }
         else throw new Error('You seem to have entered two hour-parameters, while only one is allowed. Please try again or type /parsa help for instructions')
       }
-      else if (args.channel == element) return
       else throw new Error(`There is a problem with the parameter: '${element}'. Please try again or type /parsa help for instructions.`)
     })
-    if (!args.channel) args.channel = source_channel
     return args
   }
 }
