@@ -1,6 +1,3 @@
-const { slackService } = require('../services/slackService')
-const { slackClient } = require('../services/slackClient')
-const slack = slackService({ slackClient })
 const { parseTimestamp } = require('./parseSlackTimestamp.js')
 
 /**
