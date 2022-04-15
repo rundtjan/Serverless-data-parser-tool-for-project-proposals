@@ -9,7 +9,7 @@ Serverless data parser tool aka Parsa is an application used for parsing Slack c
 - Slack Bot User OAuth token
 - FOR SERVERLESS VERSION aka the MVP aka the Main-branch implementation you need also an AWS account (tbd more precisely how to use and cofigure at some point)
 
-If you want to send data to HubSpot CRM you will also need:
+If you want to send or receive data to/from HubSpot CRM you will also need:
 - An HubSpot environment and/or account
 - An HubSpot API key for the environment
 
@@ -19,7 +19,17 @@ As our Parsa app has not been yet made as an shareable app you need to configure
 Bot User OAuth Token can be found from the app dashboard "OAuth & Permissions" &rarr; "OAuth Tokens for Your Workspace". This is needed to the .env file.
 
 #### Slack bot instructions
-The created app/bot must be invited to the channel where you want to parse the messages. If the bot is not in the channel you can not access to view the parsed messages in the Parsa UI. You can invite the bot to the channel with "@[your-bot-name-here]" and remove with "@remove [your-bot-name-here]" or "@kick [your-bot-name-here]".  
+The created app/bot must be invited to the channel where you want to parse the messages. If the bot is not in the channel you can not access to view the parsed messages in the Parsa UI. You can invite the bot to the channel with the following command:
+
+>"@[your-bot-name-here]"
+
+and remove with the following command:
+
+>"@remove [your-bot-name-here]"
+
+or
+
+>"@kick [your-bot-name-here]"
 
 #### Configuring your .env file
 Your .env file should look like this to work:
