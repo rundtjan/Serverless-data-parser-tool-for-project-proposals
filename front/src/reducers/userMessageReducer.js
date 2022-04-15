@@ -15,18 +15,14 @@ const reducer = (state = '', action) => {
  * @see {@link channelService}
  */
 export const setUserMessage = (userMessage) => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_MESSAGE',
-      userMessage,
-    })
+  return {
+    type: 'SET_MESSAGE',
+    userMessage,
   }
 }
 export const clearUserMessage = () => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'CLEAR_MESSAGE',
-    })
+  return {
+    type: 'CLEAR_MESSAGE',
   }
 }
 
