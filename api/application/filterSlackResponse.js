@@ -85,6 +85,7 @@ const AddThreadToParent = (thread, messages, parentIndex) => {
  * @returns list of custom made word objects which are later used.
  */
 const GetWordsFromMessages = (messages) => {
+  console.log('GetWordFromMessages ', messages)
   const result = []
   const temp_word_obj = {}
 
@@ -195,10 +196,13 @@ const RemoveTrailingCommas = (word) => word.replace(/,+$/g, '')
  * @param {Object} members List of Slack user objects which are valid workspace users.
  */
 const GetRealNamesFromSlack = (messages, members) => {
+  console.log('getRealnames from slack ', members)
   messages.forEach((elem) => {
     elem.real_name = members[elem.user].real_name
     elem.username = members[elem.user].username
   })
+  console.log('realNames from slack elem ', messages)
+
 }
 
 /**

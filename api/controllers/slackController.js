@@ -2,7 +2,8 @@ const { slackService } = require('../services/slackService')
 const { slackClient } = require('../services/slackClient')
 const slack = slackService({ slackClient })
 const { processSlackMessages } = require('../application/processSlackMessages')
-const { processMessageShortcut } = require('../application/processMessageShortcut')
+const { processMessageShortcut, processOneMessage } = require('../application/processMessageShortcut')
+//const { GetWordsFromMessages } = require('../application/filterSlackResponse')
 
 let paramUser = ''
 let paramChannel = 'general'
@@ -109,6 +110,19 @@ async function getAllMessagesFromSingleThread(args) {
     return error
   }
 }
+async function getOneMessage(args) {
+  try {
+    console.log('in slackCOntroller oneMessage args ', args)
+    console.log('getOneMessage ts, channel ', args.ts, args.channel)
+    const message = await slack.getOneMessageByTs(args.ts, args.channel)
+    console.log('message: ', message)
+    const resultObj = await processOneMessage(slack, message)
+    console.log('slackCOntroller getOnmessage final resultObj ', resultObj)
+    return resultObj
+  } catch (error) {
+    return error
+  }
+}
 
 module.exports = {
   slackMessages,
@@ -118,5 +132,6 @@ module.exports = {
   getAllMessagesFromSingleThread,
   getParams,
   replyToThread,
-  replyToChannel
+  replyToChannel,
+  getOneMessage
 }

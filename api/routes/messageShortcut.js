@@ -1,3 +1,4 @@
+
 const axios = require('axios')
 const parseShortcutPayload = require('../utils/parseShortcutPayload')
 
@@ -9,25 +10,21 @@ const parseShortcutPayload = require('../utils/parseShortcutPayload')
  * @returns an object that informs Slack of that the messageshortcut request was received.
  * Before returning this object, however, it posts an answer to Slack using Axios.
  */
-const threadShortcut = async function(event){
-  event = parseShortcutPayload(event)
-  console.log('thread shortcut ', event)
-  await axios.post(event.response_url, {'text': `You parsed a thread starting: "${event.text}". See the result at: https://main.dtatk8xusyguu.amplifyapp.com/type=thread&ts=${event.thread_ts}&channel=${event.channelId}`})
-  return {statusCode: 200}
-}
-
 const messageShortcut = async function(event) {
   event = parseShortcutPayload(event)
   if(event.shortcut==='message_shortcut') {
-    await axios.post(event.response_url, {'text': `You parsed a message starting: "${event.text}". See the result at: https://main.dtatk8xusyguu.amplifyapp.com/type=thread&ts=${event.thread_ts}&channel=${event.channelId}`})
+    await axios.post(event.response_url, {'text': `You parsed a message starting: "${event.text}". See the result at: localhost:3000/type=message&ts=${event.message_ts}&channel=${event.channelId}`})
     return {statusCode: 200}
   }
   if(event.shortcut==='thread_shortcut') {
     console.log('****** thread_shortcut ********')
+
     await axios.post(event.response_url, {'text': `You parsed a thread starting: "${event.text}". See the result at: https://main.dtatk8xusyguu.amplifyapp.com/type=thread&ts=${event.thread_ts}&channel=${event.channelId}`})
     return {statusCode: 200}
   }
   console.log('message shortcut ', event)
-
 }
-module.exports = { messageShortcut, threadShortcut }
+module.exports = { messageShortcut }
+
+// https://main.dtatk8xusyguu.amplifyapp.com/type=message&ts=${event.message_ts}&channel=${event.channelId}`
+// https://ksh77k9z1m.execute-api.eu-west-1.amazonaws.com/type=message&ts=${event.message_ts}&channel=${event.channelId}

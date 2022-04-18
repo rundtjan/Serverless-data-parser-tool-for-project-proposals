@@ -1,6 +1,7 @@
 const { GetHumanMessagesFromSlack } = require('../application/filterSlackResponse')
 const { addNamesToThreadMessages } = require('../application/processSlackMessages')
 
+
 /**
  * Creates an object from the thread which can be shown in the UI.
  * Pretty similar to the processSlackMessages function in application/processSlackMessages.
@@ -28,4 +29,32 @@ async function processThreadShortcut(slack, threadWithResponses) {
   }
 }
 
-module.exports = { processMessageShortcut: processThreadShortcut }
+
+async function processOneMessage(slack, message) {
+  message.thread_array = []
+  
+  console.log('in processOneMessage ', message)
+  var channels
+  const oldest = undefined
+  const user = undefined
+  const messages = [ message ]
+
+  try {
+    channels = await slack.getChannels()
+    console.log('gets channels ', channels)
+  } catch (error){
+    throw new Error(error)
+  }
+  try {
+    console.log('tries to add names to messages ', messages)
+    const resultObj = addNamesToThreadMessages(slack, messages, oldest, user)
+    console.log('resultobj agter filter apply ', resultObj)
+    resultObj.channels = channels.map(elem => elem.name)
+    console.log('Process message shortcut with channels ', resultObj)
+    return resultObj
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+module.exports = { processMessageShortcut: processThreadShortcut, processOneMessage }

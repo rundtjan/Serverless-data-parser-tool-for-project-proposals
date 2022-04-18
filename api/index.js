@@ -19,13 +19,13 @@ exports.handler = async (event) => {
       response = await slashCommand(event)
       break
     case 'parseResult':
+      console.log('event parseResult *** ', event)
       response = await parseResult(event)
       break
     case 'sendToHubspot':
       response = await sendToHubspot(event)
       break
     case 'messageShortcut':
-      console.log('event *** ', event)
       response = await messageShortcut(event)
       break
     case 'searchDeals':

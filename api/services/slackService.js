@@ -113,6 +113,26 @@ const slackService = ({ slackClient }) => {
   }
 
   /**
+   * 
+   * @param {*} messageTs Timestamp of a single message.
+   * @param {*} channelId Channel id.
+   * @returns 
+   */
+  const getOneMessageByTs = async (messageTs, channelId) => {
+    try {
+      const apiResult = await slackClient.conversations.history({
+        channel: channelId,
+        latest: messageTs,
+        inclusive: true,
+        limit: 1
+      })
+      return apiResult.messages[0]
+    } catch (error) {
+      throw new Error(`Error in getOneMessge: ${error}`)
+    }
+  } 
+
+  /**
    * Gets all the messages/responses from a thread from the channel.
    * @param {String} channelId Id of the channel where the thread is.
    * @param {Object} ts_array array of timestamps.
@@ -241,7 +261,8 @@ const slackService = ({ slackClient }) => {
     getAllThreadsMessages,
     replyMessage,
     sendMessageBlocks,
-    replyMessageBlocks
+    replyMessageBlocks,
+    getOneMessageByTs
   })
 }
 

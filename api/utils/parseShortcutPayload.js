@@ -14,9 +14,10 @@ module.exports = (event) => {
   const shortcut = json.callback_id
   const channelId = json.channel.id 
   const thread_ts = json.message.thread_ts
+  const message_ts = json.message_ts
   const response_url = json.response_url
   let text = ''
   json.message.text.split('+').forEach(element => text += `${element} `)
   text = text.substring(0, 50) + '...'
-  return { thread_ts, channelId, text, response_url, shortcut }
+  return { thread_ts, message_ts, channelId, text, response_url, shortcut }
 }
