@@ -29,8 +29,15 @@ async function processThreadShortcut(slack, threadWithResponses) {
   }
 }
 
-
+/**
+ * Creates an object from a single message which can be shown in the UI.
+ * Pretty similar to the processSlackMessages function in application/processSlackMessages.
+ * @param {Slack client} slack Client object used to communicate with the Slack web api.
+ * @param {Object} message Object which contains the message and data related to the message.
+ * @returns object which can be shown in the UI.
+ */
 async function processOneMessage(slack, message) {
+  // Because only one message is parsed the thread_array is put empty. 
   message.thread_array = []
   var channels
   const oldest = undefined
@@ -39,16 +46,13 @@ async function processOneMessage(slack, message) {
 
   try {
     channels = await slack.getChannels()
-    console.log('gets channels ', channels)
   } catch (error){
     throw new Error(error)
   }
   try {
-    console.log('tries to add names to messages ', messages)
+    // No filtering is needed with only one message and that's why addNamesToThreadMessages is used.
     const resultObj = addNamesToThreadMessages(slack, messages, oldest, user)
-    console.log('resultobj agter filter apply ', resultObj)
     resultObj.channels = channels.map(elem => elem.name)
-    console.log('Process message shortcut with channels ', resultObj)
     return resultObj
   } catch (error) {
     throw new Error(error.message)

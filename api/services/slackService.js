@@ -113,10 +113,10 @@ const slackService = ({ slackClient }) => {
   }
 
   /**
-   * 
-   * @param {*} messageTs Timestamp of a single message.
-   * @param {*} channelId Channel id.
-   * @returns 
+   * Gets a single Slack message. 
+   * @param {String} messageTs Timestamp of a single message.
+   * @param {String} channelId Channel id of the channel where the message is from.
+   * @returns One message object from Slack.
    */
   const getOneMessageByTs = async (messageTs, channelId) => {
     try {

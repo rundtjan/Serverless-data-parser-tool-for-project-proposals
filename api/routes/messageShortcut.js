@@ -5,8 +5,8 @@ const parseShortcutPayload = require('../utils/parseShortcutPayload')
 /**
  * A function that takes care of requests to 'POST route=messageShortcut' containing
  * a request to parse a certain thread.
- * @param {*} event the event object passed as a parameter to the lambda-function, contains info
- * on the thread to parse.
+ * @param {Object} event the event object passed as a parameter to the lambda-function, contains info
+ * on the thread/message to parse.
  * @returns an object that informs Slack of that the messageshortcut request was received.
  * Before returning this object, however, it posts an answer to Slack using Axios.
  */

@@ -85,7 +85,6 @@ const AddThreadToParent = (thread, messages, parentIndex) => {
  * @returns list of custom made word objects which are later used.
  */
 const GetWordsFromMessages = (messages) => {
-  console.log('GetWordFromMessages ', messages)
   const result = []
   const temp_word_obj = {}
 
