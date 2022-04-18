@@ -31,8 +31,6 @@ const parseResultHandler = async (event, slackController, parseReqBody, parseTim
   let buff = Buffer.from(data, 'base64')
   event.body = buff.toString('ascii')
   event = parseReqBody(event)
-  console.log('parseresult event.body ', event.body)
-  console.log('parseresult event.body.type ', event.body.type)
 
   if (event.body.type && event.body.type === 'thread') {
     try {
@@ -43,7 +41,6 @@ const parseResultHandler = async (event, slackController, parseReqBody, parseTim
     }
   } else if (event.body.type && event.body.type === 'message') {
     try {
-      console.log('in parse result route message ', event.body)
       const response = await slackController.getOneMessage(event.body)
       return response
     } catch (error) {

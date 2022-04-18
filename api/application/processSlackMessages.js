@@ -105,7 +105,6 @@ async function addNamesToMessages(slack, messages, oldest, user) {
   messages
     .filter((elem) => elem.thread_array.length > 0)
     .forEach((elem) => GetRealNamesFromSlack(elem.thread_array, members))
-  console.log('addNamesToMessages before applyfilters ', messages)
   const result = applyFilters(messages, oldest, user)
   return result
 }
@@ -120,18 +119,14 @@ async function addNamesToMessages(slack, messages, oldest, user) {
  * @returns an object containing list of messages, list of words in messages and list of categories where the words belong.
  */
 async function addNamesToThreadMessages(slack, messages, oldest, user) {
-  console.log('in addNamesToThreadMessages ', messages, oldest, user)
   var members = {}
 
   const users = await slack.getUsers()
-  console.log('users in addNames ', users)
 
   users.forEach(
     (elem) => (members[elem.id] = { username: elem.username, real_name: elem.real_name })
   )
-  console.log('bevore getRealNames members', members)
   GetRealNamesFromSlack(messages, members)
-  console.log('before applyfiters messages ', messages)
   const result = applyFilters(messages, oldest, user)
   return result
 }
@@ -144,7 +139,6 @@ async function addNamesToThreadMessages(slack, messages, oldest, user) {
  * @returns an object containing list of messages, list of words in messages and list of categories where the words belong.
  */
 function applyFilters(messages, oldest, user) {
-  console.log('in applyFilters ', messages)
   if (oldest) messages = filterOutOldMessages(messages, oldest)
   if (user) messages = filterMessagesByUser(messages, user)
   const words = GetWordsFromMessages(messages)

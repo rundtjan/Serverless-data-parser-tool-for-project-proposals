@@ -32,8 +32,6 @@ async function processThreadShortcut(slack, threadWithResponses) {
 
 async function processOneMessage(slack, message) {
   message.thread_array = []
-  
-  console.log('in processOneMessage ', message)
   var channels
   const oldest = undefined
   const user = undefined
