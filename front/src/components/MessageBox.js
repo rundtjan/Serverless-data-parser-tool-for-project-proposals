@@ -7,6 +7,12 @@ import Typography from '@mui/material/Typography'
 import { IconButton, Link } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
+
+/**
+ * Component for displaying result messages from a operation to the user.
+ *
+ * @returns Box, or null if no message is set in state.
+ */
 const MessageBox = () => {
   const message = useSelector(state => state.userMessage)
   const dispatch = useDispatch()
@@ -18,9 +24,12 @@ const MessageBox = () => {
   if(!message) return null
 
   return (
-    <Box sx={{ width: '100%', bgcolor: 'white' }}>
+    <Box sx={{ width: '100%', bgcolor: '#fafafa' }}>
+      <Typography variant='h5' textAlign='center' color='black'>
+        {message.text}
+      </Typography>
       <Typography variant='h6' textAlign='center' color='black'>
-        {message.text} <Link href={message.link}>{message.link}</Link> <IconButton onClick={clearMessage}><CloseIcon color='error' /></IconButton>
+        <Link href={message.link}>{message.link}</Link> <IconButton onClick={clearMessage}><CloseIcon color='error' /></IconButton>
       </Typography>
     </Box>
   )

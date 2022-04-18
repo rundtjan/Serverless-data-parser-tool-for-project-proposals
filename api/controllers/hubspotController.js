@@ -2,6 +2,10 @@ const hubspotService = require('../services/hubspotService')
 const hubspotClient = require('../services/hubspotClient')
 const hubspot = hubspotService(hubspotClient)
 
+/**
+ * Gets all deals from HubSpot API.
+ * @param {Object} res Response object.
+ */
 const getAllDeals = async (res) => {
   try {
     const result = await hubspot.getAllDeals()
@@ -12,6 +16,11 @@ const getAllDeals = async (res) => {
   }
 }
 
+/**
+ * Search deals from HubSpot by name by the given query string.
+ * @param {String} queryString String to be looked from the deal name.
+ * @returns List of deals where the query string is contained in the deal name.
+ */
 const searchDeals = async (queryString) => {
   try {
     const result = await hubspot.searchDeals(queryString)
@@ -23,6 +32,10 @@ const searchDeals = async (queryString) => {
   }
 }
 
+/**
+ * Gets all contancts from the HubSpot CRM.
+ * @param {Object} res Response object.
+ */
 const getAllContacts = async (res) => {
   try {
     const result = await hubspot.getAllContacts()
@@ -72,11 +85,15 @@ const updateDeal = async (properties, id) => {
   }
 }
 
+/**
+ * create new deal based on json sent from UI
+ * only customer & price are used for testing new deal creation.
+ * No custom properties space available atm.
+ * TODO: use existing custom properties to store our data? 
+ * @param {Object} obj JSON object coming from the UI containing the data in the categories fields.
+ * @returns result from the deal creation.
+ */
 const createDeal = async (obj) => {
-  // create new deal based on json sent from UI
-  // only customer & price are used for testing new deal creation.
-  // No custom properties space available atm.
-  // TODO: use existing custom properties to store our data? 
   var description = ''
   Object.keys(obj).forEach((key) => {
     if (key !== 'Customer' && key !== 'Price') description += `${key}: ${obj[key]}, `
@@ -106,8 +123,9 @@ const createDeal = async (obj) => {
     return 'error'
   }
 }
+
+// For testing, remove later.
 const getOwners = async () => {
-  // For testing, remove later.
   const email = undefined
   const after = undefined
   const limit = 100
