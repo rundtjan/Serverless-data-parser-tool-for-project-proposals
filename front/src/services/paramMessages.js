@@ -8,7 +8,9 @@ const baseUrl = `${process.env.REACT_APP_API_URL}?route=parseResult` // eslint-d
  * @returns Data containing messages
  */
 const getAll = async(id) => {
+  console.log('id ', id)
   const res = await axios.post(`${baseUrl}`, id)
+  console.log('res.data ', res.data)
   return res.data
 }
 

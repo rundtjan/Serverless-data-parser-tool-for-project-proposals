@@ -10,6 +10,7 @@ const { parseTimestamp } = require('../utils/parseSlackTimestamp')
  * @returns see below
  */
 const parseResult = async (event) => {
+  console.log('parseresult ', event)
   return await parseResultHandler(event, slackController, parseReqBody, parseTimestamp)
 }
 
@@ -25,18 +26,27 @@ const parseResult = async (event) => {
  */
 const parseResultHandler = async (event, slackController, parseReqBody, parseTimestamp) => {
   console.log('Receiving post from Parsa front for parsing.')
+  console.log('')
   let data = event.body
   let buff = Buffer.from(data, 'base64')
   event.body = buff.toString('ascii')
   event = parseReqBody(event)
 
-  if (event.body.type && event.body.type == 'thread'){
+  if (event.body.type && event.body.type === 'thread') {
     try {
       const response = await slackController.getAllMessagesFromSingleThread(event.body)
       return response
     } catch (error) {
       return error.error
     }
+  } else if (event.body.type && event.body.type === 'message') {
+    try {
+      const response = await slackController.getOneMessage(event.body)
+      return response
+    } catch (error) {
+      return error.error
+    }
+    
   } else {
     const args = {channel: event.body.channel, user: event.body.user, oldest: event.body.oldest}
     if (!args.oldest) args.oldest = parseTimestamp(Date.now() * 1000, event.body.hours)
