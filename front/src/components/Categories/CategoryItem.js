@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { unAssignWord, editAssignedWord } from '../reducers/assignReducer'
+import { unAssignWord, editAssignedWord } from '../../reducers/assignReducer'
 
 //Mui components
 import ListItem from '@mui/material/ListItem'
