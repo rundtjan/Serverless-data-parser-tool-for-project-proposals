@@ -43,8 +43,6 @@ function assignCategoryToWord(word) {
     return 'Deadline'
   } else if (price && number) {
     return 'Price'
-  } else if (number) {
-    return 'Number'
   } else {
     return ''
   }
