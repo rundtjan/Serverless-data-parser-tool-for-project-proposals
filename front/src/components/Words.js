@@ -37,16 +37,38 @@ const Words = () => {
       return(
         <List sx={{ py: 0, my:0 }}>
           {words.map(word => (
-            <Word key={word.word} word={word}/>
+            <Word key={Math.random().toString(36).slice(2)} word={word}/>
           ))}
         </List>
       )
-    }
-
-    return(
+    } else if(category === 'Company') {
+      return(
+        <List sx={{ py: 0, my:0 }}>
+          {words.filter(word => word.category === 'Customer').map(word => (
+            <Word key={Math.random().toString(36).slice(2)} word={word}/>
+          ))}
+        </List>
+      )
+    } else if(category === 'Number') {
+      return(
+        <List sx={{ py: 0, my:0 }}>
+          {words.filter(word => word.category === 'Price').map(word => (
+            <Word key={Math.random().toString(36).slice(2)} word={word}/>
+          ))}
+        </List>
+      )
+    } else if(category === 'Date') {
+      return(
+        <List sx={{ py: 0, my:0 }}>
+          {words.filter(word => word.category === 'Deadline').map(word => (
+            <Word key={Math.random().toString(36).slice(2)} word={word}/>
+          ))}
+        </List>
+      )
+    } else return(
       <List sx={{ py: 0, my:0 }}>
         {words.filter(word => word.category === category).map(word => (
-          <Word key={word.word} word={word}/>
+          <Word key={Math.random().toString(36).slice(2)} word={word}/>
         ))}
       </List>
     )

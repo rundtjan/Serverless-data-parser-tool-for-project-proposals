@@ -122,6 +122,7 @@ async function addNamesToThreadMessages(slack, messages, oldest, user) {
   var members = {}
 
   const users = await slack.getUsers()
+
   users.forEach(
     (elem) => (members[elem.id] = { username: elem.username, real_name: elem.real_name })
   )
@@ -144,4 +145,4 @@ function applyFilters(messages, oldest, user) {
   return { messages: messages, words: words, categories: categories }
 }
 
-module.exports = { processSlackMessages, addNamesToThreadMessages }
+module.exports = { processSlackMessages, addNamesToThreadMessages, addNamesToMessages }

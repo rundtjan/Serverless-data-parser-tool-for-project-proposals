@@ -5,6 +5,7 @@ const { processSlackMessages } = require('../application/processSlackMessages')
 const { processMessageShortcut } = require('../application/processMessageShortcut')
 const savedQueries = {}
 const axios = require('axios')
+// This is the production environment which was given by the client.
 const baseUrl = 'http://135.181.37.120'
 
 let paramUser = ''
@@ -39,7 +40,7 @@ function slackResponse (args, id) {
 }
 
 /**
- * Get's the id for the query and passes it to the function which gives the URL.
+ * Gets the id for the query and passes it to the function which gives the URL.
  * @param {Object} res HTTP Response.
  * @param {Object} args a object which has the arguments used in filtering the messages.
  */
@@ -53,7 +54,7 @@ async function saveQuery(res, args) {
 }
 
 /**
- * Get's query by id from the global object which stores the queries.
+ * Gets query by id from the global object which stores the queries.
  * @param {Object} res HTTP response.
  * @param {Number} id Id of the query which is wanted.
  */
@@ -96,7 +97,7 @@ async function slackMessages(res, args, save = false) {
 }
 
 /**
- * Get's every channel name from the Slack workspace.
+ * Gets every channel name from the Slack workspace.
  * @param {Object} res HTTP Response.
  */
 async function slackChannels(res) {
@@ -109,7 +110,7 @@ async function slackChannels(res) {
 }
 
 /**
- * Get's every user from the Slack Workspace.
+ * Gets every user from the Slack Workspace.
  * @param {Object} res HTTP response.
  */
 async function slackUsers(res) {
@@ -136,7 +137,7 @@ async function slackGetAllByUser(res, id) {
 }
 
 /**
- * Get's global parameters which are needed for showing the parameters in the UI.
+ * Gets global parameters which are needed for showing the parameters in the UI.
  * @param {Object} res HTTP Response.
  */
 async function getParams(res) {
