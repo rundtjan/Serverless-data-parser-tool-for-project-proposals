@@ -19,11 +19,13 @@ import { splitTextByHighlights, findMessageWords } from '../utils/helper'
 
 //Reducers
 import { setAssignedWord } from '../reducers/assignReducer'
+import { setDoNothing } from '../reducers/oneMessageReducer'
 
 
 const Message = ({ message, words }) => {
   const [expanded, setExpanded] = useState(false)
   const highlightWords = useSelector(state => state.highlightWord)
+  const populateClick = useSelector(state => state.oneMessage)
 
   const dispatch = useDispatch()
 
@@ -133,11 +135,17 @@ const Message = ({ message, words }) => {
   }
 
   const handlePopulateClick = (msg) => {
+    dispatch(setDoNothing())
     console.log('PingPong')
     const wordList = findMessageWords(msg, words)
     for(const word of wordList) {
       dispatch(setAssignedWord(word.word, word.category))
     }
+  }
+
+  if (populateClick === 'execute'){
+    console.log('once tries to populate')
+    handlePopulateClick(message)
   }
 
   return(
