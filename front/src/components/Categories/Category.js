@@ -68,7 +68,7 @@ const Category = ({ category }) => {
         >
           <List dense>
             {assignedWords.map(word => (
-              <CategoryItem key={word.word} word={word.word}/>
+              <CategoryItem key={Math.random().toString(36).slice(2)} word={word.word}/>
             ))}
           </List>
         </Box>

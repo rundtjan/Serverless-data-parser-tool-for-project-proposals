@@ -37,7 +37,7 @@ const Words = () => {
       return(
         <List sx={{ py: 0, my:0 }}>
           {words.map(word => (
-            <Word key={word.word} word={word}/>
+            <Word key={Math.random().toString(36).slice(2)} word={word}/>
           ))}
         </List>
       )
@@ -46,7 +46,7 @@ const Words = () => {
     return(
       <List sx={{ py: 0, my:0 }}>
         {words.filter(word => word.category === category).map(word => (
-          <Word key={word.word} word={word}/>
+          <Word key={Math.random().toString(36).slice(2)} word={word}/>
         ))}
       </List>
     )
