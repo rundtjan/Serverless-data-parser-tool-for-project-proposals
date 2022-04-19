@@ -45,7 +45,7 @@ const CategoryItem = ({ word }) => {
 
   return(
     <ListItem
-      key={word + '-assignItem'}
+      key={Math.random().toString(36).slice(2)}
       divider
       secondaryAction={
         <IconButton id='delete-button' edge='end' onClick={() => handleRemoveFromCategory(word)}>
@@ -54,7 +54,7 @@ const CategoryItem = ({ word }) => {
       }
     >
       <TextField
-        key={`${word}-assignText`}
+        key={Math.random().toString(36).slice(2)}
         size='small'
         onChange={handleEdit}
         value={value}
