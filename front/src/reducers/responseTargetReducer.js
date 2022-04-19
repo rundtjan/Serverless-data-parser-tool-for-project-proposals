@@ -10,9 +10,10 @@ const reducer = (state = null, action) => {
 
 export const setResponseTarget = (id) => {
   var responseTarget = {}
-  if (id.includes('type=thread')){
+  if (id.includes('type=thread') || id.includes('type=message')){
     responseTarget.ts = id.split('ts=')[1].split('&channel')[0]
     responseTarget.channel_id = id.split('channel=')[1]
+    console.log(responseTarget)
   } else {
     responseTarget.channel_id = id.split('&channel_id=')[1]
   }
