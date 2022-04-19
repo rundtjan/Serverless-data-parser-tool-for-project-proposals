@@ -19,6 +19,7 @@ import { splitTextByHighlights, findMessageWords } from '../utils/helper'
 
 //Reducers
 import { setAssignedWord } from '../reducers/assignReducer'
+import { readyToSend } from '../reducers/readyToSendReducer'
 
 
 const Message = ({ message, words }) => {
@@ -138,6 +139,7 @@ const Message = ({ message, words }) => {
     for(const word of wordList) {
       dispatch(setAssignedWord(word.word, word.category))
     }
+    dispatch(readyToSend())
   }
 
   return(
