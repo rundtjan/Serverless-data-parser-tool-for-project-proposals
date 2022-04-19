@@ -16,7 +16,6 @@ const SlackPage = () => {
   const id = useParams().id.toString()
   const dispatch = useDispatch()
   if (id.includes('type=message')){
-    console.log('yes once')
     dispatch(setOneMessage())
   }
   dispatch(getParamMessages(id))

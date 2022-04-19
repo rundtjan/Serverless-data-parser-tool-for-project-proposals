@@ -137,7 +137,6 @@ const Message = ({ message, words }) => {
 
   const handlePopulateClick = (msg) => {
     dispatch(setDoNothing())
-    console.log('PingPong')
     const wordList = findMessageWords(msg, words)
     for(const word of wordList) {
       dispatch(setAssignedWord(word.word, word.category))
@@ -146,7 +145,6 @@ const Message = ({ message, words }) => {
   }
 
   if (populateClick === 'execute'){
-    console.log('once tries to populate')
     handlePopulateClick(message)
   }
 
