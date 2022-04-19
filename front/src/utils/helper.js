@@ -70,7 +70,9 @@ export const findMessageWords = (message, words) => {
   for(const word of words) {
     //Check if word is in message
     if(word.message_ids.includes(id)) {
-      wordList = wordList.concat(word)
+      if(word.category !== '') {
+        wordList = wordList.concat(word)
+      }
     }
   }
 
