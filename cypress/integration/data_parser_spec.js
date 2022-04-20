@@ -12,7 +12,7 @@ describe('Data parser tool ', function() {
     /**This test loops through all messages and checks for a button. If has button checks for a thread */
     it('Message with an expander has a thread', function(){
         cy.get('#messageList').find('ul').first().find('.MuiBox-root').each(($el, index, $list) => {
-        if ($el.find('svg').length !== 0){//message has an expander
+        if ($el.find('svg').length > 1){//message has an expander
             cy.wrap($el).children().should('have.length.of.at.least', 2)
         }
         })
@@ -21,7 +21,7 @@ describe('Data parser tool ', function() {
     /**This test loops through all messages and checks that there isn't a button. If has button checks that there's no thread */
     it('Message without an expander has no thread', function(){
         cy.get('#messageList').find('ul').first().find('.MuiBox-root').each(($el, index, $list) => {
-        if ($el.find('svg').length == 0){//message has no expander
+        if ($el.find('svg').length == 1){//message has no expander
             cy.wrap($el).children().should('have.length', 1)
         }
         })
