@@ -35,7 +35,8 @@ And Bob's your uncle. If you added an API-trigger, you can click on "API Gateway
 
 - On the tab "Code" you can click "Upload from" in order to upload your function to AWS. You will need to zip it, see the readme in the API-folder. 
 - On the tab "Monitor" you can find the link for viewing logs from your function - click "View logs in CloudWatch" to open the logs. 
-- On the tab "Configuration" you can *importantly* add environment variables. You need to add a SLACK_TOKEN and a HUBSPOT_APIKEY in order for everything to work nicely.  
+- On the tab "Configuration" you *need to* add environment variables. You will need a SLACK_TOKEN and a HUBSPOT_APIKEY in order for everything to work nicely.  
+
 These are the tabs the dev-team of this application has used, feel free to explore the other tabs by yourself.
 
 ## AWS Toolkit
