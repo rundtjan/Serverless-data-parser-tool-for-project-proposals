@@ -9,12 +9,15 @@ import PageLayout from '../components/Page/PageLayout'
 import { getParamMessages } from '../reducers/dataReducer'
 import { clearAllHighlights } from '../reducers/highlightReducer'
 import { setResponseTarget } from '../reducers/responseTargetReducer'
+import { setOneMessage } from '../reducers/oneMessageReducer'
 
 
 const SlackPage = () => {
   const id = useParams().id.toString()
   const dispatch = useDispatch()
-
+  if (id.includes('type=message')){
+    dispatch(setOneMessage())
+  }
   dispatch(getParamMessages(id))
   dispatch(setResponseTarget(id))
   dispatch(clearAllHighlights())
