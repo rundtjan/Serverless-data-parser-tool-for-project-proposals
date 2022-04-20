@@ -1,6 +1,6 @@
 describe('Data parser tool ', function() {
     
-    beforeEach(function() {
+    before(function() {
         cy.visit('/')
     })
 
@@ -36,6 +36,10 @@ describe('Data parser tool ', function() {
         cy.contains('Technology')
     })
 
+    it('Before choosing words, the SendToHubSpot-button is disabled', function(){
+      cy.get('#sendToHubSpotButton').should('be.disabled')
+    })
+
     /**This test needs to get the second button (index eq(1)), because the first button is the filter-button. */
     it('Clicking a checkbox opens a drop down menu', function() {
         cy.get('#wordList').parent().find('button').eq(1).click()
@@ -68,10 +72,6 @@ describe('Data parser tool ', function() {
         cy.contains('Number')
         cy.contains('Date')
         cy.contains('Show all')
-    })
-
-    it('Before choosing words, the SendToHubSpot-button is disabled', function(){
-        cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
     it('After choosing a word to a category, the SendToHubSpot-button is not disabled', function(){
