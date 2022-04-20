@@ -1,6 +1,6 @@
 describe('Data parser tool ', function() {
     
-    before(function() {
+    beforeEach(function() {
         cy.visit('/')
     })
 
