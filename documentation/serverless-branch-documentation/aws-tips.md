@@ -4,7 +4,7 @@
 No one from our development team had never used AWS in a bigger project. So here are some tricks and tips which we tought we ourselves would have needed when we transferred our software from monolithic Node.js backend to serverless architecture and AWS Lambdas.  
 
 ## How to configure an AWS account to the project
-You will need an AWS Lambda-function, so after logging in to or creating an account at AWS, head of to the Lambda-department and:
+You will need an AWS Lambda-function, so after logging in to or creating an account at AWS, head off to the Lambda-department and:
 - choose a suitable region in the dropdown menu in the upper righthand corner (suitable means that it's geographically close to your users)
 - click "Create function"
 - choose "Author from scratch"
