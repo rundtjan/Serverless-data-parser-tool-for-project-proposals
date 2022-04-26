@@ -23,7 +23,7 @@ jobs:
       - name: allow production front to build before testing it
         run: sleep 240s
         shell: bash
-      - name: Cypress run 
+      - name: Cypress run
         uses: cypress-io/github-action@v2
 
       

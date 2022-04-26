@@ -12,7 +12,7 @@ describe('Data parser tool ', function() {
     /**This test loops through all messages and checks for a button. If has button checks for a thread */
     it('Message with an expander has a thread', function(){
         cy.get('#messageList').find('ul').first().find('.MuiBox-root').each(($el, index, $list) => {
-        if ($el.find('svg').length !== 0){//message has an expander
+        if ($el.find('svg').length > 1){//message has an expander
             cy.wrap($el).children().should('have.length.of.at.least', 2)
         }
         })
@@ -21,7 +21,7 @@ describe('Data parser tool ', function() {
     /**This test loops through all messages and checks that there isn't a button. If has button checks that there's no thread */
     it('Message without an expander has no thread', function(){
         cy.get('#messageList').find('ul').first().find('.MuiBox-root').each(($el, index, $list) => {
-        if ($el.find('svg').length == 0){//message has no expander
+        if ($el.find('svg').length == 1){//message has no expander
             cy.wrap($el).children().should('have.length', 1)
         }
         })
@@ -34,6 +34,10 @@ describe('Data parser tool ', function() {
         cy.contains('FTEs')
         cy.contains('Contact')
         cy.contains('Technology')
+    })
+
+    it('Before choosing words, the SendToHubSpot-button is disabled', function(){
+      cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
     /**This test needs to get the second button (index eq(1)), because the first button is the filter-button. */
@@ -68,10 +72,6 @@ describe('Data parser tool ', function() {
         cy.contains('Number')
         cy.contains('Date')
         cy.contains('Show all')
-    })
-
-    it('Before choosing words, the SendToHubSpot-button is disabled', function(){
-        cy.get('#sendToHubSpotButton').should('be.disabled')
     })
 
     it('After choosing a word to a category, the SendToHubSpot-button is not disabled', function(){
