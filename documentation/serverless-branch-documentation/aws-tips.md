@@ -45,3 +45,6 @@ AWS Toolkit is an extension for VSCode which might come in handy. More informati
 ## Local running and testing of lambdas
 AWS offer tools for running and testing lambdas locally, you might want to read [this](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-debugging.html).  
 Note that Parsa is just a big, ordinary Node-function, so you can execute it on your own machine like any other Node-function. There's actually a helper file for this purpose in the folder api/utils. The file "run_locally.js" executes Parsa with any event.body payload that you would like to test (you will need to use your own, since those that are listed there only suit the data in the slack-environment used by this dev-team). You can copy the payload in raw format from the AWS logs. The function then console logs the response that would have been sent by the Lambda function.
+
+## Programmatic login for CD
+In order to enable continuous deployment you will need an IAM-user with programmatic access (a subuser for AWS). Create an IAM user with the permission policy AWSLambda_FullAccess and programmatic access. You will need to add some Github-secrets: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION (which should match the Lambda-region).
