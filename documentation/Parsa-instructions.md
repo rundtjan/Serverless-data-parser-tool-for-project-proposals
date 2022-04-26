@@ -73,6 +73,7 @@ With Parsa you can also parse and send just threads to the Parsa UI. This is imp
 | Name          | Location | Callback ID     |
 |---------------|----------|-----------------|
 | Parse threads | Messages | thread_shortcut |
+| Parse message | Messages | message_shortcut|
 
 |               |                        |
 |---------------|------------------------|
