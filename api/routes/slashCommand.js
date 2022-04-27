@@ -1,6 +1,6 @@
-
 const { parseParameters } = require('../utils/parseParameters')
 const parseReqBody = require('../utils/parseReqBody')
+// This should be changed to your own environment URL!!
 const frontUrl = 'https://main.dtatk8xusyguu.amplifyapp.com/'
 const helpResponse = require('../utils/helpResponse')
 const parseResponse = require('../utils/parseResponse')
