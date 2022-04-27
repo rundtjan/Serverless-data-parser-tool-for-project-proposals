@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import Layout from '../Layout'
 import Messages from '../Messages'
 import Words from '../Words'
-import Categories from '../Categories'
+import Categories from '../Categories/Categories'
 import HubSpotDealTable from '../HubSpotDeals/HubSpotDealTable'
 import MessageBox from '../MessageBox'
 
