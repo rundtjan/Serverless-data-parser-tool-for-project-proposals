@@ -7,7 +7,7 @@ Serverless data parser tool aka Parsa is an application used for parsing Slack c
 - A Slack workspace
 - A Slack app
 - Slack Bot User OAuth token
-- FOR SERVERLESS VERSION aka the MVP aka the Main-branch implementation you need also an AWS account (tbd more precisely how to use and cofigure at some point)
+- FOR SERVERLESS VERSION aka the MVP aka the Main-branch implementation you need also an AWS account. See [here for AWS configuration](/documentation/serverless-branch-documentation/aws-tips.md)
 
 If you want to send or receive data to/from HubSpot CRM you will also need:
 - An HubSpot environment and/or account
@@ -21,15 +21,15 @@ Bot User OAuth Token can be found from the app dashboard "OAuth & Permissions" &
 #### Slack bot instructions
 The created app/bot must be invited to the channel where you want to parse the messages. If the bot is not in the channel you can not access to view the parsed messages in the Parsa UI. You can invite the bot to the channel with the following command:
 
->"@[your-bot-name-here]"
+>@[your-bot-name-here]
 
 and remove with the following command:
 
->"@remove [your-bot-name-here]"
+>@remove [your-bot-name-here]
 
 or
 
->"@kick [your-bot-name-here]"
+>@kick [your-bot-name-here]
 
 #### Configuring your .env file
 Your .env file should look like this to work:
@@ -68,7 +68,7 @@ We have the following configuration in Slash Commands view:
 These can be changed according to your choice and needs.
 
 #### Message shortcut
-With Parsa you can also parse and send just threads to the Parsa UI. This is implemented with Slack Message shortcuts. You need to have a message shortcut in your workspace in order to use this feature. You can create a message shortcut in Slack app control panel from "Features" &rarr; "Interactivity & Shortcuts" view by clicking the "Create New Shortcut". You can read more about Slack's Message Shortcuts from [here](https://api.slack.com/interactivity/shortcuts/using). Our Message shortcut had the following configuration:  
+With Parsa you can also parse and send just threads or single messages to the Parsa UI. This is implemented with Slack Message shortcuts. You need to have a message shortcuts in your workspace in order to use this feature. You can create message shortcuts in Slack app control panel from "Features" &rarr; "Interactivity & Shortcuts" view by clicking the "Create New Shortcut". You can read more about Slack's Message Shortcuts from [here](https://api.slack.com/interactivity/shortcuts/using). Our Message shortcuts had the following configuration:
 
 | Name          | Location | Callback ID     |
 |---------------|----------|-----------------|
